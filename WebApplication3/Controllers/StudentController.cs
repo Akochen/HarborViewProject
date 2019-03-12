@@ -6,13 +6,12 @@ using System.Web.Mvc;
 
 namespace WebApplication3.Controllers
 {
-    public class UserController : Controller
+    public class StudentController : Controller
     {
-        // GET: User
+        // GET: Student
         public ActionResult Index()
         {
-            return View();
+            return View("~/Views/StudentViews/Student Home.cshtml");
         }
-        
     }
 }

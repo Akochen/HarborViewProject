@@ -16,12 +16,22 @@
             <div id="test_div"></div>
         </form>
     </div>
+    <div name="catalog_link">
+        @Html.ActionLink("Course Catalog", "OpenCatalog", "Home")
+    </div>
 </body>
 @{
     if (IsPost)
     {
-        <Text>
-        @WebApplication3.Models.UserDbConnectionClass.login("select case [type_id] When 1 then 'Student' When 2 then 'Faculty' When 3 then 'Admin' When 4 then 'Researcher' End from[user] where[email] = '" + Request["email"] + "' and [password]= ''")
-        </Text>
+        String result = WebApplication3.Models.UserDbConnectionClass.login("select case [type_id] When 1 then 'Student' When 2 then 'Faculty' When 3 then 'Admin' When 4 then 'Researcher' End from[user] where[email] = '" + Request["email"] + "' and [password]= ''");
+        if (result == "Student")
+        {
+            Response.Redirect(Url.Action("Index", "Student")); //(method name, controller name)
+
+        }
+        else
+        {
+            @Html.Raw("<text>Error: username or password incorrect!</text>")
+        }
     }
 }
