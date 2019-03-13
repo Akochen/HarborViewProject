@@ -184,6 +184,7 @@
     <Content Include="Views\Student\StudentHome.cshtml" />
     <Content Include="Views\Catalog\Catalog.cshtml" />
     <Content Include="Views\Student\SearchSection.cshtml" />
+    <Content Include="Views\Student\SearchSectionResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -193,7 +194,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\StudentSection\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

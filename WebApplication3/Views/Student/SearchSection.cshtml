@@ -1,5 +1,5 @@
 ﻿@using WebApplication3.HelperClasses;
-@model IEnumerator< List<WebApplication3.HelperClasses.Section>>
+@model String
 @{
     Layout = null;
     ViewBag.Title = "Search Sections";
@@ -13,36 +13,16 @@
 </head>
 <body>
     <div>
-        <form>
+        <form method="post">
             <label id="input">Search: </label>
             <input type="text" name="input" />
-            <input type="submit" value="Search" />
+            <input type="submit" id="submit" value="Search" />
         </form>
     </div>
     @{
         if (IsPost)
         {
-            List<Section> sections = WebApplication3.Models.StudentDbConnectionClass.searchSections("instructor", Request["input"]);
-            <table>
-                @foreach(var section )
-                {
-                    <tr>
-                        <td>@section.</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                }
-            </table>
+            @Html.Action("SearchSectionResults", "Student", Request["input"]);
         }
     }
 </body>

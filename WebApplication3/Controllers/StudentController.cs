@@ -19,5 +19,15 @@ namespace WebApplication3.Controllers
         {
             return View();
         }
+
+        public ActionResult SearchSectionResults()
+        {
+            return PartialView(new List<Section>());
+        }
+        [HttpPost]
+        public ActionResult SearchSectionResults(String searchParameter)
+        {
+            return PartialView(WebApplication3.Models.StudentDbConnectionClass.searchSections("", searchParameter));
+        }
     }
 }

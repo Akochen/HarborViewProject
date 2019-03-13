@@ -1,0 +1,18 @@
+﻿@model List<WebApplication3.HelperClasses.Section>
+    <table>
+        @foreach (var sectionInfo in Model)
+        {
+            <tr>
+                <td>Section:<br /> @sectionInfo.sectionID</td>
+                <td>Course:<br />@sectionInfo.courseID</td>
+                <td>Course Name:<br />@sectionInfo.courseName</td>
+                <td>Professor:<br />@sectionInfo.professorName</td>
+                <td>Days:<br />@sectionInfo.days</td>
+                <td>Time:<br />@sectionInfo.startTime-@sectionInfo.endTime</td>
+                <td>Semester:<br />@sectionInfo.semester</td>
+                <td>Year:<br />@sectionInfo.year</td>
+                <td>Building:<br />@sectionInfo.building</td>
+                <td>Room:<br />@sectionInfo.room</td>
+            </tr>
+        }
+    </table>
