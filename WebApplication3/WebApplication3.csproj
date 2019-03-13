@@ -97,6 +97,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\student.css" />
     <Content Include="Forms\WebForm1.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Forms\WebForm1.aspx.cs">
@@ -153,6 +155,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\Catalog.cs" />
+    <Compile Include="HelperClasses\Section.cs" />
+    <Compile Include="HelperClasses\Course.cs" />
+    <Compile Include="HelperClasses\Major.cs" />
+    <Compile Include="HelperClasses\Minor.cs" />
     <Compile Include="Models\UserDbConnectionClass.cs" />
     <Compile Include="Models\StudentDbConnectionClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -174,8 +181,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\StudentViews\Student Home.cshtml" />
-    <Content Include="Views\UserViews\Catalog.cshtml" />
+    <Content Include="Views\Student\StudentHome.cshtml" />
+    <Content Include="Views\Catalog\Catalog.cshtml" />
+    <Content Include="Views\Student\SearchSection.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -185,8 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Student\" />
-    <Folder Include="Views\User\" />
+    <Folder Include="Views\StudentSection\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

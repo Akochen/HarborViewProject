@@ -1,0 +1,54 @@
+﻿@model WebApplication3.HelperClasses.Catalog
+@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Course Catalog";
+}
+
+<body>
+    <div name="course_div">
+        <table class="courses" style="border: 1px solid;">
+            <tr>
+                <th>ID</th>
+                <th>Course Name</th>
+                <th>Description</th>
+                <th>Requirements</th>
+                <th>Credits</th>
+            </tr>
+            @{
+                foreach (var v in Model.courses)
+                {
+                    <tr>
+                        <td>@v.shortName</td>
+                        <td>@v.fullName</td>
+                        <td>@v.description</td>
+                        <td>@v.prereqs</td>
+                        <td>@v.credits</td>
+                    </tr>
+                }
+            }
+        </table>
+        <table class="majors">
+            @{
+                foreach (var v in Model.majors)
+                {
+                    <tr>
+                        <td>@v.name</td>
+                        <td>@Html.Raw(v.requirements)</td>
+                        <td>@v.degreeLevel</td>
+                    </tr>
+                }
+            }
+        </table>
+        <table class="minors">
+            @{
+                foreach (var v in Model.minors)
+                {
+                    <tr>
+                        <td>@v.name</td>
+                        <td>@Html.Raw(v.requirements)</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</body>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.HtmlControls;
+using WebApplication3.HelperClasses;
 
 namespace WebApplication3.Controllers
 {
@@ -13,16 +14,6 @@ namespace WebApplication3.Controllers
         public ActionResult Index()
         {
             return View();
-        }
-
-        public ActionResult OpenCatalog()
-        {
-            return View("~/Views/UserViews/Catalog.cshtml");
-        }
-
-        public String GetCourses()
-        {
-            return Models.UserDbConnectionClass.displayCatalogCourses();
         }
     }
 }

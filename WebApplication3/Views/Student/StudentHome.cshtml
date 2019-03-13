@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Student Home";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>student view</title>
+    <link rel="stylesheet" href="~/Content/student.css">
+</head>
+<body>
+    <div class="header">
+        <h1> Connect HVU </h1>
+    </div>
+    <hr>
+    <ul>
+        <li><a href=#register>Registration</a></li>
+        <li><a href=#catalog>Academics</a></li>
+        <li><a href=#transcript>Transcript</a></li>
+        <li><a href=#audit>Degree Audit</a></li>
+        <li>@Html.ActionLink("Search Sections", "SearchSection", "Student")</li>
+    </ul>
+    <div id="gradl"></div>
+</body>
+</html>
