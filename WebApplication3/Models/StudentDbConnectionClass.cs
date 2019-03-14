@@ -16,7 +16,7 @@ namespace WebApplication3.Models
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String queryString = "SELECT [section_id],[course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number],[type],[capactiy],[seats_remaining]" +
                 " FROM [HarborViewUniversity].[dbo].[section_view] " +
-                "WHERE " + searchType + "LIKE '%" + searchParameter + "%' AND [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' " +
+                "WHERE " + searchType + " LIKE '%" + searchParameter + "%' AND [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' " +
                 "ORDER BY course_id";
             using (SqlConnection connection = new SqlConnection(cString))
             {
