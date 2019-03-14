@@ -35,7 +35,7 @@ namespace WebApplication3.Models
         
         public static Catalog createCatalog()
         {
-            String courseString = "SELECT TOP(1000)[Course_Name], [Course], [Prereqs], [Description], [Credits] FROM[HarborViewUniversity].[dbo].[catalog_courses]";
+            String courseString = "SELECT [Course_Name], [Course], [Prereqs], [Description], [Credits] FROM[HarborViewUniversity].[dbo].[catalog_courses] ORDER BY [Course_Name] ASC";
             //Fill Courses List
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             List<Course> coursesList = new List<Course>();
