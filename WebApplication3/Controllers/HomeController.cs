@@ -15,5 +15,10 @@ namespace WebApplication3.Controllers
         {
             return View();
         }
+
+        public String getUserID(String email)
+        {
+            return (WebApplication3.Models.UserDbConnectionClass.getUserID(email));
+        }
     }
 }

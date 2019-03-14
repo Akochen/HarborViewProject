@@ -146,6 +146,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelperClasses\Catalog.cs" />
+    <Compile Include="HelperClasses\Advisor.cs" />
+    <Compile Include="HelperClasses\Hold.cs" />
     <Compile Include="HelperClasses\SectionSearchHelper.cs" />
     <Compile Include="HelperClasses\Section.cs" />
     <Compile Include="HelperClasses\Course.cs" />
@@ -176,6 +178,8 @@
     <Content Include="Views\Catalog\Catalog.cshtml" />
     <Content Include="Views\Student\SearchSection.cshtml" />
     <Content Include="Views\Student\SearchSectionResults.cshtml" />
+    <Content Include="Views\Student\ViewHolds.cshtml" />
+    <Content Include="Views\Student\ViewAdvisor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

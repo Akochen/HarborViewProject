@@ -13,20 +13,32 @@
 <body>
     <ul>
         <li><a class="active" href="#home">Home</a></li>
-        <li><a href=#register>Registration</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Registration</a>
+            <div class="dropdown-content">
+                @Html.ActionLink("Search Sections", "SearchSection", "Student")
+            </div>
+        </li>
         <li class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">Academics</a>
             <div class="dropdown-content">
-                <a href="#AddDrop">Add/Drop Section</a>
-                <a href="#Advisor">View Advisor</a>
-                <a href="#Holds">View Holds</a>
-                <a href="#transcript">View Transcript</a>
-                @Html.ActionLink("Search Sections", "SearchSection", "Student")
+                @Html.ActionLink("View Holds", "ViewHolds", "Student", new { userID = TempData["UserID"].ToString() }, null)
+                @Html.ActionLink("View Advisors", "ViewAdvisor", "Student", new { userID = TempData["UserID"].ToString() }, null)
             </div>
         </li>
         <li><a href=#audit>Degree Audit</a></li>
     </ul>
-    <p>Hello World</p>
+    <p>
+    @{
+        @Html.Raw("<text>Your ID: </text>")
+        if (TempData.ContainsKey("UserID")) {
+            @Html.Raw(TempData["UserID"].ToString())
+        } else
+        {
+            @Html.Raw("ERROR")
+        }
+    }
+    </p>
 
 </body>
 </html>

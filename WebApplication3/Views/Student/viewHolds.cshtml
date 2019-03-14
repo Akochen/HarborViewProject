@@ -1,0 +1,26 @@
+﻿@model List<WebApplication3.HelperClasses.Hold>
+@{
+    ViewBag.Title = "My Holds";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+</head>
+<body>
+    <table class="holds">
+        <tr class="tableheader">
+            <td>Type</td>
+            <td>Semester</td>
+            <td>Year</td>
+        </tr>
+        <tr>
+            @foreach (var v in Model)
+            {
+                <td>@v.holdType </td>
+                <td>@v.semester</td>
+                <td>@v.year</td>
+            }
+        </tr>
+    </table>
+</body>
+

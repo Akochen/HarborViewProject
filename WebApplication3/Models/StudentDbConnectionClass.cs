@@ -34,6 +34,50 @@ namespace WebApplication3.Models
             return sections;
         }
 
+        public static List<Hold> viewHolds(String userID)
+        {
+            List<Hold> holds = new List<Hold>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT  [hold_type_name] ,[semester] ,[year] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + userID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        holds.Add(new Hold(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                    }
+                }
+                connection.Close();
+            }
+
+            return holds;
+        }
+
+        public static List<Advisor> viewAdvisor(String userID)
+        {
+            List<Advisor> advisors = new List<Advisor>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT [faculty_name], [department_full_name], [faculty_email] FROM [HarborViewUniversity].[dbo].[advisor_view] WHERE [student_id] = " + userID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        advisors.Add(new Advisor(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                    }
+                }
+                connection.Close();
+            }
+
+            return advisors;
+        }
+
         public static SectionSearchHelper createSectionSearchHelper()
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;

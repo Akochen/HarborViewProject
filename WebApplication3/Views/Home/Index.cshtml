@@ -27,6 +27,8 @@
         String result = WebApplication3.Models.UserDbConnectionClass.login("select case [type_id] When 1 then 'Student' When 2 then 'Faculty' When 3 then 'Admin' When 4 then 'Researcher' End from[user] where[email] = '" + Request["email"] + "' and [password]= '" + Request["password"] + "'");
         if (result == "Student")
         {
+            var userID = Html.Action("getUserID", "Home", new { email = Request["email"]});
+            TempData["UserID"] = userID;
             Response.Redirect(Url.Action("StudentHome", "Student")); //(method name, controller name)
 
         }

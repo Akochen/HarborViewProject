@@ -29,5 +29,15 @@ namespace WebApplication3.Controllers
         {
             return PartialView(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchType, searchParameter, searchYear, searchSemester));
         }
+
+        public ActionResult ViewHolds(String userID)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.viewHolds(userID));
+        }
+
+        public ActionResult ViewAdvisor(String userID)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.viewAdvisor(userID));
+        }
     }
 }

@@ -32,7 +32,26 @@ namespace WebApplication3.Models
                 }
             }
         }
-        
+
+        public static String getUserID(String email)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT [user_id] FROM [dbo].[user] WHERE [email] = '" + email + "'";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                String output = "";
+                if (reader.Read())
+                {
+                    output = reader.GetInt32(0).ToString();
+                    connection.Close();
+                }
+                return output;
+            }
+        }
+
         public static Catalog createCatalog()
         {
             String courseString = "SELECT [Course_Name], [Course], [Prereqs], [Description], [Credits] FROM[HarborViewUniversity].[dbo].[catalog_courses] ORDER BY [Course_Name] ASC";

@@ -132,7 +132,7 @@ li.dropdown {
   border: 1px solid black
 }
 
-.majors td, .minors td {
+.majors td, .minors td, holds td {
   border: 1px solid black;
   padding-right: 30px;
   padding-top: 0px
@@ -142,6 +142,10 @@ li.dropdown {
 {
   margin-right: auto;
   width: 100%;
+}
+
+html {
+    height: 100%
 }
 
 

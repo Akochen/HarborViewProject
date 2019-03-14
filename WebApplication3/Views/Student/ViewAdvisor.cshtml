@@ -1,0 +1,24 @@
+﻿@model List<WebApplication3.HelperClasses.Advisor>
+@{
+    ViewBag.Title = "My Advisors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>E-Mail</th>
+        </tr>
+        @foreach(var v in Model)
+        {
+        <tr>
+            <td>@v.name</td>
+            <td>@v.department</td>
+            <td>@v.email</td>
+        </tr>
+        }
+    </table>
+</body>
+
