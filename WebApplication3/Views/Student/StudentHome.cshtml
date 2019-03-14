@@ -6,21 +6,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>student view</title>
+    <title>Student Home</title>
     <link rel="stylesheet" href="~/Content/student.css">
 </head>
+
 <body>
-    <div class="header">
-        <h1> Connect HVU </h1>
-    </div>
-    <hr>
     <ul>
+        <li><a class="active" href="#home">Home</a></li>
         <li><a href=#register>Registration</a></li>
-        <li><a href=#catalog>Academics</a></li>
-        <li><a href=#transcript>Transcript</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Academics</a>
+            <div class="dropdown-content">
+                <a href="#AddDrop">Add/Drop Course</a>
+                <a href="#Advisor">View Advisor</a>
+                <a href="#Holds">View Holds</a>
+                <a href="#transcript">View Transcript</a>
+                @Html.ActionLink("Search Sections", "SearchSection", "Student")
+            </div>
+        </li>
         <li><a href=#audit>Degree Audit</a></li>
-        <li>@Html.ActionLink("Search Sections", "SearchSection", "Student")</li>
     </ul>
-    <div id="gradl"></div>
+    <p>Hello World</p>
+
 </body>
 </html>

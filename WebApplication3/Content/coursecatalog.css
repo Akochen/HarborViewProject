@@ -1,0 +1,161 @@
+ul {
+    columns: 2;
+}
+
+.courses, .majors, .minors{
+    width: 98%;
+}
+
+img {
+  display: block;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+body{
+  background-image: linear-gradient(to bottom, skyblue,lightblue );
+  background-repeat: repeat-x;
+}
+
+li {
+  float: none;
+} 
+
+li a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+li a:hover{
+  color: white;
+}
+
+table, th{
+  border: 3px solid black;
+  background-color: white;
+  border:solid 1px green;
+}
+/*--------------------------------------------------*/
+
+th {
+  background-color: black;
+  color: white;
+}
+
+/*--------------------------------------------------*/
+
+.header {
+	background-color: skyblue;
+	color: white;
+	padding: 10px;
+}
+
+.active {
+  background-color: red;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: black}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.section-one ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: gray;
+}
+
+.section-two ul {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+.spread-one li {
+  padding: 30px;
+}
+
+.floating li{
+  float: none;
+
+
+}
+
+.tableheader tr {
+  background-color: black;
+  text-decoration-color: white;
+}
+
+
+.courses td
+{
+  border: 1px solid black
+}
+
+.majors td, .minors td {
+  border: 1px solid black;
+  padding-right: 30px;
+  padding-top: 0px
+}
+
+.ul ul
+{
+  margin-right: auto;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

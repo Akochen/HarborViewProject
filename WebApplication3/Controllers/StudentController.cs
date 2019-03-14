@@ -17,7 +17,7 @@ namespace WebApplication3.Controllers
         }
         public ActionResult SearchSection()
         {
-            return View();
+            return View(WebApplication3.Models.StudentDbConnectionClass.createSectionSearchHelper());
         }
 
         public ActionResult SearchSectionResults()
@@ -25,9 +25,9 @@ namespace WebApplication3.Controllers
             return PartialView(new List<Section>());
         }
         [HttpPost]
-        public ActionResult SearchSectionResults(String searchParameter)
+        public ActionResult SearchSectionResults(String searchParameter, String searchType, String searchYear, String searchSemester)
         {
-            return PartialView(WebApplication3.Models.StudentDbConnectionClass.searchSections("", searchParameter));
+            return PartialView(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchType, searchParameter, searchYear, searchSemester));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using WebApplication3.HelperClasses;
-@model String
+@model SectionSearchHelper
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Search Sections";
 }
 
@@ -14,15 +14,127 @@
 <body>
     <div>
         <form method="post">
-            <label id="input">Search: </label>
-            <input type="text" name="input" />
-            <input type="submit" id="submit" value="Search" />
+            <table>
+                <tr>
+                    <td>
+                        <label id="typeLabel">Search: </label>
+                        <select id="type" name="type" onchange="selectorDisplay()">
+                            <option value="course_id">Course ID</option>
+                            <option value="course_name">Course Name</option>
+                            <option value="instructor">Instructor</option>
+                            <option value="days">Days</option>
+                            <option value="start_time">Start Time</option>
+                            <option value="department_full_name">Department</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label id="inputLabel"> For </label>
+                        <input type="text" id="inputBox" name="input" />
+                        <select id="departmentSelector" name="departmentSelector">
+                            <option value="startselection">---Department---</option>
+                            @foreach (var v in Model.departments)
+                            {
+                                <option value="@v">@v</option>
+                            }
+                        </select>
+                        <select id="daySelector" name="daySelector">
+                            <option value="startselection">---Days---</option>
+                            @foreach (var v in Model.days)
+                            {
+                                <option value="@v">@v</option>
+                            }
+                        </select>
+                        <select id="timeSelector" name="timeSelector">
+                            <option value="startselection">---Time---</option>
+                            @foreach (var v in Model.times)
+                            {
+                                <option value="@v">@v</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select id="semesterSelector" name="semesterSelector">
+                            <option value="startselection">---Semester---</option>
+                            @foreach (var v in Model.semesters)
+                            {
+                                <option value="@v">@v</option>
+                            }
+                        </select>
+                        <select id="yearSelector" name="yearSelector">
+                            <option value="startselection">---Year---</option>
+                            @foreach (var v in Model.years)
+                            {
+                                <option value="@v">@v</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <input type="submit" id="submit" value="Search" />
+                    </td>
+                </tr>
+            </table>
         </form>
     </div>
+    <script>
+        selectorDisplay();
+        function selectorDisplay() {
+            var selector = document.getElementById("type");
+            var deptSel = document.getElementById("departmentSelector");
+            var daySel = document.getElementById("daySelector");
+            var timeSel = document.getElementById("timeSelector");
+            var inputLabel = document.getElementById("inputLabel");
+            var inputBox = document.getElementById("inputBox");
+            console.log(selector.options[selector.selectedIndex].value)
+            if (selector.options[selector.selectedIndex].value == "days") {
+                daySel.hidden = false;
+                timeSel.hidden = true;
+                deptSel.hidden = true;
+                inputBox.hidden = true;
+                inputLabel.hidden = true;
+            } else if (selector.options[selector.selectedIndex].value == "start_time") {
+                daySel.hidden = true;
+                timeSel.hidden = false;
+                deptSel.hidden = true;
+                inputBox.hidden = true;
+                inputLabel.hidden = true;
+            } else if (selector.options[selector.selectedIndex].value == "department_full_name") {
+                daySel.hidden = true;
+                timeSel.hidden = true;
+                deptSel.hidden = false;
+                inputBox.hidden = true;
+                inputLabel.hidden = true;
+            } else {
+                daySel.hidden = true;
+                timeSel.hidden = true;
+                deptSel.hidden = true;
+                inputBox.hidden = false;
+                inputLabel.hidden = false;
+            }
+        }
+    </script>
     @{
         if (IsPost)
         {
-            @Html.Action("SearchSectionResults", "Student", Request["input"]);
+            if (Request.Form["type"].Equals("days"))
+            {
+                @Html.Action("SearchSectionResults", "Student", new { searchParameter = Request.Form["daySelector"], searchType = Request.Form["type"], searchSemester = Request.Form["semesterSelector"], searchYear = Request.Form["yearSelector"] });
+            }
+            else if (Request.Form["type"].Equals("start_time"))
+            {
+                @Html.Action("SearchSectionResults", "Student", new { searchParameter = Request.Form["timeSelector"], searchType = Request.Form["type"], searchSemester = Request.Form["semesterSelector"], searchYear = Request.Form["yearSelector"] });
+            }
+            else if (Request.Form["type"].Equals("department_full_name"))
+            {
+                @Html.Action("SearchSectionResults", "Student", new { searchParameter = Request.Form["departmentSelector"], searchType = Request.Form["type"], searchSemester = Request.Form["semesterSelector"], searchYear = Request.Form["yearSelector"] });
+            }
+            else
+            {
+                @Html.Action("SearchSectionResults", "Student", new { searchParameter = Request["input"], searchType = Request.Form["type"], searchSemester = Request.Form["semesterSelector"], searchYear = Request.Form["yearSelector"] });
+            }
         }
     }
 </body>

@@ -3,16 +3,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Course Catalog";
 }
-
+<head>
+    <link rel="stylesheet" href="~/Content/coursecatalog.css">
+</head>
 <body>
     <div name="course_div">
-        <table class="courses" style="border: 1px solid;">
-            <tr>
-                <th>ID</th>
-                <th>Course Name</th>
-                <th>Description</th>
-                <th>Requirements</th>
-                <th>Credits</th>
+        <table class="courses" cellspacing="5">
+            <tr >
+                <th class="ROW1">ID</th>
+                <th class="ROW1">Course Name</th>
+                <th class="ROW1">Description</th>
+                <th class="ROW1">Requirements</th>
+                <th class="ROW1">Credits</th>
             </tr>
             @{
                 foreach (var v in Model.courses)
@@ -27,28 +29,37 @@
                 }
             }
         </table>
-        <table class="majors">
-            @{
-                foreach (var v in Model.majors)
-                {
-                    <tr>
-                        <td>@v.name</td>
-                        <td>@Html.Raw(v.requirements)</td>
-                        <td>@v.degreeLevel</td>
-                    </tr>
+            <table class="majors">
+                <tr>
+                    <th>Major</th>
+                    <th>Requirements</th>
+                    <th>Degree Type</th>
+                </tr>
+                @{
+                    foreach (var v in Model.majors)
+                    {
+                        <tr>
+                            <td align="right">@v.name</td>
+                            <td>@Html.Raw(v.requirements)</td>
+                            <td align="right">@v.degreeLevel</td>
+                        </tr>
+                    }
                 }
-            }
-        </table>
-        <table class="minors">
-            @{
-                foreach (var v in Model.minors)
-                {
-                    <tr>
-                        <td>@v.name</td>
-                        <td>@Html.Raw(v.requirements)</td>
-                    </tr>
+            </table>
+            <table class="minors">
+                <tr>
+                    <th>Major</th>
+                    <th>Requirements</th>
+                </tr>
+                @{
+                    foreach (var v in Model.minors)
+                    {
+                        <tr>
+                            <td align="right">@v.name</td>
+                            <td>@Html.Raw(v.requirements)</td>
+                        </tr>
+                    }
                 }
-            }
-        </table>
-    </div>
+            </table>
+        </div>
 </body>
