@@ -1,24 +1,29 @@
-ul {
-    columns: 2;
+table, th {
+    border: 3px solid black;
+    background-color: white;
+    border: solid 0px green;
+    table-layout: fixed;
+    border-spacing: 0px;
 }
 
-.courses, .majors, .minors{
-    width: 98%;
+th {
+    background-color: black;
 }
-
-img {
-  display: block;
-  margin-left: 0;
-  margin-right: auto;
-}
-
 body{
   background-image: linear-gradient(to bottom, skyblue,lightblue );
   background-repeat: repeat-x;
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: gray;
+}
+
 li {
-  float: none;
+  float: left;
 } 
 
 li a {
@@ -37,24 +42,22 @@ li a:hover{
   color: white;
 }
 
-table, th{
-  border: 3px solid black;
-  background-color: white;
-  border:solid 1px green;
-}
-/*--------------------------------------------------*/
-
-th {
-  background-color: black;
-  color: white;
+.results{
+	width: 100%;
+	padding: 5px;
 }
 
-/*--------------------------------------------------*/
+#lines td 
+{
+	border-left: 2px solid black;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
 
 .header {
-	background-color: skyblue;
-	color: white;
-	padding: 10px;
+  background-color: black;
+  color: white;
+  padding: 10px;
 }
 
 .active {
@@ -117,8 +120,6 @@ li.dropdown {
 
 .floating li{
   float: none;
-
-
 }
 
 .tableheader tr {
@@ -129,12 +130,12 @@ li.dropdown {
 
 .courses td
 {
-  border: 1px solid black
+  border: 0px solid black
 }
 
-.majors td, .minors td, holds td {
+.majors td {
   border: 1px solid black;
-  padding-right: 30px;
+  padding-right: 250px;
   padding-top: 0px
 }
 
@@ -143,6 +144,20 @@ li.dropdown {
   margin-right: auto;
   width: 100%;
 }
+
+/*CHANGED MADE TO SEARCH SECTION
+*	Added the dropdown menu at the top. div container
+*
+*/
+
+
+
+
+
+
+
+
+
 
 
 

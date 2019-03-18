@@ -1,0 +1,45 @@
+img {
+  display: block;
+  margin-left: 0;
+  margin-right: auto;
+  height: auto;
+  width: 350px;
+}
+
+body {
+  background-color: skyblue;
+}
+
+.button a
+{
+	color: black;
+}
+
+a:hover {
+	color: grey;
+}
+
+.boxed {
+	border: 1px solid white;
+	border-radius: 20px;
+	padding: 100px;
+	background-color: white;
+	margin-right: 350px;
+	margin-left: 350px;
+	margin-bottom: 100px;
+	margin-top: 100px;
+}
+
+#input input
+{
+	margin-bottom: 10px;
+}
+
+
+/* THINGS CHANGED IN LOGIN.HTML
+*
+* <h2>Login</h2> was changed and moved
+* div class boxed was added to body
+* div class button was added to course catalog
+* div id input was added immedietly after the second body function
+* in the <head> a link was added to call this css file

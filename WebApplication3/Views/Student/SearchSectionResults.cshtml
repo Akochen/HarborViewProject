@@ -1,30 +1,35 @@
 ﻿@model List<WebApplication3.HelperClasses.Section>
-<table class="results">
+
+<table class="results" id="lines">
     <tr class="header">
-        <td>Section:</td>
-        <td>Course:</td>
-        <td>Course Name:</td>
-        <td>Professor</td>
-        <td>Days</td>
-        <td>Time</td>
-        <td>Semester</td>
-        <td>Year</td>
-        <td>Building</td>
-        <td>Room</td>
+        <th>Section:</th>
+        <th>Course:</th>
+        <th>Course Name:</th>
+        <th>Professor</th>
+        <th>Days</th>
+        <th>Time</th>
+        <th>Semester</th>
+        <th>Year</th>
+        <th>Capacity</th>
+        <th>Remaining</th>
+        <th>Building</th>
+        <th>Room</th>
     </tr>
     @foreach (var sectionInfo in Model)
     {
-        <tr>
-            <td>@sectionInfo.sectionID</td>
-            <td>@sectionInfo.courseID</td>
-            <td>@sectionInfo.courseName</td>
-            <td>@sectionInfo.professorName</td>
-            <td>@sectionInfo.days</td>
-            <td>@sectionInfo.startTime-@sectionInfo.endTime</td>
-            <td>@sectionInfo.semester</td>
-            <td>@sectionInfo.year</td>
-            <td>@sectionInfo.building</td>
-            <td>@sectionInfo.room</td>
-        </tr>
+    <tr>
+        <td>@sectionInfo.sectionID</td>
+        <td>@sectionInfo.courseID</td>
+        <td>@sectionInfo.courseName</td>
+        <td>@sectionInfo.professorName</td>
+        <td>@sectionInfo.days</td>
+        <td>@sectionInfo.startTime-@sectionInfo.endTime</td>
+        <td>@sectionInfo.semester</td>
+        <td>@sectionInfo.year</td>
+        <td>@sectionInfo.seatCapacity</td>
+        <td>@sectionInfo.seatRemaining</td>
+        <td>@sectionInfo.building</td>
+        <td>@sectionInfo.room</td>
+    </tr>
     }
 </table>

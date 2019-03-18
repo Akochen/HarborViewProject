@@ -1,7 +1,7 @@
 ﻿@using WebApplication3.HelperClasses;
 @model SectionSearchHelper
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Title = "Search Sections";
 }
 
@@ -9,9 +9,30 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="~/Content/Sectionsearch.css" />
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Registration</a>
+            <div class="dropdown-content">
+                @Html.ActionLink("Search Sections", "SearchSection", "Student")
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Academics</a>
+            <div class="dropdown-content">
+                @if (TempData["userID"] != null)
+                {
+                    @Html.ActionLink("View Holds", "ViewHolds", "Student", new { userID = TempData["UserID"].ToString() }, null)
+                    @Html.ActionLink("View Advisors", "ViewAdvisor", "Student", new { userID = TempData["UserID"].ToString() }, null)
+                }
+            </div>
+        </li>
+        <li><a href=#audit>Degree Audit</a></li>
+    </ul>
     <div>
         <form method="post">
             <table>

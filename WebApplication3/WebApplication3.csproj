@@ -91,7 +91,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\coursecatalog.css" />
+    <Content Include="Content\hold.css" />
     <Content Include="Content\HVU Logo.png" />
+    <Content Include="Content\HVULogoLogIn.png" />
+    <Content Include="Content\logIn.css" />
+    <Content Include="Content\Sectionsearch.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\student.css" />
     <Content Include="Forms\WebForm1.aspx" />
@@ -161,7 +165,7 @@
     <Content Include="Views\web.config" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LayoutHome.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
@@ -180,6 +184,7 @@
     <Content Include="Views\Student\SearchSectionResults.cshtml" />
     <Content Include="Views\Student\ViewHolds.cshtml" />
     <Content Include="Views\Student\ViewAdvisor.cshtml" />
+    <Content Include="Views\Shared\_LayoutStudent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
