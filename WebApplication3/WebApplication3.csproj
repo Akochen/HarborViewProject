@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\coursecatalog.css" />
+    <Content Include="Content\DropDownMenu.css" />
     <Content Include="Content\hold.css" />
     <Content Include="Content\HVU Logo.png" />
     <Content Include="Content\HVULogoLogIn.png" />
@@ -138,6 +139,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PasswordController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Forms\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
@@ -151,6 +153,8 @@
     </Compile>
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
+    <Compile Include="HelperClasses\ViewScheduleHelper.cs" />
+    <Compile Include="HelperClasses\Enrollment.cs" />
     <Compile Include="HelperClasses\Hold.cs" />
     <Compile Include="HelperClasses\SectionSearchHelper.cs" />
     <Compile Include="HelperClasses\Section.cs" />
@@ -185,6 +189,10 @@
     <Content Include="Views\Student\ViewHolds.cshtml" />
     <Content Include="Views\Student\ViewAdvisor.cshtml" />
     <Content Include="Views\Shared\_LayoutStudent.cshtml" />
+    <Content Include="Views\Password\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\Student\ViewSchedule.cshtml" />
+    <Content Include="Views\Student\ViewScheduleResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

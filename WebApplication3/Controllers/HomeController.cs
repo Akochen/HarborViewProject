@@ -20,5 +20,13 @@ namespace WebApplication3.Controllers
         {
             return (WebApplication3.Models.UserDbConnectionClass.getUserID(email));
         }
+
+        public ActionResult LogOut()
+        {
+            Session.RemoveAll();
+            return Index();
+        }
+
+       
     }
 }

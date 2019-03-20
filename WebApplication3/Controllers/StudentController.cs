@@ -39,5 +39,20 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.StudentDbConnectionClass.viewAdvisor(userID));
         }
+
+        public ActionResult ViewSchedule()
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.createScheduleViewHelper());
+        }
+
+        public ActionResult ViewScheduleResults()
+        {
+            return View(new List<Enrollment>());
+        }
+        [HttpPost]
+        public ActionResult ViewScheduleResults(String userID, String year, String semester)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.viewSchedule(userID, year, semester));
+        }
     }
 }

@@ -36,19 +36,23 @@
                         if (result == "Student")
                         {
                             var userID = Html.Action("getUserID", "Home", new { email = Request["email"] });
-                            TempData["UserID"] = userID;
+                            Session["UserID"] = userID;
                             Response.Redirect(Url.Action("StudentHome", "Student")); //(method name, controller name)
                         }
                         else
                         {
                             @Html.Raw("<text>Error: username or password incorrect!</text>")
+
                         }
                     }
                 }
             </div>
-            <div name="catalog_link">
+            <div id="catalog_link">
                 @Html.ActionLink("Course Catalog", "Catalog", "Catalog")
                 <!--(link text, controller method name, controller name)-->
+            </div>
+            <div id="pw_link">
+                @Html.ActionLink("Change Password", "ChangePassword", "Password")
             </div>
 
         </div>

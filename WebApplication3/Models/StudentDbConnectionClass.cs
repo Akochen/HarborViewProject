@@ -144,6 +144,63 @@ namespace WebApplication3.Models
 
             return new SectionSearchHelper(departments, times, days, years, semesters);
         }
+
+        public static ViewScheduleHelper createScheduleViewHelper()
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String yearString = "SELECT DISTINCT [year] FROM [HarborViewUniversity].[dbo].[section_view]";
+            String semesterString = "SELECT DISTINCT [semster] FROM [HarborViewUniversity].[dbo].[section_view]";
+            List<String> years = new List<string>();
+            List<String> semesters = new List<string>();
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command4 = new SqlCommand(yearString, connection);
+                connection.Open();
+                using (var reader = command4.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        years.Add(reader.GetString(0));
+                    }
+                }
+
+                SqlCommand command5 = new SqlCommand(semesterString, connection);
+                using (var reader = command5.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        semesters.Add(reader.GetString(0));
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return new ViewScheduleHelper(years, semesters);
+        }
+
+        public static List<Enrollment> viewSchedule(String userID, String year, String semester)
+        {
+            List<Enrollment> enrollments = new List<Enrollment>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT [course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[type],[building_full_name],[room_number] FROM [HarborViewUniversity].[dbo].[enrollment_view] WHERE [user_id] = " + userID + " AND [semster] = '" + semester + "' AND [year] = '" + year + "'";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        enrollments.Add(new Enrollment(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
+                            , reader.GetString(7), reader.GetString(8), reader.GetString(9), reader.GetInt32(10).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+
+            return enrollments;
+        }
     }
 
 }

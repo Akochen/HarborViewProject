@@ -101,5 +101,50 @@ namespace WebApplication3.Models
             Catalog catalog = new Catalog(coursesList, majorsList, minorsList);
             return catalog;
         }
+
+        public static String changePasswordCheck(String email, String id, String password)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT COUNT([email]) FROM [HarborViewUniversity].[dbo].[user] WHERE [email] = '" + email + "' AND [user_id] = " + id;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                int output = -1;
+                if (reader.Read())
+                {
+                    output = reader.GetInt32(0);
+                    connection.Close();
+                }
+                if(output == -1)
+                {
+                    return "Error: Please check your internet connection!";
+                } else if (output == 0)
+                {
+                    return "Error: The E-Mail you have entered is incorrect!";
+                } else if(output == 1)
+                {
+                    changePassword(email, password);
+                    return "Your password has been successfully changed";
+                } else
+                {
+                    return "Error: Please contact an administrator <br />(Error code: 232)";
+                }
+            }
+        }
+
+        public static void changePassword(String email, String password)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "UPDATE [HarborViewUniversity].[dbo].[user] SET password = '" + password + "' WHERE email = '" + email + "';";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
     }
 }

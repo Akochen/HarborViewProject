@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Title = "Student Home";
 }
 
@@ -11,37 +11,17 @@
 </head>
 
 <body>
-    <ul>
-        <li><a class="active" href="#home">Home</a></li>
-        <li class="dropdown">
-            <a href="javascript:void(0)">Registration</a>
-            <div class="dropdown-content">
-                @Html.ActionLink("Search Sections", "SearchSection", "Student")
-            </div>
-        </li>
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Academics</a>
-            <div class="dropdown-content">
-                @if (TempData["userID"] != null)
-                {
-                    @Html.ActionLink("View Holds", "ViewHolds", "Student", new { userID = TempData["UserID"].ToString() }, null)
-                    @Html.ActionLink("View Advisors", "ViewAdvisor", "Student", new { userID = TempData["UserID"].ToString() }, null)
-                }
-            </div>
-        </li>
-        <li><a href=#audit>Degree Audit</a></li>
-    </ul>
-    <p>
-    @{
-        @Html.Raw("<text>Your ID: </text>")
-        if (TempData.ContainsKey("UserID")) {
-            @Html.Raw(TempData["UserID"].ToString())
-        } else
-        {
-            @Html.Raw("ERROR")
+        @{
+            @Html.Raw("<br /><text>Your ID: </text>")
+            if (Session["UserID"] != null)
+            {
+                @Html.Raw(Session["UserID"].ToString())
+            }
+            else
+            {
+                @Html.Raw("ERROR")
+            }
         }
-    }
-    </p>
 
 </body>
 </html>
