@@ -18,6 +18,7 @@
                     <div class="dropdown-content">
                         @Html.ActionLink("Search Sections", "SearchSection", "Student")
                         @Html.ActionLink("View Schedule", "ViewSchedule", "Student")
+                        @Html.ActionLink("Register", "RegisterForClasses", "Student", new { searchParameter = "", searchType = "days", searchSemester = "fall", searchYear = "2019" }, null)
                     </div>
                 </li>
                 <li class="dropdown">

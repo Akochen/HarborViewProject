@@ -193,6 +193,8 @@
     <Content Include="Views\Shared\_LayoutUser.cshtml" />
     <Content Include="Views\Student\ViewSchedule.cshtml" />
     <Content Include="Views\Student\ViewScheduleResults.cshtml" />
+    <Content Include="Views\Student\ViewCurrentSchedule.cshtml" />
+    <Content Include="Views\Student\RegisterForClasses.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,43 @@
+﻿@model List<WebApplication3.HelperClasses.Section>
+
+@{
+    ViewBag.Title = "RegisterForClasses";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<table class="results" id="lines">
+    <tr class="header">
+        <th>Section:</th>
+        <th>Course:</th>
+        <th>Course Name:</th>
+        <th>Professor</th>
+        <th>Days</th>
+        <th>Time</th>
+        <th>Semester</th>
+        <th>Year</th>
+        <th>Capacity</th>
+        <th>Remaining</th>
+        <th>Building</th>
+        <th>Room</th>
+        <th class="register">Register</th>
+    </tr>
+    @foreach (var sectionInfo in Model)
+    {
+    <tr>
+        <td>@sectionInfo.sectionID</td>
+        <td>@sectionInfo.courseID</td>
+        <td>@sectionInfo.courseName</td>
+        <td>@sectionInfo.professorName</td>
+        <td>@sectionInfo.days</td>
+        <td>@sectionInfo.startTime-@sectionInfo.endTime</td>
+        <td>@sectionInfo.semester</td>
+        <td>@sectionInfo.year</td>
+        <td>@sectionInfo.seatCapacity</td>
+        <td>@sectionInfo.seatRemaining</td>
+        <td>@sectionInfo.building</td>
+        <td>@sectionInfo.room</td>
+        <td></td>
+    </tr>
+    }
+</table>
+

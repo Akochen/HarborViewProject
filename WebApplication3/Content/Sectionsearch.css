@@ -1,8 +1,11 @@
+.results {
+    width: 98%;
+}
+
 table, th {
     border: 3px solid black;
     background-color: white;
     border: solid 0px green;
-    table-layout: fixed;
     border-spacing: 0px;
 }
 
@@ -43,8 +46,7 @@ li a:hover{
 }
 
 .results{
-	width: 100%;
-	padding: 5px;
+    padding: 5px;
 }
 
 #lines td 

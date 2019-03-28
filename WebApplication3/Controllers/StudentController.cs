@@ -9,7 +9,6 @@ namespace WebApplication3.Controllers
 {
     public class StudentController : Controller
     {
-        private List<Section> sections;
         // GET: Student
         public ActionResult StudentHome()
         {
@@ -53,6 +52,16 @@ namespace WebApplication3.Controllers
         public ActionResult ViewScheduleResults(String userID, String year, String semester)
         {
             return View(WebApplication3.Models.StudentDbConnectionClass.viewSchedule(userID, year, semester));
+        }
+
+        public ActionResult ViewCurrentSchedule(String userID, String year, String semester)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.viewSchedule(userID, year, semester));
+        }
+
+        public ActionResult RegisterForClasses(String searchParameter, String searchType, String searchYear, String searchSemester)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchType, searchParameter, searchYear, searchSemester));
         }
     }
 }
