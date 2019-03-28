@@ -39,6 +39,12 @@
                             Session["UserID"] = userID;
                             Response.Redirect(Url.Action("StudentHome", "Student")); //(method name, controller name)
                         }
+                        else if(result == "Faculty")
+                        {
+                            var userID = Html.Action("getUserID", "Home", new { email = Request["email"] });
+                            Session["UserID"] = userID;
+                            Response.Redirect(Url.Action("FacultyHome", "Faculty")); //(method name, controller name)
+                        }
                         else
                         {
                             @Html.Raw("<text>Error: username or password incorrect!</text>")
