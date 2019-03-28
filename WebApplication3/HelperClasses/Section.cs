@@ -39,5 +39,18 @@ namespace WebApplication3.HelperClasses
             this.seatCapacity = seatCapacity;
             this.seatRemaining = seatRemaining;
         }
+
+        //Faculty schedule section
+        public Section(string courseName, string days, string startTime, string endTime, string semester, string year, string building, int room)
+        {
+            this.courseName = courseName;
+            this.days = days;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.semester = semester;
+            this.year = year;
+            this.building = building;
+            this.room = room;
+        }
     }
 }

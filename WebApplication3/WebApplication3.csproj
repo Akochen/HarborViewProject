@@ -98,6 +98,7 @@
     <Content Include="Content\logIn.css" />
     <Content Include="Content\Sectionsearch.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\faculty.css" />
     <Content Include="Content\student.css" />
     <Content Include="Forms\WebForm1.aspx" />
     <Content Include="Global.asax" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
+    <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PasswordController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="HelperClasses\Course.cs" />
     <Compile Include="HelperClasses\Major.cs" />
     <Compile Include="HelperClasses\Minor.cs" />
+    <Compile Include="Models\FacultyDbConnectionClass.cs" />
     <Compile Include="Models\UserDbConnectionClass.cs" />
     <Compile Include="Models\StudentDbConnectionClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,6 +198,9 @@
     <Content Include="Views\Student\ViewScheduleResults.cshtml" />
     <Content Include="Views\Student\ViewCurrentSchedule.cshtml" />
     <Content Include="Views\Student\RegisterForClasses.cshtml" />
+    <Content Include="Views\Shared\_LayoutFaculty.cshtml" />
+    <Content Include="Views\Faculty\FacultyHome.cshtml" />
+    <Content Include="Views\Faculty\FacultySchedule.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

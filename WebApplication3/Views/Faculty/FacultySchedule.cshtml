@@ -1,0 +1,23 @@
+﻿@model List<WebApplication3.HelperClasses.Section>
+@{ 
+    Layout = null;
+}
+<table>
+    <tr>
+        <th>Course Name</th>
+        <th>Time</th>
+        <th>Days</th>
+        <th>Building</th>
+        <th>Room</th>
+    </tr>
+    @foreach(var v in Model)
+    {
+        <tr>
+            <td>@v.courseName</td>
+            <td>@v.startTime-@v.endTime</td>
+            <td>@v.days</td>
+            <td>@v.building</td>
+            <td>@v.room</td>
+        </tr>
+    }
+</table>
