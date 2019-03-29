@@ -246,6 +246,7 @@ namespace WebApplication3.Models
                                             if ((currentCredits + newClassCredits <= reader3.GetByte(0)))
                                             {
                                                 //do insert
+                                                reader3.Close();
                                                 command = new SqlCommand(insertString, connection);
                                                 command.ExecuteNonQuery();
                                                 result = "You have successfully registered for " + courseName;
