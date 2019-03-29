@@ -201,6 +201,104 @@ namespace WebApplication3.Models
 
             return enrollments;
         }
+
+        public static String register(int sectionID, int studentID)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String capacityString = "select (capactiy - seats_taken) as seats_remaining,course_name, course_credits from section inner join course on course.course_id = section.course_id WHERE section_id = " + sectionID;
+            String ftString = "select max_credits from student_full_time where student_id = " + studentID + " and semester = '" + CurrentSemester.getSemesterSeason() +"' and [year] = '" + CurrentSemester.getSemesterYear() +"'";
+            String ptString = "select max_credits from student_part_time where student_id = " + studentID + " and semester = '" + CurrentSemester.getSemesterSeason() + "' and [year] = '" + CurrentSemester.getSemesterYear() + "'";
+            String creditsString = "SELECT COALESCE((select sum(c.course_credits) as credits_count from enrollment e inner join section s on s.section_id = e.section_id inner join course c on c.course_id = s.course_id where student_id = " + studentID + " and s.semster = '" + CurrentSemester.getSemesterSeason() + "' and [year] = '" + CurrentSemester.getSemesterYear() + "' group by course_credits), 0) AS 'credit_count'";
+            String insertString = " INSERT INTO enrollment(student_id, section_id) VALUES(" + studentID + ", " + sectionID + ")";
+            String courseName = "ERROR: Unable to connect to database!";
+            String result = "";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                //Check seat capacity
+                SqlCommand command = new SqlCommand(capacityString, connection);
+                connection.Open();
+                using (var reader1 = command.ExecuteReader())
+                {
+                    if (reader1.Read())
+                    {
+                        courseName = reader1.GetString(1);
+                        if (reader1.GetByte(0) > 1)
+                        {
+                            int newClassCredits = reader1.GetByte(2);
+                            //Check credits currently being takem
+                            command = new SqlCommand(creditsString, connection);
+                            reader1.Close();
+                            using (var reader2 = command.ExecuteReader())
+                            {
+                                if (reader2.Read())
+                                {
+                                    int currentCredits = reader2.GetInt32(0);
+                                    int test1 = currentCredits + newClassCredits;
+                                    //check if full-time
+                                    command = new SqlCommand(ftString, connection);
+                                    reader2.Close();
+                                    using (var reader3 = command.ExecuteReader())
+                                    {
+                                        //if full time get max credits
+                                        if (reader3.Read())
+                                        {
+                                            int test2 = reader3.GetByte(0);
+                                            if ((currentCredits + newClassCredits <= reader3.GetByte(0)))
+                                            {
+                                                //do insert
+                                                command = new SqlCommand(insertString, connection);
+                                                command.ExecuteNonQuery();
+                                                result = "You have successfully registered for " + courseName;
+                                                reader3.Close();
+                                            }
+                                            else
+                                            {
+                                                result = "You cannot exceed the maximum credit limit!";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //Check if part time
+                                            command = new SqlCommand(ptString, connection);
+                                            reader3.Close();
+                                            using (var reader4 = command.ExecuteReader())
+                                            {
+                                                if (reader4.Read())
+                                                {
+                                                    if (currentCredits + newClassCredits <= reader4.GetByte(0))
+                                                    {
+                                                        //yeet it into the table
+                                                        command = new SqlCommand(insertString, connection);
+                                                        command.ExecuteNonQuery();
+                                                        result = "You have successfully registered for " + courseName;
+                                                        reader4.Close();
+                                                    }
+                                                    else
+                                                    {
+                                                        result = "You cannot exceed the maximum credit limit!";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    result = "ERROR: You are not currently a student.";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            result = "Unable to add " + courseName + ". Section is full.";
+                        }
+                    }
+                }
+                connection.Close();
+            }
+            return result;
+        }
     }
 
 }

@@ -10,31 +10,7 @@
 <table style="width:100%;">
     <tr>
         <td style="width:50%;">
-            @Html.Action("FacultySchedule", "Faculty", new { userID = Session["UserID"], semester = getSemesterSeason(), year = getSemesterYear()})
+            @Html.Action("FacultySchedule", "Faculty", new { userID = Session["UserID"], semester = WebApplication3.HelperClasses.CurrentSemester.getSemesterSeason(), year = WebApplication3.HelperClasses.CurrentSemester.getSemesterYear()})
         </td>
     </tr>
 </table>
-
-@functions{ 
-    private static String getSemesterSeason()
-    {
-        DateTime now = DateTime.Now;
-        if (now.Month < 5)
-        {
-            return "Spring";
-        }
-        else if (now.Month < 9)
-        {
-            return "Summer";
-        }
-        else
-        {
-            return "Fall";
-        }
-    }
-
-    private static String getSemesterYear()
-    {
-        return DateTime.Now.Year.ToString();
-    }
-}

@@ -1,7 +1,7 @@
 ﻿@model List<WebApplication3.HelperClasses.Section>
 
 @{
-    ViewBag.Title = "RegisterForClasses";
+    ViewBag.Title = "Registration";
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 
@@ -36,7 +36,7 @@
         <td>@sectionInfo.seatRemaining</td>
         <td>@sectionInfo.building</td>
         <td>@sectionInfo.room</td>
-        <td></td>
+        <td>@Html.ActionLink("Add", "RegisterForClass", "Student", new { sectionID = sectionInfo.sectionID, studentID = Session["UserID"]} , null)</td>
     </tr>
     }
 </table>

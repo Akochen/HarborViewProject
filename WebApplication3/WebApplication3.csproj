@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
+    <Compile Include="HelperClasses\CurrentSemester.cs" />
     <Compile Include="HelperClasses\ViewScheduleHelper.cs" />
     <Compile Include="HelperClasses\Enrollment.cs" />
     <Compile Include="HelperClasses\Hold.cs" />

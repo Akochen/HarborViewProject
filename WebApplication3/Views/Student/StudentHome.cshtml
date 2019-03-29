@@ -11,21 +11,27 @@
 </head>
 
 <body>
-        @{
-            @Html.Raw("<br /><text>Your ID: </text>")
-            if (Session["UserID"] != null)
-            {
-                @Html.Raw(Session["UserID"].ToString())
-            }
-            else
-            {
-                @Html.Raw("ERROR")
-            }
+    @{
+        @Html.Raw("<br /><text>Your ID: </text>")
+        if (Session["UserID"] != null)
+        {
+            @Html.Raw(Session["UserID"].ToString())
         }
+        else
+        {
+            @Html.Raw("ERROR")
+        }
+    }
     <table style="width:98%;">
         <tr>
             <td style="width:50%;">
-                @Html.Action("ViewCurrentSchedule", "Student", new { userID = Session["UserID"], year = "2019", semester = "spring" })
+                @{
+                    if (Session["UserID"] != null)
+                    {
+                        @Html.Action("ViewCurrentSchedule", "Student", new { userID = Session["UserID"], year = WebApplication3.HelperClasses.CurrentSemester.getSemesterYear(), semester = @WebApplication3.HelperClasses.CurrentSemester.getSemesterSeason() })
+                    }
+                }
+
             </td>
             <td></td>
         </tr>
