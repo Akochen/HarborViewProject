@@ -19,8 +19,10 @@
                         @Html.ActionLink("Search Sections", "SearchSection", "Student")
                         @Html.ActionLink("View Schedule", "ViewSchedule", "Student")
                         @Html.ActionLink("Register", "RegisterForClasses", "Student", new { searchParameter = "", searchType = "days", searchSemester = "fall", searchYear = "2019" }, null)
+                        @Html.ActionLink("Drop", "RemoveEnrollmentOptions", "Student")
+
                     </div>
-                </li>
+                </li>   
                 <li class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Academics</a>
                     <div class="dropdown-content">

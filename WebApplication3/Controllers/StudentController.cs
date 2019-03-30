@@ -68,5 +68,25 @@ namespace WebApplication3.Controllers
         {
             return WebApplication3.Models.StudentDbConnectionClass.register(sectionID, studentID);
         }
+
+        public ActionResult RemoveEnrollmentOptions()
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.createScheduleViewHelper());
+        }
+
+        public ActionResult RemoveEnrollmentResults()
+        {
+            return View(new List<Section>());
+        }
+        [HttpPost]
+        public ActionResult RemoveEnrollmentResults(String userID, String year, String semester)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.viewSchedule(userID, year, semester));
+        }
+        
+        public String RemoveEnrollment(int studentID, int sectionID)
+        {
+            return null;
+        }
     }
 }

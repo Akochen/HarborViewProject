@@ -52,5 +52,20 @@ namespace WebApplication3.HelperClasses
             this.building = building;
             this.room = room;
         }
+
+        //Remove Enrollment Section
+        
+        public Section(int sectionID, string courseID, string courseName, string professorName, string days, string startTime, string endTime, string semester, string year)
+        {
+            this.sectionID = sectionID;
+            this.courseID = courseID;
+            this.courseName = courseName;
+            this.professorName = professorName;
+            this.days = days;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.semester = semester;
+            this.year = year;
+        }
     }
 }

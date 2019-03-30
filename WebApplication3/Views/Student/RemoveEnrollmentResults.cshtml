@@ -1,0 +1,51 @@
+﻿@model List<WebApplication3.HelperClasses.Section>
+@{
+    Layout = null;
+}
+            this.sectionID = sectionID;
+            this.courseID = courseID;
+            this.courseName = courseName;
+            this.professorName = professorName;
+            this.days = days;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.semester = semester;
+            this.year = year;
+<div>
+    <table>
+        <tr>
+            <th>
+                Section ID
+            </th>
+            <th>
+                Course ID
+            </th>
+            <th>
+                Course Name
+            </th>
+            <th>
+                Professor Name
+            </th>
+            <th>
+                Days
+            </th>
+            <th>
+                Time
+            </th>
+
+        </tr>
+        @foreach (var v in Model)
+        {
+        <tr>
+            <td>@v.sectionID</td>
+            <td>@v.courseID</td>
+            <td>@v.courseName</td>
+            <td>@v.professorName</td>
+            <td>@v.days</td>
+            <td>@v.startTime-@v.endTime</td>
+            <td>@Html.ActionLink("Delete", "RemoveEnrollmentResults", "Student", new { sectionID = v.sectionID, studentID = Session["UserID"] }, null)</td>
+        </tr>
+        }
+    </table>
+</div>
+

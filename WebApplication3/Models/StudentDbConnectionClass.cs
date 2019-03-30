@@ -300,6 +300,33 @@ namespace WebApplication3.Models
             }
             return result;
         }
+
+        public static String searchEnrollmentToRemove()
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+
+                //Check seat capacity
+                //SqlCommand command = new SqlCommand(,connection);
+                connection.Open();
+                return null;
+            }
+        }
+        //
+        public static String removeEnrollment(int sectionId, int studentId)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                //Check seat capacity
+                //SqlCommand command = new SqlCommand(,connection);
+                connection.Open();
+            }
+
+
+                return null;
+        }
     }
 
 }
