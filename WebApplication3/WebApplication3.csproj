@@ -96,10 +96,14 @@
     <Content Include="Content\HVU Logo.png" />
     <Content Include="Content\HVULogoLogIn.png" />
     <Content Include="Content\logIn.css" />
+    <Content Include="Content\michal-mrozek-1238448-unsplash.jpg" />
+    <Content Include="Content\Register.css" />
     <Content Include="Content\Sectionsearch.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\faculty.css" />
     <Content Include="Content\student.css" />
+    <Content Include="Content\Table.css" />
+    <Content Include="Content\ViewSchedule.css" />
     <Content Include="Forms\WebForm1.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -155,7 +159,7 @@
     </Compile>
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
-    <Compile Include="HelperClasses\CurrentSemester.cs" />
+    <Compile Include="HelperClasses\SemesterDataHelper.cs" />
     <Compile Include="HelperClasses\ViewScheduleHelper.cs" />
     <Compile Include="HelperClasses\Enrollment.cs" />
     <Compile Include="HelperClasses\Hold.cs" />
@@ -202,6 +206,7 @@
     <Content Include="Views\Shared\_LayoutFaculty.cshtml" />
     <Content Include="Views\Faculty\FacultyHome.cshtml" />
     <Content Include="Views\Faculty\FacultySchedule.cshtml" />
+    <Content Include="Views\Student\RegisteredForClass.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

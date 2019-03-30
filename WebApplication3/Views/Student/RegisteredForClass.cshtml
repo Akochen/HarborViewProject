@@ -1,0 +1,8 @@
+﻿@model String
+@using WebApplication3.HelperClasses
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/Content/Register.css" />
+@Html.Action("RegisterForClasses", "Student", new { searchParameter = "", searchType = "Days", searchSemester = SemesterDataHelper.getSemesterSeason(), searchYear = SemesterDataHelper.getSemesterYear() })
+@Html.Raw(@Model)

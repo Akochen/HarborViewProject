@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+@using WebApplication3.HelperClasses
 <html>
 <head>
     <title>@ViewBag.Title - Harbor View University</title>
@@ -18,7 +19,7 @@
                     <div class="dropdown-content">
                         @Html.ActionLink("Search Sections", "SearchSection", "Student")
                         @Html.ActionLink("View Schedule", "ViewSchedule", "Student")
-                        @Html.ActionLink("Register", "RegisterForClasses", "Student", new { searchParameter = "", searchType = "days", searchSemester = "fall", searchYear = "2019" }, null)
+                        @Html.ActionLink("Register", "RegisterForClasses", "Student", new { searchParameter = "", searchType = "Days", searchSemester = SemesterDataHelper.getSemesterSeason(), searchYear = SemesterDataHelper.getSemesterYear() }, null)
                     </div>
                 </li>
                 <li class="dropdown">

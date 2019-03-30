@@ -10,7 +10,7 @@
 <table style="width:100%;">
     <tr>
         <td style="width:50%;">
-            @Html.Action("FacultySchedule", "Faculty", new { userID = Session["UserID"], semester = WebApplication3.HelperClasses.CurrentSemester.getSemesterSeason(), year = WebApplication3.HelperClasses.CurrentSemester.getSemesterYear()})
+            @Html.Action("FacultySchedule", "Faculty", new { userID = Session["UserID"], semester = WebApplication3.HelperClasses.SemesterDataHelper.getSemesterSeason(), year = WebApplication3.HelperClasses.SemesterDataHelper.getSemesterYear()})
         </td>
     </tr>
 </table>

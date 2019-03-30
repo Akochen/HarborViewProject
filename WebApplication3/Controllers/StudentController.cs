@@ -64,9 +64,10 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchType, searchParameter, searchYear, searchSemester));
         }
 
-        public String RegisterForClass(int studentID, int sectionID)
+        public ActionResult RegisteredForClass(int studentID, int sectionID)
         {
-            return WebApplication3.Models.StudentDbConnectionClass.register(sectionID, studentID);
+            String result = "<script> alert(\"" + WebApplication3.Models.StudentDbConnectionClass.register(sectionID, studentID, "2019", "Fall") + "\"); </script>";
+            return PartialView((object)result);
         }
     }
 }

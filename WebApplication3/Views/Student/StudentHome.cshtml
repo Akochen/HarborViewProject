@@ -28,7 +28,7 @@
                 @{
                     if (Session["UserID"] != null)
                     {
-                        @Html.Action("ViewCurrentSchedule", "Student", new { userID = Session["UserID"], year = WebApplication3.HelperClasses.CurrentSemester.getSemesterYear(), semester = @WebApplication3.HelperClasses.CurrentSemester.getSemesterSeason() })
+                        @Html.Action("ViewCurrentSchedule", "Student", new { userID = Session["UserID"], year = WebApplication3.HelperClasses.SemesterDataHelper.getSemesterYear(), semester = @WebApplication3.HelperClasses.SemesterDataHelper.getSemesterSeason() })
                     }
                 }
 

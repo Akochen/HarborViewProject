@@ -1,0 +1,111 @@
+table{
+  border: 3px solid black;
+  background-color: white;
+  border:solid 0px green;
+  table-layout: fixed;
+  border-spacing: 0px;
+}
+
+html{
+background-color: skyblue;
+
+}
+/*body{
+background-image: linear-gradient(to bottom, skyblue,lightblue );
+  background-repeat: repeat-x;
+}*/
+
+.header{
+  background: white;
+  text-decoration-color: white;
+  padding: 10px;
+
+}
+
+.results{
+	width: 100%;
+	padding: 5px;
+}
+
+#lines td 
+{
+	border-left: 2px solid black;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.section-one ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: gray;
+}
+
+.section-two ul {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+.spread-one li {
+  padding: 30px;
+}
+
+.floating li{
+  float: none;
+}
+
+.tableheader{
+  background-color: black;
+  color: white;
+}
+
+
+.courses td
+{
+  border: 0px solid black
+}
+
+.majors td {
+  border: 1px solid black;
+  padding-right: 250px;
+  padding-top: 0px
+}
+
+.ul ul
+{
+  margin-right: auto;
+  width: 100%;
+}
+
+/*CHANGED MADE TO SEARCH SECTION
+*	Added the dropdown menu at the top. div container
+*
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
