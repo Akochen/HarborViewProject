@@ -206,6 +206,8 @@
     <Content Include="Views\Shared\_LayoutFaculty.cshtml" />
     <Content Include="Views\Faculty\FacultyHome.cshtml" />
     <Content Include="Views\Faculty\FacultySchedule.cshtml" />
+    <Content Include="Views\Student\RemoveEnrollmentOptions.cshtml" />
+    <Content Include="Views\Student\RemoveEnrollmentResults.cshtml" />
     <Content Include="Views\Student\RegisteredForClass.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
