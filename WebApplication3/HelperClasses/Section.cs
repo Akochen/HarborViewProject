@@ -64,7 +64,18 @@ namespace WebApplication3.HelperClasses
             this.day3 = day3;
         }
 
-        //Remove Enrollment Section
+        /// <summary>
+        /// Constructor for removing a section from a student's enrollment list.
+        /// </summary>
+        /// <param name="sectionID"></param>
+        /// <param name="courseID"></param>
+        /// <param name="courseName"></param>
+        /// <param name="professorName"></param>
+        /// <param name="days"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="semester"></param>
+        /// <param name="year"></param>
         
         public Section(int sectionID, string courseID, string courseName, string professorName, string days, string startTime, string endTime, string semester, string year)
         {

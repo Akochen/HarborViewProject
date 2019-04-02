@@ -2,15 +2,7 @@
 @{
     Layout = null;
 }
-            this.sectionID = sectionID;
-            this.courseID = courseID;
-            this.courseName = courseName;
-            this.professorName = professorName;
-            this.days = days;
-            this.startTime = startTime;
-            this.endTime = endTime;
-            this.semester = semester;
-            this.year = year;
+
 <div>
     <table>
         <tr>
@@ -32,6 +24,15 @@
             <th>
                 Time
             </th>
+            <th>
+                Semester
+            </th>
+            <th>
+                Year
+            </th>
+            <th>
+
+            </th>
 
         </tr>
         @foreach (var v in Model)
@@ -43,7 +44,9 @@
             <td>@v.professorName</td>
             <td>@v.days</td>
             <td>@v.startTime-@v.endTime</td>
-            <td>@Html.ActionLink("Delete", "RemoveEnrollmentResults", "Student", new { sectionID = v.sectionID, studentID = Session["UserID"] }, null)</td>
+            <td>@v.semester</td>
+            <td>@v.year</td>
+            <td>@Html.ActionLink("Drop", "RemoveEnrollmentResults", "Student", new { sectionID = v.sectionID, studentID = Session["UserID"] }, null)</td>
         </tr>
         }
     </table>

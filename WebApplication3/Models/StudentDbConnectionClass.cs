@@ -390,6 +390,52 @@ namespace WebApplication3.Models
                 }
             }
         }
+
+        public static List<Section> submitDropClass(String userID, String year, String semester)
+        {
+            List<Section> sections = new List<Section>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT [section_id],[course_id],[course_name],[professor],[days],[start_time],[end_time],[semster],[year],[user_id] FROM [HarborViewUniversity].[dbo].[remove_enrollment] WHERE [user_id] = " + userID + " AND [semster] = '" + semester + "' AND [year] = '" + year + "'";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        sections.Add(new Section(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), 
+                            reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetString(8)));
+                    }
+                }
+                connection.Close();
+            }
+
+            return sections;
+        }
+
+        //public static List<Section> removeEnrollment(String userID, String year, String semester)
+        //{
+        //    List<Section> enrollments = new List<Section>();
+        //    String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+        //    String queryString = "SELECT [course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[type],[building_full_name],[room_number] FROM [HarborViewUniversity].[dbo].[enrollment_view] WHERE [user_id] = " + userID + " AND [semster] = '" + semester + "' AND [year] = '" + year + "'";
+        //    using (SqlConnection connection = new SqlConnection(cString))
+        //    {
+        //        SqlCommand command = new SqlCommand(queryString, connection);
+        //        connection.Open();
+        //        using (var reader = command.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                enrollments.Add(new Section(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
+        //                    , reader.GetString(7), reader.GetString(8), reader.GetString(9), reader.GetInt32(10).ToString()));
+        //            }
+        //        }
+        //        connection.Close();
+        //    }
+
+        //    return enrollments;
+        //}
     }
 
 }

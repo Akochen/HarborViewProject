@@ -17,11 +17,9 @@
                 <li class="dropdown">
                     <a href="javascript:void(0)">Registration</a>
                     <div class="dropdown-content">
-                        @Html.ActionLink("Search Sections", "SearchSection", "Student")
-                        @Html.ActionLink("View Schedule", "ViewSchedule", "Student")
+                        @Html.ActionLink("Search Sections", "SearchSection", "Student")           
                         @Html.ActionLink("Register", "RegisterForClasses", "Student", new { searchParameter = "", searchType = "Days", searchSemester = SemesterDataHelper.getSemesterSeason(), searchYear = SemesterDataHelper.getSemesterYear() }, null)
-                        @Html.ActionLink("Drop", "RemoveEnrollmentOptions", "Student")
-
+                        @Html.ActionLink("Drop Class", "RemoveEnrollmentOptions", "Student")
                     </div>
                 </li>   
                 <li class="dropdown">
@@ -29,6 +27,8 @@
                     <div class="dropdown-content">
                         @if (Session["userID"] != null)
                         {
+                            @Html.ActionLink("View Transcript", "ViewSchedule", "Student", new { userID = Session["UserID"].ToString() }, null)
+                            @Html.ActionLink("View Schedule History", "ViewSchedule", "Student")
                             @Html.ActionLink("View Holds", "ViewHolds", "Student", new { userID = Session["UserID"].ToString() }, null)
                             @Html.ActionLink("View Advisors", "ViewAdvisor", "Student", new { userID = Session["UserID"].ToString() }, null)
                         }
