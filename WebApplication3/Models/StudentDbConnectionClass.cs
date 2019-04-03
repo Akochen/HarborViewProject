@@ -179,6 +179,41 @@ namespace WebApplication3.Models
             return new ViewScheduleHelper(years, semesters);
         }
 
+        public static ViewScheduleHelper createRemoveEnrollmentViewScheduleHelper()
+        {
+            
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String yearString = "SELECT DISTINCT [year] FROM [HarborViewUniversity].[dbo].[section_view]";
+            String semesterString = "SELECT DISTINCT [semster] FROM [HarborViewUniversity].[dbo].[section_view]";
+            List<String> years = new List<string>();
+            List<String> semesters = new List<string>();
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command4 = new SqlCommand(yearString, connection);
+                connection.Open();
+                using (var reader = command4.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        years.Add(reader.GetString(0));
+                    }
+                }
+
+                SqlCommand command5 = new SqlCommand(semesterString, connection);
+                using (var reader = command5.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        semesters.Add(reader.GetString(0));
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return new ViewScheduleHelper(years, semesters);
+        }
+
         public static List<Enrollment> viewSchedule(String userID, String year, String semester)
         {
             List<Enrollment> enrollments = new List<Enrollment>();
@@ -476,7 +511,7 @@ namespace WebApplication3.Models
         }
 
         //public static List<Section> removeEnrollment(int userID, int sectionID)
-        public static String removeEnrollment(int userID, int sectionID)
+        public static String removeEnrollment(int userID, int sectionID, String semester, String year)
         {
             List<Section> sections = new List<Section>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;

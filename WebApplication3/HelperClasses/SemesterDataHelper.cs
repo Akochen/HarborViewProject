@@ -51,5 +51,30 @@ namespace WebApplication3.HelperClasses
                 return getSemesterYear();
             }
         }
+
+        public static bool canRegisterForCurrentSemester()
+        {
+            //if during first week of current semester
+            DateTime today = DateTime.Now;
+            if (getSemesterSeason().Equals("Spring"))
+            {
+                if (today.Month == 1)
+                {
+                    if (today.Day < 7)
+                    {
+                        return true;
+                    }
+                }
+            } else if (getSemesterSeason().Equals("Fall")){
+                if (today.Month == 9)
+                {
+                    if (today.Day < 7)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
