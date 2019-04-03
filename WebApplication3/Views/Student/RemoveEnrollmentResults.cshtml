@@ -46,7 +46,7 @@
             <td>@v.startTime-@v.endTime</td>
             <td>@v.semester</td>
             <td>@v.year</td>
-            <td>@Html.ActionLink("Drop", "RemoveEnrollmentResults", "Student", new { sectionID = v.sectionID, studentID = Session["UserID"] }, null)</td>
+            <td>@Html.ActionLink("Drop", "RemoveEnrollment", "Student", new { sectionID = v.sectionID, studentID = Session["UserID"] }, null)</td>
         </tr>
         }
     </table>

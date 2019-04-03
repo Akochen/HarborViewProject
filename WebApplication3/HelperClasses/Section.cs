@@ -65,7 +65,9 @@ namespace WebApplication3.HelperClasses
         }
 
         /// <summary>
-        /// Constructor for removing a section from a student's enrollment list.
+        /// Constructor for searching for a section to remove from a student's enrollment list.
+        /// This method is only for displaying the options to remove and is not intended to be for
+        /// the removal of the section enrollment itself.
         /// </summary>
         /// <param name="sectionID"></param>
         /// <param name="courseID"></param>
@@ -89,5 +91,6 @@ namespace WebApplication3.HelperClasses
             this.semester = semester;
             this.year = year;
         }
+
     }
 }
