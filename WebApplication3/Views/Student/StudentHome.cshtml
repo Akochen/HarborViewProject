@@ -22,19 +22,12 @@
             @Html.Raw("ERROR")
         }
     }
-    <table style="width:98%;">
-        <tr>
-            <td style="width:50%;">
+    
                 @{
                     if (Session["UserID"] != null)
                     {
                         @Html.Action("ViewCurrentSchedule", "Student", new { userID = Session["UserID"], year = WebApplication3.HelperClasses.SemesterDataHelper.getSemesterYear(), semester = @WebApplication3.HelperClasses.SemesterDataHelper.getSemesterSeason() })
                     }
                 }
-
-            </td>
-            <td></td>
-        </tr>
-    </table>
 </body>
 </html>

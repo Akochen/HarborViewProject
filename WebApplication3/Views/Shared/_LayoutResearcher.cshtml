@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Harbor View University</title>
+</head>
+<body>
+    <link rel="stylesheet" href="~/Content/DropDownMenu.css" />
+    <div class="container">
+        <header>
+            <img src="~/Content/HVU Logo.png" alt="HVU Logo">
+            <hr />
+            <ul>
+                <li>
+                @Html.ActionLink("Home", "ResearcherHome", "Researcher")
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">1</a>
+                    <div class="dropdown-content">
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">2</a>
+                    <div class="dropdown-content">
+                        @if (Session["userID"] != null)
+                        {
+                        }
+                    </div>
+                </li>
+                <li><a href=#audit>3</a></li>
+                <li class="active">
+                    @Html.ActionLink("Log Out", "Index", "Home")
+                </li>
+            </ul>
+        </header>
+    </div>
+
+    <div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy;Harbor View University</p>
+        </footer>
+    </div>
+
+</body>
+</html>

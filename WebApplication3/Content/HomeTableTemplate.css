@@ -1,0 +1,18 @@
+.tableheader th {
+    background-color: black;
+    color: white;
+    padding: 3px;
+}
+
+table {
+    background-color: white;
+    border: solid 0px green;
+    border-spacing: 0px;
+    width: 50%;
+    border-left: 3px solid black;
+}
+
+td {
+    border-right: 3px solid black;
+    padding-bottom: 4px;
+}

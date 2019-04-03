@@ -1,10 +1,11 @@
 ﻿@model List<WebApplication3.HelperClasses.Enrollment>
-@{ 
+@{
     Layout = null;
 }
+<link rel="stylesheet" href="~/Content/HomeTableTemplate.css" />
 
 <table>
-    <tr>
+    <tr class="tableheader">
         <th>
             Course ID
         </th>
@@ -30,17 +31,17 @@
             Room
         </th>
     </tr>
-    @foreach(var v in Model)
+    @foreach (var v in Model)
     {
-    <tr>
-        <td>@v.courseID</td>
-        <td>@v.name</td>
-        <td>@v.instructor</td>
-        <td>@v.days</td>
-        <td>@v.startTime-@v.endTime</td>
-        <td>@v.type</td>
-        <td>@v.building</td>
-        <td>@v.room</td>
-    </tr>
+        <tr>
+            <td>@v.courseID</td>
+            <td>@v.name</td>
+            <td>@v.instructor</td>
+            <td>@v.days</td>
+            <td>@v.startTime-@v.endTime</td>
+            <td>@v.type</td>
+            <td>@v.building</td>
+            <td>@v.room</td>
+        </tr>
     }
 </table>
