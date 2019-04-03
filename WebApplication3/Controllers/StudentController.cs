@@ -85,10 +85,14 @@ namespace WebApplication3.Controllers
 
             return View(WebApplication3.Models.StudentDbConnectionClass.submitDropClass(userID, year, semester));
         }
-        
+
         public String RemoveEnrollment(int studentID, int sectionID)
         {
-            return null;
+            String result = WebApplication3.Models.StudentDbConnectionClass.removeEnrollment(studentID, sectionID);
+            return result;
         }
     }
 }
+
+
+
