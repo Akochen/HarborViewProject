@@ -1,0 +1,34 @@
+﻿@model WebApplication3.HelperClasses.EnrollmentSemesterHelper
+@using WebApplication3.HelperClasses;
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<form method="post">
+    <h3>Select a semester:</h3>
+    <select name="semesterSelect">
+        @foreach (var v in Model.semesters)
+        {
+            <option value="@v">@v</option>
+        }
+    </select>
+    <input type="submit" value="GO"/>
+    @{
+        if (IsPost)
+        {
+            String year;
+            String season;
+            if (Request.Form["semesterSelect"].Contains(SemesterDataHelper.getSemesterSeason()))
+            {
+                year = SemesterDataHelper.getSemesterYear();
+                season = SemesterDataHelper.getSemesterSeason();
+            } else
+            {
+                year = SemesterDataHelper.getNextSemesterYear();
+                season = SemesterDataHelper.getNextSemesterSeason();
+            }
+            Response.Redirect(Url.Action("RegisterForClasses", "Student", new { searchParameter = "", searchType = "Days", searchSemester = season, searchYear = year }));
+        }
+    }
+</form>

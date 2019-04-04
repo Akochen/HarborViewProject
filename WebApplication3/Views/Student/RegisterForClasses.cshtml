@@ -36,7 +36,7 @@
         <td>@sectionInfo.seatRemaining</td>
         <td>@sectionInfo.building</td>
         <td>@sectionInfo.room</td>
-        <td>@Html.ActionLink("Add", "RegisteredForClass", "Student", new { sectionID = sectionInfo.sectionID, studentID = Session["UserID"]} , null)</td>
+        <td>@Html.ActionLink("Add", "RegisteredForClass", "Student", new { sectionID = sectionInfo.sectionID, studentID = Session["UserID"], year = sectionInfo.year, season = sectionInfo.semester }, null)</td>
     </tr>
     }
 </table>

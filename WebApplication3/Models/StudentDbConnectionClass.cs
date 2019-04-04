@@ -179,39 +179,16 @@ namespace WebApplication3.Models
             return new ViewScheduleHelper(years, semesters);
         }
 
-        public static ViewScheduleHelper createRemoveEnrollmentViewScheduleHelper()
+        public static EnrollmentSemesterHelper createAddEnrollmentViewScheduleHelper()
         {
-            
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String yearString = "SELECT DISTINCT [year] FROM [HarborViewUniversity].[dbo].[section_view]";
-            String semesterString = "SELECT DISTINCT [semster] FROM [HarborViewUniversity].[dbo].[section_view]";
-            List<String> years = new List<string>();
             List<String> semesters = new List<string>();
-            using (SqlConnection connection = new SqlConnection(cString))
+            if (SemesterDataHelper.canRegisterForCurrentSemester())
             {
-                SqlCommand command4 = new SqlCommand(yearString, connection);
-                connection.Open();
-                using (var reader = command4.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        years.Add(reader.GetString(0));
-                    }
-                }
-
-                SqlCommand command5 = new SqlCommand(semesterString, connection);
-                using (var reader = command5.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        semesters.Add(reader.GetString(0));
-                    }
-                }
-
-                connection.Close();
+                semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
             }
+            semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
 
-            return new ViewScheduleHelper(years, semesters);
+            return new EnrollmentSemesterHelper(semesters);
         }
 
         public static List<Enrollment> viewSchedule(String userID, String year, String semester)

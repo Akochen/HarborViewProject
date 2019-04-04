@@ -59,15 +59,20 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.StudentDbConnectionClass.viewSchedule(userID, year, semester));
         }
 
+        public ActionResult RegisterForClassesSelector()
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.createAddEnrollmentViewScheduleHelper());
+        }
+
         public ActionResult RegisterForClasses(String searchParameter, String searchType, String searchYear, String searchSemester)
         {
             return View(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchType, searchParameter, searchYear, searchSemester));
         }
 
-        public ActionResult RegisteredForClass(int studentID, int sectionID)
+        public ActionResult RegisteredForClass(int studentID, int sectionID, String year, String season)
         {
-            String result = "<script> alert(\"" + WebApplication3.Models.StudentDbConnectionClass.register(sectionID, studentID, "2019", "Fall") + "\"); </script>";
-            return PartialView((object)result);
+            String result = "<script> alert(\"" + WebApplication3.Models.StudentDbConnectionClass.register(sectionID, studentID, year, season) + "\"); </script>";
+            return View((object) result);
         }
 
         public ActionResult RemoveEnrollmentOptions()
@@ -88,7 +93,7 @@ namespace WebApplication3.Controllers
 
         public String RemoveEnrollment(int studentID, int sectionID, String semester, String year)
         {
-            String result = WebApplication3.Models.StudentDbConnectionClass.removeEnrollment(studentID, sectionID);
+            String result = "";// WebApplication3.Models.StudentDbConnectionClass.removeEnrollment(studentID, sectionID);
             return result;
         }
     }

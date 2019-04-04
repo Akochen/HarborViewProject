@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
+    <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\SemesterDataHelper.cs" />
     <Compile Include="HelperClasses\ViewScheduleHelper.cs" />
     <Compile Include="HelperClasses\Enrollment.cs" />
@@ -216,6 +217,7 @@
     <Content Include="Views\Shared\_LayoutAdministrator.cshtml" />
     <Content Include="Views\Administrator\AdminHome.cshtml" />
     <Content Include="Views\Researcher\ResearcherHome.cshtml" />
+    <Content Include="Views\Student\RegisterForClassesSelector.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
