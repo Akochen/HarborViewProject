@@ -14,19 +14,25 @@
                 @Html.ActionLink("Home", "FacultyHome", "Faculty")
                 </li>
                 <li class="dropdown">
-                    <a href="javascript:void(0)">1</a>
+                    <a href="javascript:void(0)">Faculty Academics</a>
                     <div class="dropdown-content">
+                        <div class="dropdown-content">
+                            @if (Session["userID"] != null)
+                            {
+                                @Html.ActionLink("View Semester History", "SearchSection", "Student")
+                            }
+                        </div>
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">2</a>
-                    <div class="dropdown-content">
-                        @if (Session["userID"] != null)
-                        {
-                        }
-                    </div>
+                    <a href="javascript:void(0)" class="dropbtn">Student Academics</a>
+                        <div class="dropdown-content">
+                            @if (Session["userID"] != null)
+                            {
+                                @Html.ActionLink("Assign Final Grades", "", "")
+                            }
+                        </div>
                 </li>
-                <li><a href=#audit>3</a></li>
                 <li class="active">
                     @Html.ActionLink("Log Out", "Index", "Home")
                 </li>
