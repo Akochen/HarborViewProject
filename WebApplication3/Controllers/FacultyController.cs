@@ -18,5 +18,10 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.FacultyDbConnectionClass.viewSchedule(UserID, semester, year));
         }
+
+        public ActionResult AssignGradeEnrollees(String UserID, String semester, String year)
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.viewEnrolleeList());
+        }
     }
 }

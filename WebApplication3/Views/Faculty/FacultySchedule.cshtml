@@ -4,20 +4,24 @@
 }
 <table>
     <tr>
+        <th>Section ID</th>
         <th>Course Name</th>
         <th>Time</th>
         <th>Days</th>
         <th>Building</th>
         <th>Room</th>
+        <th></th>
     </tr>
     @foreach(var v in Model)
     {
-        <tr>
-            <td>@v.courseName</td>
-            <td>@v.startTime-@v.endTime</td>
-            <td>@v.days</td>
-            <td>@v.building</td>
-            <td>@v.room</td>
-        </tr>
+    <tr>
+        <td>@v.sectionID</td>
+        <td>@v.courseName</td>
+        <td>@v.startTime-@v.endTime</td>
+        <td>@v.days</td>
+        <td>@v.building</td>
+        <td>@v.room</td>
+        <td>@Html.ActionLink("Enrollee List", "AssignGradeEnrollees ", "Faculty", new { sectionID = v.sectionID, year = v.year, season = v.semester }, null)</td>
+    </tr>
     }
 </table>

@@ -19,7 +19,7 @@
                         <div class="dropdown-content">
                             @if (Session["userID"] != null)
                             {
-                                @Html.ActionLink("View Semester History", "SearchSection", "Student")
+                                @*@Html.ActionLink("View Semester History", "SearchSection", "Student")*@
                             }
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         <div class="dropdown-content">
                             @if (Session["userID"] != null)
                             {
-                                @Html.ActionLink("Assign Final Grades", "", "")
+                                @Html.ActionLink("Assign Final Grades", "AssignGradeOptions", "Faculty")
                             }
                         </div>
                 </li>
