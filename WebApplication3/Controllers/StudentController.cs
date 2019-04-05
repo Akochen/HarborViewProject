@@ -44,10 +44,10 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.StudentDbConnectionClass.createScheduleViewHelper());
         }
         
-        public ActionResult ViewScheduleResults()
-        {
-            return View(new List<Enrollment>());
-        }
+        //public ActionResult ViewScheduleResults()
+        //{
+        //    return View(new List<Enrollment>());
+        //}
         [HttpPost]
         public ActionResult ViewScheduleResults(String userID, String year, String semester)
         {
@@ -80,10 +80,10 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.StudentDbConnectionClass.createScheduleViewHelper());
         }
 
-        public ActionResult RemoveEnrollmentResults()
-        {
-            return View(new List<Section>());
-        }
+        //public ActionResult RemoveEnrollmentResults()
+        //{
+        //    return View(new List<Section>());
+        //}
         [HttpPost]
         public ActionResult RemoveEnrollmentResults(String userID, String year, String semester)
         {

@@ -22,8 +22,8 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        sections.Add(new Section(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
-                            , reader.GetString(7), reader.GetInt32(8)));
+                        sections.Add(new Section(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
+                            reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(8), reader.GetInt32(9)));
                     }
                 }
                 connection.Close();
@@ -31,6 +31,10 @@ namespace WebApplication3.Models
 
             return sections;
         }
-        
+
+        public static List<Section> viewEnrolleeList()
+        {
+            return null;
+        }
     }
 }

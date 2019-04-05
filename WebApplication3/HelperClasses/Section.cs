@@ -43,8 +43,18 @@ namespace WebApplication3.HelperClasses
             this.seatRemaining = seatRemaining;
         }
 
-        //Faculty schedule section
-        public Section(string courseName, string days, string startTime, string endTime, string semester, string year, string building, int room)
+        /// <summary>
+        /// Constructor for the Faculty Section List
+        /// </summary>
+        /// <param name="courseName"></param>
+        /// <param name="days"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="semester"></param>
+        /// <param name="year"></param>
+        /// <param name="building"></param>
+        /// <param name="room"></param>
+        public Section(string courseName, string days, string startTime, string endTime, string semester, string year, string building, int room, int sectionID)
         {
             this.courseName = courseName;
             this.days = days;
@@ -54,6 +64,7 @@ namespace WebApplication3.HelperClasses
             this.year = year;
             this.building = building;
             this.room = room;
+            this.sectionID = sectionID;
         }
 
         public Section(string startTime, string day1, string day2, string day3)
@@ -92,5 +103,27 @@ namespace WebApplication3.HelperClasses
             this.year = year;
         }
 
+        /// <summary>
+        /// Constructor for the assign final grade use case for a faculty member.
+        /// </summary>
+        /// <param name="sectionID"></param>
+        /// <param name="courseID"></param>
+        /// <param name="courseName"></param>
+        /// <param name="days"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="semester"></param>
+        /// <param name="year"></param>
+        public Section(int sectionID, string courseID, string courseName, string days, string startTime, string endTime, string semester, string year)
+        {
+            this.sectionID = sectionID;
+            this.courseID = courseID;
+            this.courseName = courseName;
+            this.days = days;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.semester = semester;
+            this.year = year;
+        }
     }
 }
