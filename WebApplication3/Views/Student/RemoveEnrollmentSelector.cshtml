@@ -1,7 +1,7 @@
 ﻿@model WebApplication3.HelperClasses.EnrollmentSemesterHelper
 @using WebApplication3.HelperClasses;
 @{
-    ViewBag.Title = "Registration";
+    ViewBag.Title = "Remove Enrollment";
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 <link rel="stylesheet" href="~/Content/searchTable.css" />
@@ -20,7 +20,7 @@
             </td>
         </tr>
     </table>
-    
+
     @{
         if (IsPost)
         {
@@ -30,12 +30,13 @@
             {
                 year = SemesterDataHelper.getSemesterYear();
                 season = SemesterDataHelper.getSemesterSeason();
-            } else
+            }
+            else
             {
                 year = SemesterDataHelper.getNextSemesterYear();
                 season = SemesterDataHelper.getNextSemesterSeason();
             }
-            Response.Redirect(Url.Action("RegisterForClasses", "Student", new { searchParameter = "", searchType = "Days", searchSemester = season, searchYear = year }));
+            Response.Redirect(Url.Action("RemoveEnrollmentResults", "Student", new { userID = Session["UserID"], semester = season, year = year }));
         }
     }
 </form>

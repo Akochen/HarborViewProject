@@ -24,9 +24,9 @@ namespace WebApplication3.Controllers
             return PartialView(new List<Section>());
         }
         [HttpPost]
-        public ActionResult SearchSectionResults(String searchParameter, String searchType, String searchYear, String searchSemester)
+        public ActionResult SearchSectionResults(String searchYear, String searchSemester, String instructor, String days, String time, String courseID, String courseName, String department)
         {
-            return PartialView(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchType, searchParameter, searchYear, searchSemester));
+            return PartialView(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchYear, searchSemester, instructor, days, time, courseID, courseName, department));
         }
 
         public ActionResult ViewHolds(String userID)
@@ -66,7 +66,7 @@ namespace WebApplication3.Controllers
 
         public ActionResult RegisterForClasses(String searchParameter, String searchType, String searchYear, String searchSemester)
         {
-            return View(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchType, searchParameter, searchYear, searchSemester));
+            return View(WebApplication3.Models.StudentDbConnectionClass.displayEnrollables(searchType, searchParameter, searchYear, searchSemester));
         }
 
         public ActionResult RegisteredForClass(int studentID, int sectionID, String year, String season)
@@ -75,26 +75,26 @@ namespace WebApplication3.Controllers
             return View((object) result);
         }
 
+        public ActionResult RemoveEnrollmentSelector()
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.createRemoveEnrollmentViewScheduleHelper());
+        }
+
         public ActionResult RemoveEnrollmentOptions()
         {
             return View(WebApplication3.Models.StudentDbConnectionClass.createScheduleViewHelper());
         }
-
-        public ActionResult RemoveEnrollmentResults()
-        {
-            return View(new List<Section>());
-        }
-        [HttpPost]
+        
         public ActionResult RemoveEnrollmentResults(String userID, String year, String semester)
         {
 
             return View(WebApplication3.Models.StudentDbConnectionClass.submitDropClass(userID, year, semester));
         }
 
-        public String RemoveEnrollment(int studentID, int sectionID, String semester, String year)
+        public ActionResult RemoveEnrollment(int studentID, int sectionID, String semester, String year)
         {
-            String result = "";// WebApplication3.Models.StudentDbConnectionClass.removeEnrollment(studentID, sectionID);
-            return result;
+            String result = "<script> alert(\"" + WebApplication3.Models.StudentDbConnectionClass.removeEnrollment(studentID, sectionID, semester, year) + "\"); </script>";
+            return View((object)result);
         }
     }
 }

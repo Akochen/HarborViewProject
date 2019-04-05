@@ -4,6 +4,11 @@ ul {
   padding: 0;
   overflow: hidden;
   background-color: gray;
+  margin-bottom: 10px;
+}
+
+html {
+    background-color: skyblue;
 }
 
 li {

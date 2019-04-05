@@ -98,11 +98,13 @@
     <Content Include="Content\logIn.css" />
     <Content Include="Content\michal-mrozek-1238448-unsplash.jpg" />
     <Content Include="Content\Register.css" />
+    <Content Include="Content\searchTable.css" />
     <Content Include="Content\Sectionsearch.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\faculty.css" />
     <Content Include="Content\student.css" />
     <Content Include="Content\HomeTableTemplate.css" />
+    <Content Include="Content\Background.css" />
     <Content Include="Content\TableTemplate.css" />
     <Content Include="Content\ViewSchedule.css" />
     <Content Include="Forms\WebForm1.aspx" />
@@ -218,6 +220,8 @@
     <Content Include="Views\Administrator\AdminHome.cshtml" />
     <Content Include="Views\Researcher\ResearcherHome.cshtml" />
     <Content Include="Views\Student\RegisterForClassesSelector.cshtml" />
+    <Content Include="Views\Student\RemoveEnrollmentSelector.cshtml" />
+    <Content Include="Views\Student\RemoveEnrollment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

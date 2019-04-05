@@ -10,12 +10,37 @@ namespace WebApplication3.Models
 
     public class StudentDbConnectionClass
     {
-        public static List<Section> searchSections(String searchType, String searchParameter, String searchYear, String searchSemester)
+        public static List<Section> displayEnrollables(String searchType, String searchParameter, String searchYear, String searchSemester)
         {
             List<Section> sections = new List<Section>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String queryString = "SELECT [section_id],[course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number],[type],[capactiy],[seats_remaining] FROM [HarborViewUniversity].[dbo].[section_view] WHERE " + searchType + " LIKE '%" + searchParameter + "%' AND [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' " +
                 "ORDER BY course_id";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        sections.Add(new Section(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)
+                            , reader.GetString(8), reader.GetString(9), reader.GetInt32(10), reader.GetString(11), reader.GetByte(12), reader.GetByte(13)));
+                    }
+                }
+                connection.Close();
+            }
+
+            return sections;
+        }
+
+        public static List<Section> searchSections(String searchYear, String searchSemester, String instructor, String days, String time, String courseID, String courseName, String department)
+        {
+            List<Section> sections = new List<Section>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT [section_id],[course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number],[type],[capactiy],[seats_remaining] FROM [HarborViewUniversity].[dbo].[section_view] " +
+                "WHERE  [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' AND [instructor] LIKE '%" + instructor +"%' AND [days] LIKE '%" + days +"%' AND [start_time] LIKE '%" + time +"%' " +
+                "AND [course_id] LIKE '%" + courseID +"%' AND [course_name] LIKE '%" + courseName +"%' AND [department_full_name] LIKE '%" + department +"%'  ORDER BY course_id";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -183,6 +208,18 @@ namespace WebApplication3.Models
         {
             List<String> semesters = new List<string>();
             if (SemesterDataHelper.canRegisterForCurrentSemester())
+            {
+                semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
+            }
+            semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
+
+            return new EnrollmentSemesterHelper(semesters);
+        }
+
+        public static EnrollmentSemesterHelper createRemoveEnrollmentViewScheduleHelper()
+        {
+            List<String> semesters = new List<string>();
+            if (SemesterDataHelper.canDropForCurrentSemester())
             {
                 semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
             }

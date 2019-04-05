@@ -76,5 +76,27 @@ namespace WebApplication3.HelperClasses
             }
             return false;
         }
+
+        public static bool canDropForCurrentSemester()
+        {
+            //if during month of current semester
+            DateTime today = DateTime.Now;
+            if (getSemesterSeason().Equals("Spring"))
+            {
+                if (today.Month == 1)
+                {
+                    return true;
+                
+                }
+            }
+            else if (getSemesterSeason().Equals("Fall"))
+            {
+                if (today.Month == 9)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

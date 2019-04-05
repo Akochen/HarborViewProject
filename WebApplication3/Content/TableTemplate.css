@@ -9,9 +9,10 @@
     border: solid 0px green;
     border-spacing: 0px;
     border-left: 3px solid black;
+    border-bottom: 1px solid black;
 }
 
 .resultsTable tr td {
     border-right: 3px solid black;
-    padding-bottom: 4px;
+    margin-bottom: 4px;
 }

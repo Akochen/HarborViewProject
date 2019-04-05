@@ -1,11 +1,9 @@
 ﻿@model String
-@using WebApplication3.HelperClasses
 @{
     Layout = null;
 }
-
 <link rel="stylesheet" href="~/Content/Background.css" />
 @Html.Raw(Model)
 @{
-    @Html.Action("RegisterForClassesSelector", "Student");
+    @Html.Action("RemoveEnrollmentSelector", "Student");
 }

@@ -1,0 +1,18 @@
+﻿.searchTable {
+    background-color: white;
+    border-radius: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 8px;
+}
+    .searchTable tr td input {
+        margin-left: 3px;
+        margin-bottom: 3px;
+    }
+
+    .searchTable tr td select {
+        margin-left: 3px;
+        margin-bottom: 3px;
+    }

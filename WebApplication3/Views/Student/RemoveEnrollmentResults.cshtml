@@ -1,11 +1,12 @@
 ﻿@model List<WebApplication3.HelperClasses.Section>
 @{
-    Layout = null;
+    ViewBag.Title = "Remove Enrollment";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
-
+<link rel="stylesheet" href="~/Content/TableTemplate.css" />
 <div>
-    <table>
-        <tr>
+    <table class="resultsTable">
+        <tr class="tableheader">
             <th>
                 Section ID
             </th>
@@ -37,17 +38,17 @@
         </tr>
         @foreach (var v in Model)
         {
-        <tr>
-            <td>@v.sectionID</td>
-            <td>@v.courseID</td>
-            <td>@v.courseName</td>
-            <td>@v.professorName</td>
-            <td>@v.days</td>
-            <td>@v.startTime-@v.endTime</td>
-            <td>@v.semester</td>
-            <td>@v.year</td>
-            <td>@Html.ActionLink("Drop", "RemoveEnrollment", "Student", new { sectionID = v.sectionID, studentID = Session["UserID"], semester = v.semester, year = v.year }, null)</td>
-        </tr>
+            <tr>
+                <td>@v.sectionID</td>
+                <td>@v.courseID</td>
+                <td>@v.courseName</td>
+                <td>@v.professorName</td>
+                <td>@v.days</td>
+                <td>@v.startTime-@v.endTime</td>
+                <td>@v.semester</td>
+                <td>@v.year</td>
+                <td>@Html.ActionLink("Drop", "RemoveEnrollment", "Student", new { sectionID = v.sectionID, studentID = Session["UserID"], semester = v.semester, year = v.year }, null)</td>
+            </tr>
         }
     </table>
 </div>

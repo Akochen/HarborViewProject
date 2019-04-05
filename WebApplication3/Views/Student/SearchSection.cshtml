@@ -9,28 +9,27 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="~/Content/Sectionsearch.css" />
+    <link rel="stylesheet" href="~/Content/searchTable.css" />
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
     <div>
         <form method="post">
-            <table>
+            <table class="searchTable">
+                <tr>
+                    <td >
+                        <label id="inputLabel"><big><strong>Search:</strong></big></label>
+                    </td>
+                </tr>
                 <tr>
                     <td>
-                        <label id="typeLabel">Search: </label>
-                        <select id="type" name="type" onchange="selectorDisplay()">
-                            <option value="course_id">Course ID</option>
-                            <option value="course_name">Course Name</option>
-                            <option value="instructor">Instructor</option>
-                            <option value="days">Days</option>
-                            <option value="start_time">Start Time</option>
-                            <option value="department_full_name">Department</option>
-                        </select>
+                        <input type="text" name="course_id" placeholder="Course ID" />
+                        <input type="text" name="course_name" placeholder="Course Name" />
+                        <input type="text" name="instructor" placeholder="Instructor" />
                     </td>
+                </tr>
+                <tr>
                     <td>
-                        <label id="inputLabel"> For </label>
-                        <input type="text" id="inputBox" name="input" />
                         <select id="departmentSelector" name="departmentSelector">
                             <option value="startselection">---Department---</option>
                             @foreach (var v in Model.departments)
@@ -81,61 +80,68 @@
         </form>
     </div>
     <script>
-        selectorDisplay();
-        function selectorDisplay() {
-            var selector = document.getElementById("type");
-            var deptSel = document.getElementById("departmentSelector");
-            var daySel = document.getElementById("daySelector");
-            var timeSel = document.getElementById("timeSelector");
-            var inputLabel = document.getElementById("inputLabel");
-            var inputBox = document.getElementById("inputBox");
-            console.log(selector.options[selector.selectedIndex].value)
-            if (selector.options[selector.selectedIndex].value == "days") {
-                daySel.hidden = false;
-                timeSel.hidden = true;
-                deptSel.hidden = true;
-                inputBox.hidden = true;
-                inputLabel.hidden = true;
-            } else if (selector.options[selector.selectedIndex].value == "start_time") {
-                daySel.hidden = true;
-                timeSel.hidden = false;
-                deptSel.hidden = true;
-                inputBox.hidden = true;
-                inputLabel.hidden = true;
-            } else if (selector.options[selector.selectedIndex].value == "department_full_name") {
-                daySel.hidden = true;
-                timeSel.hidden = true;
-                deptSel.hidden = false;
-                inputBox.hidden = true;
-                inputLabel.hidden = true;
-            } else {
-                daySel.hidden = true;
-                timeSel.hidden = true;
-                deptSel.hidden = true;
-                inputBox.hidden = false;
-                inputLabel.hidden = false;
-            }
-        }
+        //selectorDisplay();
+        //function selectorDisplay() {
+        //    var selector = document.getElementById("type");
+        //    var deptSel = document.getElementById("departmentSelector");
+        //    var daySel = document.getElementById("daySelector");
+        //    var timeSel = document.getElementById("timeSelector");
+        //    var inputLabel = document.getElementById("inputLabel");
+        //    var inputBox = document.getElementById("inputBox");
+        //    console.log(selector.options[selector.selectedIndex].value)
+        //    if (selector.options[selector.selectedIndex].value == "days") {
+        //        daySel.hidden = false;
+        //        timeSel.hidden = true;
+        //        deptSel.hidden = true;
+        //        inputBox.hidden = true;
+        //        inputLabel.hidden = true;
+        //    } else if (selector.options[selector.selectedIndex].value == "start_time") {
+        //        daySel.hidden = true;
+        //        timeSel.hidden = false;
+        //        deptSel.hidden = true;
+        //        inputBox.hidden = true;
+        //        inputLabel.hidden = true;
+        //    } else if (selector.options[selector.selectedIndex].value == "department_full_name") {
+        //        daySel.hidden = true;
+        //        timeSel.hidden = true;
+        //        deptSel.hidden = false;
+        //        inputBox.hidden = true;
+        //        inputLabel.hidden = true;
+        //    } else {
+        //        daySel.hidden = true;
+        //        timeSel.hidden = true;
+        //        deptSel.hidden = true;
+        //        inputBox.hidden = false;
+        //        inputLabel.hidden = false;
+        //    }
+        //}
     </script>
     @{
         if (IsPost)
         {
-            if (Request.Form["type"].Equals("days"))
+            String semester = Request.Form["semesterSelector"];
+            String year = Request.Form["yearSelector"];
+            String instructor = Request["instructor"];
+            String days = Request.Form["daySelector"];
+            if (days.Equals("startselection"))
             {
-                @Html.Action("SearchSectionResults", "Student", new { searchParameter = Request.Form["daySelector"], searchType = Request.Form["type"], searchSemester = Request.Form["semesterSelector"], searchYear = Request.Form["yearSelector"] });
+                days = "";
             }
-            else if (Request.Form["type"].Equals("start_time"))
+            String time = Request.Form["timeSelector"];
+            if (time.Equals("startselection"))
             {
-                @Html.Action("SearchSectionResults", "Student", new { searchParameter = Request.Form["timeSelector"], searchType = Request.Form["type"], searchSemester = Request.Form["semesterSelector"], searchYear = Request.Form["yearSelector"] });
+                time = "";
             }
-            else if (Request.Form["type"].Equals("department_full_name"))
+            String courseID = Request["course_id"];
+            String courseName = Request["course_name"];
+            String department = Request.Form["departmentSelector"];
+            if (department.Equals("startselection"))
             {
-                @Html.Action("SearchSectionResults", "Student", new { searchParameter = Request.Form["departmentSelector"], searchType = Request.Form["type"], searchSemester = Request.Form["semesterSelector"], searchYear = Request.Form["yearSelector"] });
+                department = "";
             }
-            else
-            {
-                @Html.Action("SearchSectionResults", "Student", new { searchParameter = Request["input"], searchType = Request.Form["type"], searchSemester = Request.Form["semesterSelector"], searchYear = Request.Form["yearSelector"] });
-            }
+
+            @Html.Action("SearchSectionResults", "Student", new {searchSemester = semester, searchYear = year, instructor = instructor, days = days, time = time, courseID = courseID, courseName = courseName, department = department });
+
         }
     }
 </body>
