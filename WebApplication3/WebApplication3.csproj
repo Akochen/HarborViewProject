@@ -229,6 +229,7 @@
     <Content Include="Views\Faculty\ViewStudentScheduleSelector.cshtml" />
     <Content Include="Views\Faculty\ViewStudentSchedule.cshtml" />
     <Content Include="Views\Faculty\ViewStudentHoldSelector.cshtml" />
+    <Content Include="Views\Faculty\ViewStudentHold.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

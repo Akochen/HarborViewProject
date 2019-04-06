@@ -38,7 +38,7 @@
                 year = SemesterDataHelper.getNextSemesterYear();
                 season = SemesterDataHelper.getNextSemesterSeason();
             }
-            Response.Redirect(Url.Action("ViewStudentSchedule", "Faculty", new { studentID = Request["id_box"], year = year, semester = season }));
+            @Html.Action("ViewStudentSchedule", "Faculty", new { studentID = Request["id_box"], year = year, semester = season });
         }
     }
 </form>

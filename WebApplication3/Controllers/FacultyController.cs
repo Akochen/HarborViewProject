@@ -46,7 +46,12 @@ namespace WebApplication3.Controllers
 
         public ActionResult ViewStudentHoldSelector()
         {
-            return View(WebApplication3.Models.FacultyDbConnectionClass.viewStudentHoldSemesterHelper());
+            return View();
+        }
+
+        public ActionResult ViewStudentHold(String studentID)
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.viewHolds(studentID));
         }
     }
 }

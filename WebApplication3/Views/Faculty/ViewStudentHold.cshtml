@@ -1,0 +1,28 @@
+﻿
+@model List<WebApplication3.HelperClasses.Hold>
+@{
+    Layout = null;
+}
+
+<head>
+</head>
+<body>
+
+    <link rel="stylesheet" href="~/Content/hold.css" />
+    <table class="holds">
+        <tr class="tableheader">
+            <th>Type</th>
+            <th>Semester</th>
+            <th>Year</th>
+        </tr>
+        @foreach (var v in Model)
+        {
+            <tr>
+                <td>@v.holdType </td>
+                <td>@v.semester</td>
+                <td>@v.year</td>
+            </tr>
+        }
+    </table>
+</body>
+
