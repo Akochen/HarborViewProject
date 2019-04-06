@@ -34,6 +34,16 @@ namespace WebApplication3.Controllers
             return View((object)WebApplication3.Models.FacultyDbConnectionClass.insertGrade(studentID, sectionID, courseName, semester, year, grade,credits));
         }
 
+        public ActionResult ViewStudentScheduleSelector()
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.createViewStudentScheduleHelper());
+        }
+
+        public ActionResult ViewStudentSchedule(String studentID, String semester, String year)
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.viewStudentSchedule(studentID, year, semester));
+        }
+
         public ActionResult ViewStudentHoldSelector()
         {
             return View(WebApplication3.Models.FacultyDbConnectionClass.viewStudentHoldSemesterHelper());

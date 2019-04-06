@@ -1,0 +1,45 @@
+﻿@model WebApplication3.HelperClasses.EnrollmentSemesterHelper
+@using WebApplication3.HelperClasses;
+@{
+    ViewBag.Title = "View Student Schedule";
+    Layout = "~/Views/Shared/_LayoutFaculty.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/searchTable.css" />
+<form method="post">
+    <strong><big>Select a semester:</big></strong>
+    <table style="margin-top:5px;" class="searchTable">
+        <tr>
+            <td>
+                <select name="semesterSelect">
+                    @foreach (var v in Model.semesters)
+                    {
+                        <option value="@v">@v</option>
+                    }
+                </select>
+                <input type="text" name="id_box" placeholder="Student ID" />
+                <input type="submit" value="GO" />
+            </td>
+        </tr>
+    </table>
+
+    @{
+        if (IsPost)
+        {
+            String year;
+            String season;
+            if (Request.Form["semesterSelect"].Contains(SemesterDataHelper.getSemesterSeason()))
+            {
+                year = SemesterDataHelper.getSemesterYear();
+                season = SemesterDataHelper.getSemesterSeason();
+            }
+            else
+            {
+                year = SemesterDataHelper.getNextSemesterYear();
+                season = SemesterDataHelper.getNextSemesterSeason();
+            }
+            Response.Redirect(Url.Action("ViewStudentSchedule", "Faculty", new { studentID = Request["id_box"], year = year, semester = season }));
+        }
+    }
+</form>
+

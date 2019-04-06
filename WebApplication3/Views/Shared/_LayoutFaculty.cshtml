@@ -29,8 +29,8 @@
                     <div class="dropdown-content">
                         @if (Session["userID"] != null)
                         {
-                            @Html.ActionLink("View Hold", "ViewHoldSelector", "Faculty")
-                            @Html.ActionLink("View Schedule", "", "Faculty")
+                            @Html.ActionLink("View Student Hold", "", "Faculty")
+                            @Html.ActionLink("View Student Schedule", "ViewStudentScheduleSelector", "Faculty")
                         }
                     </div>
                 </li>
