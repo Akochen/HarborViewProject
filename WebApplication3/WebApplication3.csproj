@@ -214,7 +214,6 @@
     <Content Include="Views\Shared\_LayoutFaculty.cshtml" />
     <Content Include="Views\Faculty\FacultyHome.cshtml" />
     <Content Include="Views\Faculty\FacultySchedule.cshtml" />
-    <Content Include="Views\Student\RemoveEnrollmentOptions.cshtml" />
     <Content Include="Views\Student\RemoveEnrollmentResults.cshtml" />
     <Content Include="Views\Student\RegisteredForClass.cshtml" />
     <Content Include="Views\Shared\_LayoutResearcher.cshtml" />
@@ -227,6 +226,7 @@
     <Content Include="Views\Faculty\AssignGradeEnrollees.cshtml" />
     <Content Include="Views\Faculty\ViewEnrollees.cshtml" />
     <Content Include="Views\Faculty\InsertGrade.cshtml" />
+    <Content Include="Views\Faculty\ViewStudentHoldSelector.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

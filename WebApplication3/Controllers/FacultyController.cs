@@ -33,5 +33,10 @@ namespace WebApplication3.Controllers
         {
             return View((object)WebApplication3.Models.FacultyDbConnectionClass.insertGrade(studentID, sectionID, courseName, semester, year, grade,credits));
         }
+
+        public ActionResult ViewStudentHoldSelector()
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.viewStudentHoldSemesterHelper());
+        }
     }
 }

@@ -80,6 +80,18 @@ namespace WebApplication3.Models
                 return result;
             }
         }
+
+        //public static EnrollmentSemesterHelper viewStudentHoldSemesterHelper()
+        //{
+        //    List<String> semesters = new List<string>();
+        //    if (SemesterDataHelper.canDropForCurrentSemester())
+        //    {
+        //        semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
+        //    }
+        //    semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
+
+        //    return new EnrollmentSemesterHelper(semesters);
+        //}
+
     }
 }
-//INSERT INTO [dbo].[student_semester_history]([student_id],[section_id],[course_name],[semester],[year],[grade],[credits])VALUES(,,'','','','',)
