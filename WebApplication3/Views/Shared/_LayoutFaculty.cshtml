@@ -26,12 +26,13 @@
                 </li>
                 <li class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Student Academics</a>
-                        <div class="dropdown-content">
-                            @if (Session["userID"] != null)
-                            {
-                                @Html.ActionLink("Assign Final Grades", "AssignGradeOptions", "Faculty")
-                            }
-                        </div>
+                    <div class="dropdown-content">
+                        @if (Session["userID"] != null)
+                        {
+                            @Html.ActionLink("View Hold", "", "Faculty")
+                            @Html.ActionLink("View Schedule", "", "Faculty")
+                        }
+                    </div>
                 </li>
                 <li class="active">
                     @Html.ActionLink("Log Out", "Index", "Home")

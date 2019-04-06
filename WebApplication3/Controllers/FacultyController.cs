@@ -19,9 +19,19 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.FacultyDbConnectionClass.viewSchedule(UserID, semester, year));
         }
 
-        public ActionResult AssignGradeEnrollees(String UserID, String semester, String year)
+        public ActionResult ViewEnrollees(String sectionID)
         {
-            return View(WebApplication3.Models.FacultyDbConnectionClass.viewEnrolleeList());
+            return View(WebApplication3.Models.FacultyDbConnectionClass.viewEnrolleeList(sectionID));
+        }
+
+        public ActionResult AssignGradeEnrollees(String sectionID, String semester, String year,String firstName, String lastName, String studentID, String courseName, String credits)
+        {
+            return View(new WebApplication3.HelperClasses.StudentEnrollment(firstName, lastName, sectionID, courseName, year, semester, studentID,credits));
+        }
+
+        public ActionResult InsertGrade(String studentID, String sectionID, String courseName, String semester, String year, String grade, String credits)
+        {
+            return View((object)WebApplication3.Models.FacultyDbConnectionClass.insertGrade(studentID, sectionID, courseName, semester, year, grade,credits));
         }
     }
 }

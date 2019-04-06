@@ -21,7 +21,7 @@
         <td>@v.days</td>
         <td>@v.building</td>
         <td>@v.room</td>
-        <td>@Html.ActionLink("Enrollee List", "AssignGradeEnrollees ", "Faculty", new { sectionID = v.sectionID, year = v.year, season = v.semester }, null)</td>
+        <td>@Html.ActionLink("Enrollee List", "ViewEnrollees", "Faculty", new { sectionID = v.sectionID, year = v.year, season = v.semester }, null)</td>
     </tr>
     }
 </table>

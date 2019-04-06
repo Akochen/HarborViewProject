@@ -1,4 +1,45 @@
 ﻿
+
+@model WebApplication3.HelperClasses.StudentEnrollment
+<link rel="stylesheet" href="~/Content/searchTable.css" />
+<link rel="stylesheet" href="~/Content/Background.css" />
 @{
     Layout = null;
+}
+<form method="post">
+    <table class="searchTable" id="lines">
+        <tr>
+            <th>Enter Grade For:</th>
+        </tr>
+
+        <tr>
+            <td>@Model.firstName @Model.lastName</td>
+        </tr>
+        <tr>
+            <td>
+                <select id="gradeSelector" name="gradeSelector">
+                    @foreach (var v in WebApplication3.HelperClasses.GradeList.getGradeList())
+                    {
+                        <option value="@v">@v</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" name="gradeSubmit" value="Submit" />
+            </td>
+        </tr>
+
+    </table>
+</form>
+
+@{
+    if (IsPost)
+    {
+        if (Session["UserID"] != null)
+        {
+            @Html.Action("InsertGrade", "Faculty", new { studentID = Model.studentID, sectionID = Model.sectionID, courseName = Model.courseName, semester = Model.semester, year = Model.year, grade = Request.Form["gradeSelector"], credits = Model.credits });
+        }
+    }
 }

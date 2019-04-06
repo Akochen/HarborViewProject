@@ -7,11 +7,30 @@ namespace WebApplication3.HelperClasses
 {
     public class GradeList
     {
-        public List<String> grades { get; set; }
+       // public List<String> grades { get; set; }
 
-        public GradeList(List<string> grades)
+        //public GradeList(List<string> grades)
+        //{
+        //    this.grades = { ''}
+        //}
+
+        public static List<String> getGradeList()
         {
-            this.grades = grades;
+            List<String> gradeList = new List<string>();
+
+            gradeList.Add("A");
+            gradeList.Add("A-");
+            gradeList.Add("B+");
+            gradeList.Add("B");
+            gradeList.Add("B-");
+            gradeList.Add("C+");
+            gradeList.Add("C");
+            gradeList.Add("C-");
+            gradeList.Add("D+");
+            gradeList.Add("D");
+            gradeList.Add("D-");
+            gradeList.Add("F");
+            return gradeList;
         }
     }
 }
