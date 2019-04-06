@@ -217,7 +217,7 @@ namespace WebApplication3.Models
             {
                 semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
             }
-            semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
+            semesters.Add(SemesterDataHelper.getNextSemesterSeason() + " " + SemesterDataHelper.getNextSemesterYear());
 
             return new EnrollmentSemesterHelper(semesters);
         }
@@ -229,7 +229,7 @@ namespace WebApplication3.Models
             {
                 semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
             }
-            semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
+            semesters.Add(SemesterDataHelper.getNextSemesterSeason() + " " + SemesterDataHelper.getNextSemesterYear());
 
             return new EnrollmentSemesterHelper(semesters);
         }

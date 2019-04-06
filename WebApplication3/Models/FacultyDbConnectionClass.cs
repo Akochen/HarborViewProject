@@ -80,6 +80,37 @@ namespace WebApplication3.Models
                 return result;
             }
         }
+
+        public static List<Enrollment> viewStudentSchedule(String userID, String year, String semester)
+        {
+            List<Enrollment> enrollments = new List<Enrollment>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT [course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[type],[building_full_name],[room_number] FROM [HarborViewUniversity].[dbo].[enrollment_view] WHERE [user_id] = " + userID + " AND [semster] = '" + semester + "' AND [year] = '" + year + "'";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        enrollments.Add(new Enrollment(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
+                            , reader.GetString(7), reader.GetString(8), reader.GetString(9), reader.GetInt32(10).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+
+            return enrollments;
+        }
+        public static EnrollmentSemesterHelper createViewStudentScheduleHelper()
+        {
+            List<String> semesters = new List<string>();
+            semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
+            semesters.Add(SemesterDataHelper.getNextSemesterSeason() + " " + SemesterDataHelper.getNextSemesterYear());
+
+            return new EnrollmentSemesterHelper(semesters);
+        }
     }
 }
 //INSERT INTO [dbo].[student_semester_history]([student_id],[section_id],[course_name],[semester],[year],[grade],[credits])VALUES(,,'','','','',)

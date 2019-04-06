@@ -227,6 +227,8 @@
     <Content Include="Views\Faculty\AssignGradeEnrollees.cshtml" />
     <Content Include="Views\Faculty\ViewEnrollees.cshtml" />
     <Content Include="Views\Faculty\InsertGrade.cshtml" />
+    <Content Include="Views\Faculty\ViewStudentScheduleSelector.cshtml" />
+    <Content Include="Views\Faculty\ViewStudentSchedule.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -42,9 +42,9 @@ namespace WebApplication3.HelperClasses
 
         public static String getNextSemesterYear()
         {
-            if (getNextSemesterSeason().Equals("Fall"))
+            if (getSemesterSeason().Equals("Fall"))
             {
-                return getSemesterYear() + 1;
+                return (int.Parse(getSemesterYear()) + 1).ToString();
             }
             else
             {
