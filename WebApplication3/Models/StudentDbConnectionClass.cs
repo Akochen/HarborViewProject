@@ -39,8 +39,14 @@ namespace WebApplication3.Models
             List<Section> sections = new List<Section>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String queryString = "SELECT [section_id],[course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number],[type],[capactiy],[seats_remaining] FROM [HarborViewUniversity].[dbo].[section_view] " +
-                "WHERE  [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' AND [instructor] LIKE '%" + instructor +"%' AND [days] LIKE '%" + days +"%' AND [start_time] LIKE '%" + time +"%' " +
+                "WHERE  [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' AND [instructor] LIKE '%" + instructor +"%' AND [days] = '" + days +"' AND [start_time] LIKE '%" + time +"%' " +
                 "AND [course_id] LIKE '%" + courseID +"%' AND [course_name] LIKE '%" + courseName +"%' AND [department_full_name] LIKE '%" + department +"%'  ORDER BY course_id";
+            if (days.Equals(""))
+            {
+                queryString = "SELECT [section_id],[course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number],[type],[capactiy],[seats_remaining] FROM [HarborViewUniversity].[dbo].[section_view] " +
+                "WHERE  [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' AND [instructor] LIKE '%" + instructor + "%' AND [start_time] LIKE '%" + time + "%' " +
+                "AND [course_id] LIKE '%" + courseID + "%' AND [course_name] LIKE '%" + courseName + "%' AND [department_full_name] LIKE '%" + department + "%'  ORDER BY course_id";
+            }
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
