@@ -167,7 +167,7 @@
     <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\GradeList.cs" />
     <Compile Include="HelperClasses\SemesterDataHelper.cs" />
-    <Compile Include="HelperClasses\Student.cs" />
+    <Compile Include="HelperClasses\StudentEnrollment.cs" />
     <Compile Include="HelperClasses\ViewScheduleHelper.cs" />
     <Compile Include="HelperClasses\Enrollment.cs" />
     <Compile Include="HelperClasses\Hold.cs" />
@@ -225,6 +225,8 @@
     <Content Include="Views\Student\RemoveEnrollmentSelector.cshtml" />
     <Content Include="Views\Student\RemoveEnrollment.cshtml" />
     <Content Include="Views\Faculty\AssignGradeEnrollees.cshtml" />
+    <Content Include="Views\Faculty\ViewEnrollees.cshtml" />
+    <Content Include="Views\Faculty\InsertGrade.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
