@@ -146,5 +146,29 @@ namespace WebApplication3.Models
                 connection.Close();
             }
         }
+
+        public static String isFacultyAdvisor(String email)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            //String queryString = "SELECT [user_id] FROM [dbo].[user] WHERE [email] = '" + email + "'";
+            String queryString = @"SELECT
+                                   CASE WHEN EXISTS 
+                                    (
+                                      SELECT * FROM [advisor_view] WHERE faculty_email = '"+email+@"'
+                                    ) THEN '1' ELSE '0' END";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                String result = "";
+                if (reader.Read())
+                {
+                    result = reader.GetString(0);
+                    connection.Close();
+                }
+                return result;
+            }
+        }
     }
 }

@@ -41,8 +41,10 @@
                         }
                         else if(result == "Faculty")
                         {
+                            var isAdvisor = Html.Action("isFacultyAdvisor", "Home", new { email = Request["email"] });
                             var userID = Html.Action("getUserID", "Home", new { email = Request["email"] });
                             Session["UserID"] = userID;
+                            Session["Advisor"] = isAdvisor;
                             Response.Redirect(Url.Action("FacultyHome", "Faculty")); //(method name, controller name)
                         }
                         else

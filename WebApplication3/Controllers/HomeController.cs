@@ -21,6 +21,11 @@ namespace WebApplication3.Controllers
             return (WebApplication3.Models.UserDbConnectionClass.getUserID(email));
         }
 
+        public String isFacultyAdvisor(String email)
+        {
+            return (WebApplication3.Models.UserDbConnectionClass.isFacultyAdvisor(email));
+        }
+
         public ActionResult LogOut()
         {
             Session.RemoveAll();

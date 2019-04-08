@@ -1,53 +1,64 @@
 ﻿<!DOCTYPE html>
+{
 <html>
 <head>
     <title>@ViewBag.Title - Harbor View University</title>
 </head>
-<body>
-    <link rel="stylesheet" href="~/Content/DropDownMenu.css" />
-    <div class="container">
-        <header>
-            <img src="~/Content/HVU Logo.png" alt="HVU Logo">
-            <hr />
-            <ul>
-                <li>
-                @Html.ActionLink("Home", "FacultyHome", "Faculty")
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">Faculty Academics</a>
-                    <div class="dropdown-content">
+    <body>
+        <link rel="stylesheet" href="~/Content/DropDownMenu.css" />
+        {
+        <div class="container">
+            <header>
+                <img src="~/Content/HVU Logo.png" alt="HVU Logo">
+                <hr />
+                <ul>
+                    <li>
+                        @Html.ActionLink("Home", "FacultyHome", "Faculty")
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">Faculty Academics</a>
+
+                        <div class="dropdown-content">
+                            <div class="dropdown-content">
+                                @if (Session["userID"] != null)
+                                {
+                                    if (Session["Advisor"].ToString().Equals("1"))
+                                    {
+                                        @Html.ActionLink("Semester History", "ViewSemesterHistorySelector", "Faculty")
+                                        @Html.ActionLink("Advisee List", "ViewAdviseeList", "Faculty")
+                                    }
+                                    else {
+
+                                        @Html.ActionLink("Semester History", "ViewSemesterHistorySelector", "Faculty")                                  
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">Student Academics</a>
                         <div class="dropdown-content">
                             @if (Session["userID"] != null)
                             {
-                                @*@Html.ActionLink("View Semester History", "SearchSection", "Student")*@
+                                @Html.ActionLink("View Student Hold", "ViewStudentHoldSelector", "Faculty")
+                                @Html.ActionLink("View Student Schedule", "ViewStudentScheduleSelector", "Faculty")
                             }
                         </div>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">Student Academics</a>
-                    <div class="dropdown-content">
-                        @if (Session["userID"] != null)
-                        {
-                            @Html.ActionLink("View Student Hold", "ViewStudentHoldSelector", "Faculty")
-                            @Html.ActionLink("View Student Schedule", "ViewStudentScheduleSelector", "Faculty")
-                        }
-                    </div>
-                </li>
-                <li class="active">
-                    @Html.ActionLink("Log Out", "Index", "Home")
-                </li>
-            </ul>
-        </header>
-    </div>
+                    </li>
+                    <li class="active">
+                        @Html.ActionLink("Log Out", "Index", "Home")
+                    </li>
+                </ul>
+            </header>
+        </div>
+        <div>
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy;Harbor View University</p>
+            </footer>
+        </div>
 
-    <div>
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy;Harbor View University</p>
-        </footer>
-    </div>
-
-</body>
+    </body>
 </html>
