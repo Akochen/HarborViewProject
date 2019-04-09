@@ -1,0 +1,36 @@
+﻿@model List<WebApplication3.HelperClasses.Advisee>
+@{
+    ViewBag.Title = "ViewAdviseeList";
+    Layout = "~/Views/Shared/_LayoutFaculty.cshtml";
+}
+
+<table class="resultsTable" id="lines">
+    <tr class="tableheader">
+        <th>Student ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone</th>
+        <th>DOB</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th></th>
+    </tr>
+    @foreach (var v in Model)
+    {
+    <tr>
+        <td>@v.studentID</td>
+        <td>@v.firstName</td>
+        <td>@v.lastName</td>
+        <td>@v.phone</td>
+        <td>@v.dob</td>
+        <td>@v.street</td>
+        <td>@v.city</td>
+        <td>@v.state</td>
+        <td>@v.zip</td>
+        @*<td>@Html.ActionLink("Assign Final Grade", "AssignGradeEnrollees", "Faculty", new { sectionID = v.sectionID, year = v.year, semester = v.semester, studentID = v.studentID, firstName = v.firstName, lastName = v.lastName, courseName = v.courseName, v.credits }, null)</td>*@
+    </tr>
+    }
+</table>
+

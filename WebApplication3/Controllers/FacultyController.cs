@@ -53,5 +53,10 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.FacultyDbConnectionClass.viewHolds(studentID));
         }
+
+        public ActionResult ViewAdviseeList(String userID)
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.viewAdviseeList(userID));
+        }
     }
 }
