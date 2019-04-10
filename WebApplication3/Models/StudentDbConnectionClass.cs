@@ -267,10 +267,10 @@ namespace WebApplication3.Models
             String capacityString = "select (capactiy - seats_taken) as seats_remaining,course_name, course_credits from section inner join course on course.course_id = section.course_id WHERE section_id = " + sectionID;
             String ftString = "select max_credits from student_full_time where student_id = " + studentID + " and semester = '" + semester + "' and [year] = '" + year + "'";
             String ptString = "select max_credits from student_part_time where student_id = " + studentID + " and semester = '" + semester + "' and [year] = '" + year + "'";
-            String creditsString = "SELECT COALESCE((select sum(c.course_credits) as credits_count from enrollment e inner join section s on s.section_id = e.section_id inner join course c on c.course_id = s.course_id where student_id = " + studentID + " and s.semster = '" + SemesterDataHelper.getSemesterSeason() + "' and [year] = '" + SemesterDataHelper.getSemesterYear() + "' group by course_credits), 0) AS 'credit_count'";
+            String creditsString = "SELECT COALESCE((select sum(c.course_credits) as credits_count from enrollment e inner join section s on s.section_id = e.section_id inner join course c on c.course_id = s.course_id where student_id = " + studentID + " and s.semster = '" + semester + "' and [year] = '" + year + "' group by course_credits), 0) AS 'credit_count'";
             String insertString = " INSERT INTO enrollment(student_id, section_id) VALUES(" + studentID + ", " + sectionID + ")";
             String getToBeEnrolledString = "SELECT start_time, day_1, day_2, day_3 FROM section JOIN time_slot on section.time_slot_id = time_slot.[period] WHERE section_id = " + sectionID;
-            String getCurrentScheduleString = "SELECT start_time, day_1, day_2, day_3 FROM [dbo].[enrollment] JOIN section on section.section_id = enrollment.section_id JOIN time_slot on section.time_slot_id = time_slot.[period] WHERE [year] = '" + SemesterDataHelper.getNextSemesterYear() + "' AND semster = '" + SemesterDataHelper.getNextSemesterSeason() + "' AND student_id = " + studentID;
+            String getCurrentScheduleString = "SELECT start_time, day_1, day_2, day_3 FROM [dbo].[enrollment] JOIN section on section.section_id = enrollment.section_id JOIN time_slot on section.time_slot_id = time_slot.[period] WHERE [year] = '" + year + "' AND semster = '" + semester + "' AND student_id = " + studentID;
             String courseName = "ERROR: Unable to connect to database!";
             Section newSection;
             int newClassCredits = 0;
@@ -303,6 +303,7 @@ namespace WebApplication3.Models
                     }
                 }
 
+                //Check time conflict
                 command = new SqlCommand(getToBeEnrolledString, connection);
                 using (var reader5 = command.ExecuteReader())
                 {
@@ -332,7 +333,7 @@ namespace WebApplication3.Models
                                         {
                                             reader6.Close();
                                             connection.Close();
-                                            return "Error: You have a class at this time already!1";
+                                            return "Error: You have a class at this time already!";
                                         }
                                         else
                                         {
@@ -340,7 +341,7 @@ namespace WebApplication3.Models
                                             {
                                                 reader6.Close();
                                                 connection.Close();
-                                                return "Error: You have a class at this time already!2";
+                                                return "Error: You have a class at this time already!";
                                             }
                                             else
                                             {
@@ -348,7 +349,7 @@ namespace WebApplication3.Models
                                                 {
                                                     reader6.Close();
                                                     connection.Close();
-                                                    return "Error: You have a class at this time already!3";
+                                                    return "Error: You have a class at this time already!";
                                                 }
                                             }
                                         }
@@ -359,7 +360,7 @@ namespace WebApplication3.Models
                                         {
                                             reader6.Close();
                                             connection.Close();
-                                            return "Error: You have a class at this time already!4";
+                                            return "Error: You have a class at this time already!";
                                         }
                                         else
                                         {
@@ -367,7 +368,7 @@ namespace WebApplication3.Models
                                             {
                                                 reader6.Close();
                                                 connection.Close();
-                                                return "Error: You have a class at this time already!5";
+                                                return "Error: You have a class at this time already!";
                                             }
                                             else
                                             {
@@ -375,7 +376,7 @@ namespace WebApplication3.Models
                                                 {
                                                     reader6.Close();
                                                     connection.Close();
-                                                    return "Error: You have a class at this time already!6";
+                                                    return "Error: You have a class at this time already!";
                                                 }
                                             }
                                         }
@@ -386,7 +387,7 @@ namespace WebApplication3.Models
                                         {
                                             reader6.Close();
                                             connection.Close();
-                                            return "Error: You have a class at this time already!7";
+                                            return "Error: You have a class at this time already!";
                                         }
                                         else
                                         {
@@ -394,7 +395,7 @@ namespace WebApplication3.Models
                                             {
                                                 reader6.Close();
                                                 connection.Close();
-                                                return "Error: You have a class at this time already!8";
+                                                return "Error: You have a class at this time already!";
                                             }
                                             else
                                             {
@@ -402,7 +403,7 @@ namespace WebApplication3.Models
                                                 {
                                                     reader6.Close();
                                                     connection.Close();
-                                                    return "Error: You have a class at this time already!9";
+                                                    return "Error: You have a class at this time already!";
                                                 }
                                             }
                                         }

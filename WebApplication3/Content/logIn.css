@@ -37,7 +37,7 @@ a:hover {
 	width: 30%;
 }
 
-.footer {
+footer {
    position: fixed;
    left: 0;
    bottom: 0;
@@ -49,6 +49,10 @@ a:hover {
 	margin-bottom: 10px;
 }
 
+
+.mFooter {
+    text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+}
 
 /* THINGS CHANGED IN LOGIN.HTML
 *
