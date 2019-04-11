@@ -96,6 +96,11 @@ namespace WebApplication3.Controllers
             String result = "<script> alert(\"" + WebApplication3.Models.StudentDbConnectionClass.removeEnrollment(studentID, sectionID, semester, year) + "\"); </script>";
             return View((object)result);
         }
+
+        public ActionResult ViewTranscript(int userID)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.viewTranscript(userID));
+        }
     }
 }
 

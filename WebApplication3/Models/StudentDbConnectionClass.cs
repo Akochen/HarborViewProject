@@ -553,7 +553,62 @@ namespace WebApplication3.Models
                 connection.Close();
             }
     
-            return "You Have Succesfully Yeeted The Section";
+            return "You Have Succesfully Removed The Section";
+        }
+
+        public static StudentTranscriptHelper viewTranscript(int userId)
+        {
+
+            List<Section> sectionList = new List<Section>();
+            StudentInfo studentInfo = new StudentInfo();
+            //StudentTranscriptHelper studentTranscript = new StudentTranscriptHelper(sectionList, studentInfo);
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String getSectionDetails = @"SELECT sv.[section_id],[course_id],sv.[course_name],[instructor],[days],[start_time],[end_time],[semster],sv.[year] ,[type],[building_full_name],[room_number],sh.grade FROM [HarborViewUniversity].[dbo].[section_view] sv inner join student_semester_history sh on sh.section_id = sv .section_id WHERE student_id = " + userId ;
+            //Gets the Section details
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getSectionDetails, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        sectionList.Add(new Section(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),
+                        reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7)
+                         ,reader.GetString(8), reader.GetString(9), reader.GetString(10), reader.GetInt32(11), reader.GetString(12)));
+                    }
+                }
+                connection.Close();
+            }
+            //Get student info
+            String cString2 = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String getStudentInfo = "select * FROM [HarborViewUniversity].[dbo].[student_info] WHERE user_id = " + userId;
+            using (SqlConnection connection = new SqlConnection(cString2))
+            {
+                SqlCommand command = new SqlCommand(getStudentInfo, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        studentInfo.studentID = reader.GetInt32(0).ToString();
+                        studentInfo.firstName = reader.GetString(1);
+                        studentInfo.lastName = reader.GetString(2);
+                        studentInfo.email = reader.GetString(3);
+                        studentInfo.dob = reader.GetDateTime(4).ToShortDateString();
+                        studentInfo.phoneNumber = reader.GetString(5);
+                        studentInfo.street = reader.GetString(6);
+                        studentInfo.city = reader.GetString(7);
+                        studentInfo.state = reader.GetString(8);
+                        studentInfo.zip = reader.GetInt32(9).ToString();
+                        studentInfo.major = reader.GetString(10);
+                        studentInfo.minor = reader.GetString(11);
+                    }
+                }
+                connection.Close();
+            }
+            StudentTranscriptHelper studentTranscript = new StudentTranscriptHelper(sectionList, studentInfo);
+            return studentTranscript;
         }
     }
 

@@ -27,7 +27,7 @@
                     <div class="dropdown-content">
                         @if (Session["userID"] != null)
                         {
-                            @Html.ActionLink("View Transcript", "ViewSchedule", "Student", new { userID = Session["UserID"].ToString() }, null)
+                            @Html.ActionLink("View Transcript", "ViewTranscript", "Student", new { userID = Session["UserID"].ToString() }, null)
                             @Html.ActionLink("View Schedule History", "ViewSchedule", "Student")
                             @Html.ActionLink("View Holds", "ViewHolds", "Student", new { userID = Session["UserID"].ToString() }, null)
                             @Html.ActionLink("View Advisors", "ViewAdvisor", "Student", new { userID = Session["UserID"].ToString() }, null)
