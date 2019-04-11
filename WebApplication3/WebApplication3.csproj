@@ -236,6 +236,7 @@
     <Content Include="Views\Faculty\ViewAdviseeList.cshtml" />
     <Content Include="Views\Faculty\ViewTranscript.cshtml" />
     <Content Include="Views\Student\ViewTranscript.cshtml" />
+    <Content Include="Views\Faculty\ViewTranscriptSelector.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

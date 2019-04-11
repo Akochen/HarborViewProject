@@ -59,9 +59,14 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.FacultyDbConnectionClass.viewAdviseeList(userID));
         }
 
-        //public ActionResult ViewTranscript(String studentID)
-        //{
-        //    return View(WebApplication3.Models.FacultyDbConnectionClass.viewTranscript(studentID));
-        //}
+        public ActionResult ViewTranscriptSelector()
+        {
+            return View();
+        }
+
+        public ActionResult ViewTranscript(int studentID)
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.viewTranscript(studentID));
+        }
     }
 }

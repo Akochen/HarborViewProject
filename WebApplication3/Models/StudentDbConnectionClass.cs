@@ -537,6 +537,7 @@ namespace WebApplication3.Models
             List<Section> sections = new List<Section>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String deleteString = "DELETE FROM enrollment WHERE student_id = " + userID + " and section_id = " + sectionID + "";
+            String updateEnrollmentCount = ""
 
             using (SqlConnection connection = new SqlConnection(cString))
             {
