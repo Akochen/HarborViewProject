@@ -1,5 +1,5 @@
 ﻿@model WebApplication3.HelperClasses.Catalog
-@{ 
+@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Title = "Course Catalog";
 }
@@ -9,11 +9,11 @@
 <body>
     <div name="course_div">
         <table class="courses" cellspacing="5">
-            <tr >
+            <tr>
                 <th class="ROW1">ID</th>
                 <th class="ROW1">Course Name</th>
                 <th class="ROW1">Description</th>
-                <th class="ROW1">Requirements</th>
+                <th class="ROW1">Prerequisites</th>
                 <th class="ROW1">Credits</th>
             </tr>
             @{
@@ -29,37 +29,71 @@
                 }
             }
         </table>
-            <table class="majors">
-                <tr>
-                    <th>Major</th>
-                    <th>Requirements</th>
-                    <th>Degree Type</th>
-                </tr>
-                @{
-                    foreach (var v in Model.majors)
-                    {
-                        <tr>
-                            <td align="right">@v.name</td>
-                            <td>@Html.Raw(v.requirements)</td>
-                            <td align="right">@v.degreeLevel</td>
-                        </tr>
-                    }
+        <table class="majors">
+            <tr>
+                <th>Major</th>
+                <th>Prerequisites</th>
+                <th>Degree Type</th>
+            </tr>
+            @{
+                foreach (var v in Model.majors)
+                {
+                    <tr>
+                        <td align="right">@v.name</td>
+                        <td>@Html.Raw(v.requirements)</td>
+                        <td align="right">@v.degreeLevel</td>
+                    </tr>
                 }
-            </table>
-            <table class="minors">
-                <tr>
-                    <th>Minor</th>
-                    <th>Requirements</th>
-                </tr>
-                @{
-                    foreach (var v in Model.minors)
-                    {
-                        <tr>
-                            <td align="right">@v.name</td>
-                            <td>@Html.Raw(v.requirements)</td>
-                        </tr>
-                    }
+            }
+        </table>
+        <table class="minors">
+            <tr>
+                <th>Minor</th>
+                <th>Prerequisites</th>
+            </tr>
+            @{
+                foreach (var v in Model.minors)
+                {
+                    <tr>
+                        <td align="right">@v.name</td>
+                        <td>@Html.Raw(v.requirements)</td>
+                    </tr>
                 }
-            </table>
-        </div>
+            }
+        </table>
+    </div>
 </body>
+
+
+
+@*<table class="majors">
+        @{
+            foreach (var v in Model.majors)
+            {
+                <tr>
+                    <td>
+                        <table class="majorsInner">
+                            <tr>
+                                <th colspan="2">@v.degreeLevel @v.name</th>
+                            </tr>
+                            @for (int i = 0; i < v.requirements.Count; i++)
+                            {
+                                if (i % 2 == 0)
+                                {
+                                    @Html.Raw("<tr><td>&bull; " + v.requirements[i] + "</td>");
+                                }
+                                else
+                                {
+                                    @Html.Raw("<td>&bull; " + v.requirements[i] + "</td></tr>");
+                                }
+                            }
+                            @if (v.requirements.Count % 2 == 1)
+                            {
+                                @Html.Raw("</tr>");
+                            }
+                        </table>
+                    </td>
+                </tr>
+            }
+        }
+    </table>*@
