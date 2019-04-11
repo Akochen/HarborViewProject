@@ -1,7 +1,86 @@
-﻿
+﻿@using WebApplication3.HelperClasses;
+@model StudentTranscriptHelper
 @{
     ViewBag.Title = "ViewTranscript";
 }
 
-<h2>ViewTranscript</h2>
+<link rel="stylesheet" href="~/Content/TableTemplate.css" />
+<head>
+</head>
+<body>
+
+    <div>
+        <table class="resultsTable" id="lines">
+            <tr class="tableheader">
+                <th>Student ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Phone Number</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Major</th>
+                <th>Minor</th>
+            </tr>
+            <tr>
+                <td>@Model.studentInfo.studentID</td>
+                <td>@Model.studentInfo.firstName</td>
+                <td>@Model.studentInfo.lastName</td>
+                <td>@Model.studentInfo.email</td>
+                <td>@Model.studentInfo.dob</td>
+                <td>@Model.studentInfo.phoneNumber</td>
+                <td>@Model.studentInfo.street</td>
+                <td>@Model.studentInfo.city</td>
+                <td>@Model.studentInfo.state</td>
+                <td>@Model.studentInfo.zip</td>
+                <td>@Model.studentInfo.major</td>
+                <td>@Model.studentInfo.minor</td>
+            </tr>
+        </table>
+    </div>
+
+
+
+    <div>
+        <table class="resultsTable" id="lines">
+            <tr class="tableheader">
+                <th>Section ID:</th>
+                <th>Course ID:</th>
+                <th>Course Name:</th>
+                <th>Professor</th>
+                <th>Days</th>
+                <th>Time</th>
+                <th>Semester</th>
+                <th>Year</th>
+                <th>Type</th>
+                <th>Building</th>
+                <th>Room</th>
+                <th>Grade</th>
+            </tr>
+            @foreach (var sectionInfo in Model.sections)
+            {
+                <tr>
+                    <td>@sectionInfo.sectionID</td>
+                    <td>@sectionInfo.courseID</td>
+                    <td>@sectionInfo.courseName</td>
+                    <td>@sectionInfo.professorName</td>
+                    <td>@sectionInfo.days</td>
+                    <td>@sectionInfo.startTime-@sectionInfo.endTime</td>
+                    <td>@sectionInfo.semester</td>
+                    <td>@sectionInfo.year</td>
+                    <td>@sectionInfo.type</td>
+                    <td>@sectionInfo.building</td>
+                    <td>@sectionInfo.room</td>
+                    <td>@sectionInfo.grade</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+
+
+
 
