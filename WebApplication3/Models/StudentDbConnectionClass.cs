@@ -537,7 +537,7 @@ namespace WebApplication3.Models
             List<Section> sections = new List<Section>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String deleteString = "DELETE FROM enrollment WHERE student_id = " + userID + " and section_id = " + sectionID + "";
-            String updateEnrollmentCount = ""
+            String updateEnrollmentCount = "UPDATE [dbo].[section] SET [seats_taken] = [seats_taken] - 1 WHERE section_id = " + sectionID +"";
 
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -551,6 +551,10 @@ namespace WebApplication3.Models
                             , reader.GetString(8), reader.GetString(9), reader.GetInt32(10), reader.GetString(11), reader.GetByte(12), reader.GetByte(13)));
                     }
                 }
+                connection.Close();
+                SqlCommand command2 = new SqlCommand(updateEnrollmentCount, connection);
+                connection.Open();
+                command2.ExecuteNonQuery();
                 connection.Close();
             }
     
