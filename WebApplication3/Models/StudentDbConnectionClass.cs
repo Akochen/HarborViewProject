@@ -271,6 +271,8 @@ namespace WebApplication3.Models
             String insertString = " INSERT INTO enrollment(student_id, section_id) VALUES(" + studentID + ", " + sectionID + ")";
             String getToBeEnrolledString = "SELECT start_time, day_1, day_2, day_3 FROM section JOIN time_slot on section.time_slot_id = time_slot.[period] WHERE section_id = " + sectionID;
             String getCurrentScheduleString = "SELECT start_time, day_1, day_2, day_3 FROM [dbo].[enrollment] JOIN section on section.section_id = enrollment.section_id JOIN time_slot on section.time_slot_id = time_slot.[period] WHERE [year] = '" + year + "' AND semster = '" + semester + "' AND student_id = " + studentID;
+            String holdString = "SELECT [hold_type_name] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + studentID;
+            String takeSeatString = "UPDATE [dbo].[section] SET [seats_taken] = [seats_taken] + 1 WHERE section_id = " + sectionID;
             String courseName = "ERROR: Unable to connect to database!";
             Section newSection;
             int newClassCredits = 0;
@@ -300,6 +302,29 @@ namespace WebApplication3.Models
                         reader1.Close();
                         connection.Close();
                         return "Unable to add " + courseName + ". Section is full.";
+                    }
+                }
+
+                //Check if student has holds
+                command = new SqlCommand(holdString, connection);
+                using (var reader7 = command.ExecuteReader())
+                {
+                    List<String> holds = new List<String>();
+                    while(reader7.Read())
+                    {
+                        holds.Add(reader7.GetString(0));
+                    }
+                    if(holds.Count > 0)
+                    {
+                        String holdsResult = "\\n";
+                        foreach(String s in holds)
+                        {
+                            holdsResult += s + "\\n";
+                        }
+                        //close everything and report the error
+                        reader7.Close();
+                        connection.Close();
+                        return "Unable to add " + courseName + ". You have holds:" + holdsResult;
                     }
                 }
 
@@ -469,6 +494,8 @@ namespace WebApplication3.Models
                     {
                         //do insert
                         command = new SqlCommand(insertString, connection);
+                        command.ExecuteNonQuery();
+                        command = new SqlCommand(takeSeatString, connection);
                         command.ExecuteNonQuery();
                         connection.Close();
                         return "You have successfully registered for " + courseName;

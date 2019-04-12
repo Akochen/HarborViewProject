@@ -13,8 +13,8 @@ namespace WebApplication3.HelperClasses
 
         public Major(String name, String requirements, String degreeLevel)
         {
-            this.name = name;
             this.requirements = requirements;
+            this.name = name;
             this.degreeLevel = degreeLevel;
         }
     }
