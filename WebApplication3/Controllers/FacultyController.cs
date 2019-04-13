@@ -68,5 +68,21 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.FacultyDbConnectionClass.viewTranscript(studentID));
         }
+
+        public ActionResult ViewSemesterHistorySelector()
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.createFacultySemesterHistoryScheduleViewHelper());
+        }
+
+        [HttpPost]
+        public ActionResult ViewSemesterHistory(String userID, String year, String semester)
+        {
+            return PartialView(WebApplication3.Models.FacultyDbConnectionClass.viewFacultySemesterHistory(userID, year, semester));
+        }
+
+        public ActionResult ViewSemesterHistoryEnrollee(String sectionID)
+        {
+            return View(WebApplication3.Models.FacultyDbConnectionClass.viewFacultySemesterEnrolleeList(sectionID));
+        }
     }
 }

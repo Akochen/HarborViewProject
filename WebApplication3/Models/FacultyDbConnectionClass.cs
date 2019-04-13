@@ -95,7 +95,7 @@ namespace WebApplication3.Models
                     while (reader.Read())
                     {
                         enrollments.Add(new Enrollment(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
-                            , reader.GetString(7), reader.GetString(8), reader.GetString(9), reader.GetInt32(10).ToString()));
+                            ,reader.GetString(7), reader.GetString(8), reader.GetString(9), reader.GetInt32(10).ToString()));
                     }
                 }
                 connection.Close();
@@ -210,6 +210,110 @@ namespace WebApplication3.Models
             }
             StudentTranscriptHelper studentTranscript = new StudentTranscriptHelper(sectionList, studentInfo);
             return studentTranscript;
+        }
+
+        public static EnrollmentSemesterHelper createViewFacultySemesterHelper()
+        {
+            List<String> semesters = new List<string>();
+            semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
+            semesters.Add(SemesterDataHelper.getNextSemesterSeason() + " " + SemesterDataHelper.getNextSemesterYear());
+
+            return new EnrollmentSemesterHelper(semesters);
+        }
+
+        public static ViewScheduleHelper createFacultySemesterHistoryScheduleViewHelper()
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String yearString = "SELECT DISTINCT [year] FROM [HarborViewUniversity].[dbo].[faculty_semester_history]";
+            String semesterString = "SELECT DISTINCT [semster] FROM [HarborViewUniversity].[dbo].[faculty_semester_history]";
+            List<String> years = new List<string>();
+            List<String> semesters = new List<string>();
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command4 = new SqlCommand(yearString, connection);
+                connection.Open();
+                using (var reader = command4.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        years.Add(reader.GetString(0));
+                    }
+                }
+
+                SqlCommand command5 = new SqlCommand(semesterString, connection);
+                using (var reader = command5.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        semesters.Add(reader.GetString(0));
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return new ViewScheduleHelper(years, semesters);
+        }
+
+        public static List<FacultySemester> viewFacultySemesterHistory(String userID, String year, String semester)
+        {
+            List<FacultySemester> semesterData = new List<FacultySemester>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = @"SELECT DISTINCT
+	   [faculty_schedule].faculty_id
+	  ,[section].section_id
+	  ,CONCAT(d.department_short_name,course.course_num) as 'course_id'
+ 	  ,[course].course_name
+	  ,[section].semster
+	  ,section.[year]
+	  ,[time_slot].start_time
+	  ,[time_slot].end_time
+	  ,CONCAT([time_slot].[day_1], [time_slot].[day_2], [time_slot].[day_3]) AS 'days'
+  FROM [HarborViewUniversity].[dbo].[faculty_schedule]
+  JOIN [section] ON [faculty_schedule].[section_id] = section.[section_id]
+  JOIN [course] ON [course].course_id = section.course_id
+  JOIN [time_slot] ON [section].time_slot_id = [time_slot].period
+  JOIN department d on d.department_id = course.department_id
+  JOIN student_semester_history sh on sh.section_id = [section].section_id
+  JOIN [user] u on u.user_id = sh.student_id" +
+                 " WHERE section.[faculty_id] = " + userID + " AND section.[semster] = '" + semester + "' AND section.[year] = '" + year + "'";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        semesterData.Add(new FacultySemester(reader.GetInt32(0).ToString(), reader.GetInt32(1).ToString(), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
+                            , reader.GetString(7), reader.GetString(8)));
+                    }
+                }
+                connection.Close();
+            }
+
+            return semesterData;
+        }
+
+        public static List<FacultySemester> viewFacultySemesterEnrolleeList(String sectionID)
+        {
+            List<FacultySemester> studentData = new List<FacultySemester>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT u.first_name,u.last_name,u.email,u.phone_number,u.dob,sh.grade,sh.credits,sh.student_id FROM [HarborViewUniversity].[dbo].[faculty_schedule]JOIN [section] ON [faculty_schedule].[section_id] = [section].[section_id]JOIN [course] ON [course].course_id = section.course_id JOIN [time_slot] ON [section].time_slot_id = [time_slot].period JOIN department d on d.department_id = course.department_id JOIN student_semester_history sh on sh.section_id = [section].section_id JOIN [user] u on u.user_id = sh.student_id WHERE section.[section_id] = " + sectionID ;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        studentData.Add(new FacultySemester(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4).ToShortDateString(), reader.GetString(5), reader.GetByte(6).ToString(), reader.GetInt32(7).ToString()));
+                    }
+                    connection.Close();
+                }
+                return studentData;
+            }
         }
     }
 }
