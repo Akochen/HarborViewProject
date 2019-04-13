@@ -39,7 +39,7 @@
                             Session["UserID"] = userID;
                             Response.Redirect(Url.Action("StudentHome", "Student")); //(method name, controller name)
                         }
-                        else if(result == "Faculty")
+                        else if (result == "Faculty")
                         {
                             var isAdvisor = Html.Action("isFacultyAdvisor", "Home", new { email = Request["email"] });
                             var userID = Html.Action("getUserID", "Home", new { email = Request["email"] });
@@ -67,6 +67,9 @@
             </div>
             <div id="pw_link">
                 @Html.ActionLink("Change Password", "ChangePassword", "Password")
+            </div>
+            <div id="schedule_link">
+                @Html.ActionLink("Master Schedule", "SearchMasterScheduleSelector", "Catalog")
             </div>
 
         </div>

@@ -1,11 +1,15 @@
 ﻿@using WebApplication3.HelperClasses;
 @model EnrollmentSemesterHelper
-@{
-    ViewBag.Title = "Registration";
-    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
-}
-<link rel="stylesheet" href="~/Content/searchTable.css" />
 
+@{
+    ViewBag.Title = "Search Master Schedule";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/Content/Background.css" />
+    <link rel="stylesheet" href="~/Content/searchTable.css" />
+    <meta name="viewport" content="width=device-width" />
+</head>
 <div>
     <form method="post">
         <table class="searchTable">
@@ -74,7 +78,8 @@
         {
             semester = SemesterDataHelper.getSemesterSeason();
             year = SemesterDataHelper.getSemesterYear();
-        } else
+        }
+        else
         {
             semester = SemesterDataHelper.getNextSemesterSeason();
             year = SemesterDataHelper.getNextSemesterYear();
@@ -98,43 +103,11 @@
             department = "";
         }
 
-        @Html.Action("RegisterForClasses", "Student", new { searchSemester = semester, searchYear = year, instructor = instructor, days = days, time = time, courseID = courseID, courseName = courseName, department = department });
+        @Html.Action("SearchScheduleResults", "Catalog", new { searchSemester = semester, searchYear = year, instructor = instructor, days = days, time = time, courseID = courseID, courseName = courseName, department = department });
 
     }
 }
+</body>
+</html>
 
-@*<form method="post">
-        <strong><big>Select a semester:</big></strong>
-        <table style="margin-top:5px;" class="searchTable">
-            <tr>
-                <td>
-                    <select name="semesterSelect">
-                        @foreach (var v in Model.semesters)
-                        {
-                            <option value="@v">@v</option>
-                        }
-                    </select>
-                    <input type="submit" value="GO" />
-                </td>
-            </tr>
-        </table>
 
-        @{
-            if (IsPost)
-            {
-                String year;
-                String season;
-                if (Request.Form["semesterSelect"].Contains(SemesterDataHelper.getSemesterSeason()))
-                {
-                    year = SemesterDataHelper.getSemesterYear();
-                    season = SemesterDataHelper.getSemesterSeason();
-                }
-                else
-                {
-                    year = SemesterDataHelper.getNextSemesterYear();
-                    season = SemesterDataHelper.getNextSemesterSeason();
-                }
-                Response.Redirect(Url.Action("RegisterForClasses", "Student", new { searchParameter = "", searchType = "Days", searchSemester = season, searchYear = year }));
-            }
-        }
-    </form>*@

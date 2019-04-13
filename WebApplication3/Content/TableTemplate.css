@@ -6,7 +6,7 @@
 
 .resultsTable  {
     background-color: white;
-    border: solid 0px green;
+    /*border: solid 0px green;*/
     border-spacing: 0px;
     border-left: 3px solid black;
     border-bottom: 1px solid black;
