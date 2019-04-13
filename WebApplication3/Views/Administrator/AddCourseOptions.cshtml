@@ -1,9 +1,23 @@
-﻿
+﻿@using WebApplication3.HelperClasses;
+@model Department
 @{
     ViewBag.Title = "AddCourseOptions";
     Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
 
+
+<link rel="stylesheet" href="~/Content/Background.css" />
+
+<form name="course" method="post">
+    Department: <input type="text" name="FirstName" value=""><br />
+    Course Number: <input type="text" name="LastName" value=""><br />
+    Course Name: <input type="text" name="LastName" value=""><br />
+    Number of Credits: <input type="text" name="LastName" value=""><br />
+    Is Elective: <input type="text" name="LastName" value=""><br />
+    Is Graduate Course: <input type="text" name="LastName" value=""><br /><br />
+    Description:<br><textarea rows="5" cols="50" " name="LastName" form="course"></textarea><br />
+    <input type="submit" value="Submit">
+</form>
 
 
 
