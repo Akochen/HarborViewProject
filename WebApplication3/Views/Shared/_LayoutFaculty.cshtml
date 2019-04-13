@@ -23,14 +23,12 @@
                                 {
                                     if (Session["Advisor"].ToString().Equals("1"))
                                     {
-                                        @Html.ActionLink("Semester History", "ViewSemesterHistorySelector", "Faculty")
                                         @Html.ActionLink("Advisee List", "ViewAdviseeList", "Faculty", new { userID = Session["UserID"].ToString() }, null)
                                     }
-                                    else {
-
-                                        @Html.ActionLink("Semester History", "ViewSemesterHistorySelector", "Faculty")                                  
-                                    }
+                                    @Html.ActionLink("Semester History", "ViewSemesterHistorySelector", "Faculty")
+                                    @Html.ActionLink("Search All Sections", "SearchMasterScheduleSelector", "Faculty")
                                 }
+
                             </div>
                         </div>
                     </li>

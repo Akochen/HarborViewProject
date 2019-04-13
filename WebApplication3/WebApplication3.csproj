@@ -243,6 +243,10 @@
     <Content Include="Views\Faculty\ViewSemesterHistorySelector.cshtml" />
     <Content Include="Views\Faculty\ViewSemesterHistory.cshtml" />
     <Content Include="Views\Faculty\ViewSemesterHistoryEnrollee.cshtml" />
+    <Content Include="Views\Catalog\SearchMasterScheduleSelector.cshtml" />
+    <Content Include="Views\Catalog\SearchScheduleResults.cshtml" />
+    <Content Include="Views\Faculty\SearchMasterScheduleSelector.cshtml" />
+    <Content Include="Views\Faculty\SearchScheduleResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

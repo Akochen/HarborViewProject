@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication3.HelperClasses;
 
 namespace WebApplication3.Controllers
 {
@@ -83,6 +84,21 @@ namespace WebApplication3.Controllers
         public ActionResult ViewSemesterHistoryEnrollee(String sectionID)
         {
             return View(WebApplication3.Models.FacultyDbConnectionClass.viewFacultySemesterEnrolleeList(sectionID));
+        }
+
+        public ActionResult SearchMasterScheduleSelector()
+        {
+            return View(Models.FacultyDbConnectionClass.createViewScheduleHelper());
+        }
+
+        public ActionResult SearchScheduleResults()
+        {
+            return PartialView(new List<Section>());
+        }
+        [HttpPost]
+        public ActionResult SearchScheduleResults(String searchYear, String searchSemester, String instructor, String days, String time, String courseID, String courseName, String department)
+        {
+            return PartialView(WebApplication3.Models.FacultyDbConnectionClass.searchSections(searchYear, searchSemester, instructor, days, time, courseID, courseName, department));
         }
     }
 }

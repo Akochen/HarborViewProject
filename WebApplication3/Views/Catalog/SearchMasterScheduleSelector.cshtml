@@ -1,0 +1,113 @@
+﻿@using WebApplication3.HelperClasses;
+@model EnrollmentSemesterHelper
+
+@{
+    ViewBag.Title = "Search Master Schedule";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/Content/Background.css" />
+    <link rel="stylesheet" href="~/Content/searchTable.css" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<div>
+    <form method="post">
+        <table class="searchTable">
+            <tr>
+                <td>
+                    <label id="inputLabel"><big><strong>Search:</strong></big></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="course_id" placeholder="Course ID" />
+                    <input type="text" name="course_name" placeholder="Course Name" />
+                    <input type="text" name="instructor" placeholder="Instructor" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="departmentSelector" name="departmentSelector">
+                        <option value="startselection">---Department---</option>
+                        @foreach (var v in Model.departments)
+                        {
+                            <option value="@v">@v</option>
+                        }
+                    </select>
+                    <select id="daySelector" name="daySelector">
+                        <option value="startselection">---Days---</option>
+                        @foreach (var v in Model.days)
+                        {
+                            <option value="@v">@v</option>
+                        }
+                    </select>
+                    <select id="timeSelector" name="timeSelector">
+                        <option value="startselection">---Time---</option>
+                        @foreach (var v in Model.times)
+                        {
+                            <option value="@v">@v</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <select id="semesterSelector" name="semesterSelector">
+                        <option value="startselection">---Semester---</option>
+                        @foreach (var v in Model.semesters)
+                        {
+                            <option value="@v">@v</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <input type="submit" id="submit" value="Search" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+@{
+    if (IsPost)
+    {
+        String semester;
+        String year;
+        if (Request.Form["semesterSelector"].Contains(SemesterDataHelper.getSemesterSeason()))
+        {
+            semester = SemesterDataHelper.getSemesterSeason();
+            year = SemesterDataHelper.getSemesterYear();
+        }
+        else
+        {
+            semester = SemesterDataHelper.getNextSemesterSeason();
+            year = SemesterDataHelper.getNextSemesterYear();
+        }
+        String instructor = Request["instructor"];
+        String days = Request.Form["daySelector"];
+        if (days.Equals("startselection"))
+        {
+            days = "";
+        }
+        String time = Request.Form["timeSelector"];
+        if (time.Equals("startselection"))
+        {
+            time = "";
+        }
+        String courseID = Request["course_id"];
+        String courseName = Request["course_name"];
+        String department = Request.Form["departmentSelector"];
+        if (department.Equals("startselection"))
+        {
+            department = "";
+        }
+
+        @Html.Action("SearchScheduleResults", "Catalog", new { searchSemester = semester, searchYear = year, instructor = instructor, days = days, time = time, courseID = courseID, courseName = courseName, department = department });
+
+    }
+}
+</body>
+</html>
+
+
