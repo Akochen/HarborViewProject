@@ -167,6 +167,7 @@
     <Compile Include="HelperClasses\Advisee.cs" />
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
+    <Compile Include="HelperClasses\Department.cs" />
     <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\FacultySemester.cs" />
     <Compile Include="HelperClasses\GradeList.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="HelperClasses\Course.cs" />
     <Compile Include="HelperClasses\Major.cs" />
     <Compile Include="HelperClasses\Minor.cs" />
+    <Compile Include="Models\AdminDbConnectionClass.cs" />
     <Compile Include="Models\FacultyDbConnectionClass.cs" />
     <Compile Include="Models\UserDbConnectionClass.cs" />
     <Compile Include="Models\StudentDbConnectionClass.cs" />
@@ -243,6 +245,7 @@
     <Content Include="Views\Faculty\ViewSemesterHistorySelector.cshtml" />
     <Content Include="Views\Faculty\ViewSemesterHistory.cshtml" />
     <Content Include="Views\Faculty\ViewSemesterHistoryEnrollee.cshtml" />
+    <Content Include="Views\Administrator\AddCourseOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -13,5 +13,10 @@ namespace WebApplication3.Controllers
         {
             return View();
         }
+
+        public ActionResult AddCourseOptions()
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.createSectionSearchHelper());
+        }
     }
 }
