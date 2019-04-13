@@ -1,0 +1,29 @@
+﻿@model List<WebApplication3.HelperClasses.FacultySemester>
+<link rel="stylesheet" href="~/Content/TableTemplate.css" />
+
+<table class="resultsTable" id="lines">
+    <tr class="tableheader">
+
+        <th>SectionID:</th>
+        <th>CourseID:</th>
+        <th>Course Name:</th>
+        <th>Semester</th>
+        <th>Year</th>
+        <th>Time</th>
+        <th>Days</th>
+        <th></th>
+    </tr>
+    @foreach (var sectionInfo in Model)
+    {
+    <tr>
+        <td>@sectionInfo.sectionID</td>
+        <td>@sectionInfo.courseID</td>
+        <td>@sectionInfo.courseName</td>
+        <td>@sectionInfo.semester</td>
+        <td>@sectionInfo.year</td>
+        <td>@sectionInfo.startTime-@sectionInfo.endTime</td>
+        <td>@sectionInfo.days</td>
+        <td>@Html.ActionLink("Enrollee List", "ViewSemesterHistoryEnrollee", "Faculty", new { sectionID = sectionInfo.sectionID }, null)</td>
+    </tr>
+    }
+</table>

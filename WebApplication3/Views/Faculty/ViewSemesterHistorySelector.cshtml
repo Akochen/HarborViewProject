@@ -1,0 +1,46 @@
+﻿@model WebApplication3.HelperClasses.ViewScheduleHelper
+@{
+    ViewBag.Title = "Semester History";
+    Layout = "~/Views/Shared/_LayoutFaculty.cshtml";
+}
+<link rel="stylesheet" href="~/Content/ViewSchedule.css" />
+<div>
+    <form method="post">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <select id="semesterSelector" name="semesterSelector">
+                        <option value="startselection">---Semester---</option>
+                        @foreach (var v in Model.semesters)
+                        {
+                            <option value="@v">@v</option>
+                        }
+                    </select>
+                    <select id="yearSelector" name="yearSelector">
+                        <option value="startselection">---Year---</option>
+                        @foreach (var v in Model.years)
+                        {
+                            <option value="@v">@v</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Submit" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+@{
+    if (IsPost)
+    {
+        if (Session["UserID"] != null)
+        {
+            @Html.Action("ViewSemesterHistory", "Faculty", new { userID = Session["UserID"], semester = Request.Form["semesterSelector"], year = Request.Form["yearSelector"] });
+        }
+    }
+}

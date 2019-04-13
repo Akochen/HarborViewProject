@@ -22,6 +22,7 @@ namespace WebApplication3.HelperClasses
         public String semester { get; set; }
         public String studentID { get; set; }
         public String credits { get; set; }
+        public String grade { get; set; }
 
         public StudentEnrollment(string studentID, string firstName, string lastName, string email, 
             string phoneNumber, string dob, string sectionID, string courseName,string year,string semester,string credits)

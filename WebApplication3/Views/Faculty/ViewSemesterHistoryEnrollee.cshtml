@@ -1,0 +1,35 @@
+﻿@model List<WebApplication3.HelperClasses.FacultySemester>
+@{
+    ViewBag.Title = "ViewSemesterHistoryEnrollee";
+    Layout = "~/Views/Shared/_LayoutFaculty.cshtml";
+}
+<table class="resultsTable" id="lines">
+    <tr class="tableheader">
+
+        <th>StudentID:</th>
+        <th>First Name:</th>
+        <th>Last Name:</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>DOB</th>
+        <th>Grade</th>
+        <th>Credits</th>
+    </tr>
+    @foreach (var student in Model)
+    {
+    <tr>
+        <td>@student.studentID</td>
+        <td>@student.firstName</td>
+        <td>@student.lastName</td>
+        <td>@student.email</td>
+        <td>@student.phone_number</td>
+        <td>@student.dob</td>
+        <td>@student.phone_number</td>
+        <td>@student.dob</td>
+        <td>@student.grade</td>
+        <td>@student.credits</td>
+    </tr>
+    }
+</table>
+
+
