@@ -7,26 +7,43 @@
     <link rel="stylesheet" href="~/Content/DropDownMenu.css" />
     <div class="container">
         <header>
-            <img src="~/Content/HVU Logo.png" alt="HVU Logo">
-            <hr />
+            <img src="~/Content/HVU Logo.png" class="logo" alt="HVU Logo">
             <ul>
                 <li>
-                @Html.ActionLink("Home", "AdminHome", "Administrator")
+                    @Html.ActionLink("Home", "AdminHome", "Administrator")
                 </li>
                 <li class="dropdown">
-                    <a href="javascript:void(0)">1</a>
+                    <a href="javascript:void(0)">Master Catalog</a>
                     <div class="dropdown-content">
+                        @Html.ActionLink("Add Course", "SearchSection", "Administrator")
+                        @Html.ActionLink("Update Course", "RegisterForClassesSelector", "Administrator")
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">2</a>
+                    <a href="javascript:void(0)">Master Schedule</a>
                     <div class="dropdown-content">
-                        @if (Session["userID"] != null)
-                        {
-                        }
+                        @Html.ActionLink("Add Section", "SearchSection", "Administrator")
+                        @Html.ActionLink("Update Section", "RegisterForClassesSelector", "Administrator")
                     </div>
                 </li>
-                <li><a href=#audit>3</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Faculty Academics</a>
+                    <div class="dropdown-content">
+                        @Html.ActionLink("View Advisor Details", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("View Schedule History", "RegisterForClassesSelector", "Administrator")
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Student Academics</a>
+                    <div class="dropdown-content">
+                        @Html.ActionLink("Update Hold", "SearchSection", "Administrator")
+                        @Html.ActionLink("Update Grade", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("Update Information", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("View Transcript", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("View Degree Audit", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("View Schedule History", "RegisterForClassesSelector", "Administrator")
+                    </div>
+                </li>
                 <li class="active">
                     @Html.ActionLink("Log Out", "Index", "Home")
                 </li>
