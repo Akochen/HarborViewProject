@@ -10,12 +10,19 @@ namespace WebApplication3.Models
 
     public class StudentDbConnectionClass
     {
-        public static List<Section> displayEnrollables(String searchType, String searchParameter, String searchYear, String searchSemester)
+        public static List<Section> displayEnrollables(String searchYear, String searchSemester, String instructor, String days, String time, String courseID, String courseName, String department)
         {
             List<Section> sections = new List<Section>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "SELECT [section_id],[course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number],[type],[capactiy],[seats_remaining] FROM [HarborViewUniversity].[dbo].[section_view] WHERE " + searchType + " LIKE '%" + searchParameter + "%' AND [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' " +
-                "ORDER BY course_id";
+            String queryString = "SELECT [section_id],[course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number],[type],[capactiy],[seats_remaining] FROM [HarborViewUniversity].[dbo].[section_view] " +
+                "WHERE  [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' AND [instructor] LIKE '%" + instructor + "%' AND [days] = '" + days + "' AND [start_time] LIKE '%" + time + "%' " +
+                "AND [course_id] LIKE '%" + courseID + "%' AND [course_name] LIKE '%" + courseName + "%' AND [department_full_name] LIKE '%" + department + "%'  ORDER BY course_id";
+            if (days.Equals(""))
+            {
+                queryString = "SELECT [section_id],[course_id],[course_name],[instructor],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number],[type],[capactiy],[seats_remaining] FROM [HarborViewUniversity].[dbo].[section_view] " +
+                "WHERE  [year] = '" + searchYear + "' AND semster = '" + searchSemester + "' AND [instructor] LIKE '%" + instructor + "%' AND [start_time] LIKE '%" + time + "%' " +
+                "AND [course_id] LIKE '%" + courseID + "%' AND [course_name] LIKE '%" + courseName + "%' AND [department_full_name] LIKE '%" + department + "%'  ORDER BY course_id";
+            }
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -212,14 +219,55 @@ namespace WebApplication3.Models
 
         public static EnrollmentSemesterHelper createAddEnrollmentViewScheduleHelper()
         {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String deptString = "SELECT [department_full_name] FROM [HarborViewUniversity].[dbo].[department]";
+            String dayString = "SELECT DISTINCT [days] FROM [HarborViewUniversity].[dbo].[section_view]";
+            String timeString = "SELECT DISTINCT FORMAT(CAST([start_time] AS datetime), 'h:mm tt') AS start_time, FORMAT(CAST([end_time] AS datetime), 'h:mm tt') AS end_time, CAST([end_time] AS datetime) AS order_time FROM [HarborViewUniversity].[dbo].[time_slot] ORDER BY order_time";
+            List<String> departments = new List<string>();
+            List<String> days = new List<string>();
+            List<String> times = new List<string>();
             List<String> semesters = new List<string>();
+            //Grab semester and year selector data
             if (SemesterDataHelper.canRegisterForCurrentSemester())
             {
                 semesters.Add(SemesterDataHelper.getSemesterSeason() + " " + SemesterDataHelper.getSemesterYear());
             }
             semesters.Add(SemesterDataHelper.getNextSemesterSeason() + " " + SemesterDataHelper.getNextSemesterYear());
 
-            return new EnrollmentSemesterHelper(semesters);
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command1 = new SqlCommand(deptString, connection);
+                connection.Open();
+                using (var reader = command1.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        departments.Add(reader.GetString(0));
+                    }
+                }
+
+                SqlCommand command2 = new SqlCommand(dayString, connection);
+                using (var reader = command2.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        days.Add(reader.GetString(0));
+                    }
+                }
+
+                SqlCommand command3 = new SqlCommand(timeString, connection);
+                using (var reader = command3.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        times.Add(reader.GetString(0));
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return new EnrollmentSemesterHelper(departments, times, days, semesters);
         }
 
         public static EnrollmentSemesterHelper createRemoveEnrollmentViewScheduleHelper()
@@ -264,7 +312,7 @@ namespace WebApplication3.Models
                 return "Error: That semester is no longer available to have classes added!";
             }
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String capacityString = "select (capactiy - seats_taken) as seats_remaining,course_name, course_credits from section inner join course on course.course_id = section.course_id WHERE section_id = " + sectionID;
+            String capacityString = "select (capactiy - seats_taken) as seats_remaining,course_name, course_credits, course.course_id from section inner join course on course.course_id = section.course_id WHERE section_id = " + sectionID;
             String ftString = "select max_credits from student_full_time where student_id = " + studentID + " and semester = '" + semester + "' and [year] = '" + year + "'";
             String ptString = "select max_credits from student_part_time where student_id = " + studentID + " and semester = '" + semester + "' and [year] = '" + year + "'";
             String creditsString = "SELECT COALESCE((select sum(c.course_credits) as credits_count from enrollment e inner join section s on s.section_id = e.section_id inner join course c on c.course_id = s.course_id where student_id = " + studentID + " and s.semster = '" + semester + "' and [year] = '" + year + "' group by course_credits), 0) AS 'credit_count'";
@@ -273,6 +321,7 @@ namespace WebApplication3.Models
             String getCurrentScheduleString = "SELECT start_time, day_1, day_2, day_3 FROM [dbo].[enrollment] JOIN section on section.section_id = enrollment.section_id JOIN time_slot on section.time_slot_id = time_slot.[period] WHERE [year] = '" + year + "' AND semster = '" + semester + "' AND student_id = " + studentID;
             String holdString = "SELECT [hold_type_name] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + studentID;
             String takeSeatString = "UPDATE [dbo].[section] SET [seats_taken] = [seats_taken] + 1 WHERE section_id = " + sectionID;
+            String courseID = "";
             String courseName = "ERROR: Unable to connect to database!";
             Section newSection;
             int newClassCredits = 0;
@@ -289,20 +338,23 @@ namespace WebApplication3.Models
                     {
                         courseName = reader1.GetString(1);
                         //check the remaining seats
+                        int t1 = reader1.GetByte(0);
                         if (reader1.GetByte(0) >= 1)
                         {
                             //store new class credits
                             newClassCredits = reader1.GetByte(2);
+                            courseID = reader1.GetInt32(3).ToString();
+                        }
+                        else
+                        {
+                            //close everything and report the error
+                            reader1.Close();
+                            connection.Close();
+                            return "Unable to add " + courseName + ". Section is full.";
                         }
                         reader1.Close();
                     }
-                    else
-                    {
-                        //close everything and report the error
-                        reader1.Close();
-                        connection.Close();
-                        return "Unable to add " + courseName + ". Section is full.";
-                    }
+                    
                 }
 
                 //Check if student has holds
@@ -436,6 +488,55 @@ namespace WebApplication3.Models
                                 }
                             }
 
+                        }
+                    }
+                }
+
+                //Check prereqs are met
+                String prereqString = "SELECT [pre_req_course_id] FROM [HarborViewUniversity].[dbo].[prereq] WHERE course_id = " + courseID;
+                String getCoursesTakenString = "SELECT [course_id] student_id FROM [HarborViewUniversity].[dbo].[student_semester_history] JOIN section sec on sec.section_id = student_semester_history.section_id WHERE grade NOT IN ('C-','D+','D','D-','F') AND [student_id] = " + studentID;
+                command = new SqlCommand(prereqString, connection);
+                using (var reader8 = command.ExecuteReader())
+                {
+                    List<int> prereqs = new List<int>();
+                    List<int> coursesTaken = new List<int>();
+                    while (reader8.Read())
+                    {
+                        prereqs.Add(reader8.GetInt32(0));
+                    }
+                    reader8.Close();
+                    if(prereqs.Count > 0)
+                    {
+                        command = new SqlCommand(getCoursesTakenString, connection);
+                        using (var reader9 = command.ExecuteReader())
+                        {
+                            while(reader9.Read())
+                            {
+                                coursesTaken.Add(reader9.GetInt32(0));
+                            }
+                            reader9.Close();
+                        }
+                        if (coursesTaken.Count < 1)
+                        {
+                            return "Error: You do not meet the prerequisites for this class!";
+                        }
+                        else
+                        {
+                            int count = 0;
+                            foreach(int prereq in prereqs)
+                            {
+                                foreach(int courseTaken in coursesTaken)
+                                {
+                                    if(prereq == courseTaken)
+                                    {
+                                        count++;
+                                    }
+                                }
+                            }
+                            if(count != prereqs.Count)
+                            {
+                                return "Error: You do not meet the prerequisites for this class!";
+                            }
                         }
                     }
                 }
@@ -578,9 +679,7 @@ namespace WebApplication3.Models
                             , reader.GetString(8), reader.GetString(9), reader.GetInt32(10), reader.GetString(11), reader.GetByte(12), reader.GetByte(13)));
                     }
                 }
-                connection.Close();
                 SqlCommand command2 = new SqlCommand(updateEnrollmentCount, connection);
-                connection.Open();
                 command2.ExecuteNonQuery();
                 connection.Close();
             }

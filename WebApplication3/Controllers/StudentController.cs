@@ -64,9 +64,9 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.StudentDbConnectionClass.createAddEnrollmentViewScheduleHelper());
         }
 
-        public ActionResult RegisterForClasses(String searchParameter, String searchType, String searchYear, String searchSemester)
+        public ActionResult RegisterForClasses(String searchYear, String searchSemester, String instructor, String days, String time, String courseID, String courseName, String department)
         {
-            return View(WebApplication3.Models.StudentDbConnectionClass.displayEnrollables(searchType, searchParameter, searchYear, searchSemester));
+            return View(WebApplication3.Models.StudentDbConnectionClass.searchSections(searchYear, searchSemester, instructor, days, time, courseID, courseName, department));
         }
 
         public ActionResult RegisteredForClass(int studentID, int sectionID, String year, String season)
