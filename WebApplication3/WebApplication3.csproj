@@ -98,6 +98,7 @@
     <Content Include="Content\logIn.css" />
     <Content Include="Content\michal-mrozek-1238448-unsplash.jpg" />
     <Content Include="Content\Register.css" />
+    <Content Include="Content\dataTable.css" />
     <Content Include="Content\searchTable.css" />
     <Content Include="Content\Sectionsearch.css" />
     <Content Include="Content\Site.css" />
@@ -105,6 +106,7 @@
     <Content Include="Content\student.css" />
     <Content Include="Content\HomeTableTemplate.css" />
     <Content Include="Content\Background.css" />
+    <Content Include="Content\TranscriptTable.css" />
     <Content Include="Content\TableTemplate.css" />
     <Content Include="Content\ViewSchedule.css" />
     <Content Include="Forms\WebForm1.aspx" />

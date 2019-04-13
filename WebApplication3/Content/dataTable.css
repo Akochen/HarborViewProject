@@ -1,0 +1,19 @@
+﻿.dataTable {
+    background-color: white;
+    border-radius: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 8px;
+    margin-left: 2%
+}
+
+.innerDataTable {
+    padding-left: 5px;
+    border-collapse: collapse;
+}
+
+    .innerDataTable tr {
+        border-bottom: 1px solid black;
+    }

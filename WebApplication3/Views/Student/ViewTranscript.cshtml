@@ -1,83 +1,78 @@
 ﻿@using WebApplication3.HelperClasses;
 @model StudentTranscriptHelper
 @{
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Title = "ViewTranscript";
 }
-
-<link rel="stylesheet" href="~/Content/TableTemplate.css" />
+<link rel="stylesheet" href="~/Content/Background.css" />
+<link rel="stylesheet" href="~/Content/dataTable.css" />
+<link rel="stylesheet" href="~/Content/TranscriptTable.css" />
 <head>
 </head>
 <body>
 
     <div>
-        <table class="resultsTable" id="lines">
-            <tr class="tableheader">
-                <th>Student ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>DOB</th>
-                <th>Phone Number</th>
-                <th>Street</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Zip</th>
-                <th>Major</th>
-                <th>Minor</th>
-            </tr>
+        <table class="dataTable" id="lines">
             <tr>
-                <td>@Model.studentInfo.studentID</td>
-                <td>@Model.studentInfo.firstName</td>
-                <td>@Model.studentInfo.lastName</td>
-                <td>@Model.studentInfo.email</td>
-                <td>@Model.studentInfo.dob</td>
-                <td>@Model.studentInfo.phoneNumber</td>
-                <td>@Model.studentInfo.street</td>
-                <td>@Model.studentInfo.city</td>
-                <td>@Model.studentInfo.state</td>
-                <td>@Model.studentInfo.zip</td>
-                <td>@Model.studentInfo.major</td>
-                <td>@Model.studentInfo.minor</td>
+                <td>
+                    <table class="innerDataTable">
+                        <tr>
+                            <td><strong>ID Number:</strong> @Model.studentInfo.studentID</td>
+                            <td><strong>Name:</strong> @Model.studentInfo.firstName @Model.studentInfo.lastName</td>
+                            <td><strong>Email:</strong> @Model.studentInfo.email</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DOB:</strong> @Model.studentInfo.dob</td>
+                            <td><strong>Phone #:</strong> @Model.studentInfo.phoneNumber</td>
+                            <td><strong>Major:</strong> @Model.studentInfo.major</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Address:</strong> @Model.studentInfo.street @Model.studentInfo.city, @Model.studentInfo.state @Model.studentInfo.zip</td>
+                            <td><strong>Minor:</strong> @Model.studentInfo.minor</td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
         </table>
     </div>
 
 
-
+    <hr style="width: 95%; margin-left:auto; margin-right:auto;"/>
     <div>
-        <table class="resultsTable" id="lines">
-            <tr class="tableheader">
-                <th>Section ID:</th>
-                <th>Course ID:</th>
-                <th>Course Name:</th>
-                <th>Professor</th>
-                <th>Days</th>
-                <th>Time</th>
-                <th>Semester</th>
-                <th>Year</th>
-                <th>Type</th>
-                <th>Building</th>
-                <th>Room</th>
-                <th>Grade</th>
-            </tr>
-            @foreach (var sectionInfo in Model.sections)
+        @{
+            String currentSemster = "";
+            int rows = 0;
+            foreach (var sectionInfo in Model.sections)
             {
+                if (!currentSemster.Equals(sectionInfo.semester) && rows > 0)
+                {
+                    String tableEnd = "</table>";
+                    @Html.Raw(tableEnd)
+                }
+                if (!currentSemster.Equals(sectionInfo.semester))
+                {
+                    String tableStart = "<table class=\"transcriptTable\" id=\"lines\"> <tr class=\"tableheader\"><th>Section ID:</th><th>Course ID:</th><th>Course Name:</th><th>Professor</th><th>Semester</th><th>Year</th><th>Type</th><th>Grade</th></tr>";
+                    @Html.Raw(tableStart)
+                }
                 <tr>
                     <td>@sectionInfo.sectionID</td>
                     <td>@sectionInfo.courseID</td>
                     <td>@sectionInfo.courseName</td>
                     <td>@sectionInfo.professorName</td>
-                    <td>@sectionInfo.days</td>
-                    <td>@sectionInfo.startTime-@sectionInfo.endTime</td>
                     <td>@sectionInfo.semester</td>
                     <td>@sectionInfo.year</td>
                     <td>@sectionInfo.type</td>
-                    <td>@sectionInfo.building</td>
-                    <td>@sectionInfo.room</td>
                     <td>@sectionInfo.grade</td>
                 </tr>
+                currentSemster = sectionInfo.semester;
+                rows++;
             }
-        </table>
+            if (Model.sections.Count > 0)
+            {
+                String tableEnd = "</table>";
+                @Html.Raw(tableEnd)
+            }
+        }
     </div>
 </body>
 
