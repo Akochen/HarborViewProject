@@ -3,8 +3,9 @@
 
 @{
     ViewBag.Title = "Search Master Schedule";
-    Layout = "~/Views/Shared/_LayoutFaculty.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
+
 
 <head>
     <link rel="stylesheet" href="~/Content/Background.css" />
@@ -104,7 +105,7 @@
             department = "";
         }
 
-        @Html.Action("SearchScheduleResults", "Faculty", new { searchSemester = semester, searchYear = year, instructor = instructor, days = days, time = time, courseID = courseID, courseName = courseName, department = department });
+        @Html.Action("SearchScheduleResults", "Administrator", new { searchSemester = semester, searchYear = year, instructor = instructor, days = days, time = time, courseID = courseID, courseName = courseName, department = department });
 
     }
 }

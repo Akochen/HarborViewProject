@@ -250,6 +250,8 @@
     <Content Include="Views\Faculty\SearchMasterScheduleSelector.cshtml" />
     <Content Include="Views\Faculty\SearchScheduleResults.cshtml" />
     <Content Include="Views\Administrator\AddCourseOptions.cshtml" />
+    <Content Include="Views\Administrator\SearchMasterScheduleSelector.cshtml" />
+    <Content Include="Views\Administrator\SearchScheduleResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
