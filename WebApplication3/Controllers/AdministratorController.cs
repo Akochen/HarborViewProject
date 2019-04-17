@@ -54,5 +54,16 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.viewAdvisorAdviseeList(userID));
         }
+
+        //****************************************************************//
+        public ActionResult ViewFacultySchedule(String facultyID)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.viewFacultySchedule(facultyID));
+        }
+
+        public ActionResult ViewFacultyScheduleSelector()
+        {
+            return View();
+        }
     }
 }
