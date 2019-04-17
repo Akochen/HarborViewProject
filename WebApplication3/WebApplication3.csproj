@@ -252,6 +252,10 @@
     <Content Include="Views\Administrator\AddCourseOptions.cshtml" />
     <Content Include="Views\Administrator\SearchMasterScheduleSelector.cshtml" />
     <Content Include="Views\Administrator\SearchScheduleResults.cshtml" />
+    <Content Include="Views\Administrator\ViewTranscriptSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewTranscript.cshtml" />
+    <Content Include="Views\Administrator\ViewAnAdvisorAviseeListSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewAnAdvisorAviseeList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
