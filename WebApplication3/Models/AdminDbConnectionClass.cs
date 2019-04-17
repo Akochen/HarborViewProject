@@ -111,5 +111,28 @@ namespace WebApplication3.Models
 
             return sections;
         }
+
+        public static List<FacultySchedule> viewFacultySchedule(String userID)
+        {
+            List<FacultySchedule> enrollments = new List<FacultySchedule>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT [course_name],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number] FROM [HarborViewUniversity].[dbo].[faculty_schedule_view] WHERE [faculty_id] = " + userID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        enrollments.Add(new FacultySchedule(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
+                            , reader.GetInt32(7).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+
+            return enrollments;
+        }
     }
 }

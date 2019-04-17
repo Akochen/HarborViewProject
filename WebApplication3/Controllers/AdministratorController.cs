@@ -34,5 +34,16 @@ namespace WebApplication3.Controllers
         {
             return PartialView(WebApplication3.Models.FacultyDbConnectionClass.searchSections(searchYear, searchSemester, instructor, days, time, courseID, courseName, department));
         }
+
+        //****************************************************************//
+        public ActionResult ViewFacultySchedule(String facultyID)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.viewFacultySchedule(facultyID));
+        }
+
+        public ActionResult ViewFacultyScheduleSelector()
+        {
+            return View();
+        }
     }
 }
