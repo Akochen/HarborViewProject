@@ -31,7 +31,7 @@
                     <a href="javascript:void(0)">Faculty Academics</a>
                     <div class="dropdown-content">
                         @Html.ActionLink("View Advisor Details", "RegisterForClassesSelector", "Administrator")
-                        @Html.ActionLink("View Schedule History", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("View Schedule History", "createViewStudentScheduleHelper", "Administrator")
                     </div>
                 </li>
                 <li class="dropdown">
@@ -42,7 +42,7 @@
                         @Html.ActionLink("Update Information", "RegisterForClassesSelector", "Administrator")
                         @Html.ActionLink("View Transcript", "RegisterForClassesSelector", "Administrator")
                         @Html.ActionLink("View Degree Audit", "RegisterForClassesSelector", "Administrator")
-                        @Html.ActionLink("View Schedule History", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("View Schedule By ID", "ViewStudentScheduleSelector", "Administrator")
                     </div>
                 </li>
                 <li class="active">

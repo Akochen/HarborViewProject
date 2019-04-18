@@ -42,7 +42,13 @@ namespace WebApplication3.Controllers
 
         public ActionResult ViewStudentSchedule(String studentID, String semester, String year)
         {
-            return View(WebApplication3.Models.FacultyDbConnectionClass.viewStudentSchedule(studentID, year, semester));
+            if (!studentID.Equals(""))
+            {
+                return View(WebApplication3.Models.FacultyDbConnectionClass.viewStudentSchedule(studentID, year, semester));
+            } else
+            {
+                return View();
+            }
         }
 
         public ActionResult ViewStudentHoldSelector()
