@@ -43,7 +43,6 @@ namespace WebApplication3.Controllers
         public ActionResult ViewStudentSchedule(String studentID, String semester, String year)
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.viewStudentSchedule(studentID, year, semester));
-            return PartialView(WebApplication3.Models.AdminDbConnectionClass.searchSections(searchYear, searchSemester, instructor, days, time, courseID, courseName, department));
         }
 
         public ActionResult ViewTranscriptSelector()
