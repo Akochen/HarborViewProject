@@ -2,7 +2,7 @@
 @using WebApplication3.HelperClasses;
 @{
     ViewBag.Title = "View Student Schedule";
-    Layout = "~/Views/Shared/_LayoutFaculty.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
 
 <link rel="stylesheet" href="~/Content/searchTable.css" />
@@ -40,7 +40,7 @@
             }
             if (!Request["id_box"].Equals(""))
             {
-                @Html.Action("ViewStudentSchedule", "Faculty", new { studentID = Request["id_box"], year = year, semester = season });
+                @Html.Action("ViewStudentSchedule", "Administrator", new { studentID = Request["id_box"], year = year, semester = season });
             }
         }
     }

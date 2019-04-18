@@ -18,6 +18,8 @@ namespace WebApplication3.HelperClasses
         public String days;
         public String grade;
         public String credits;
+        public String building;
+        public String room;
 
         public String firstName;
         public String lastName;
@@ -55,5 +57,7 @@ namespace WebApplication3.HelperClasses
             this.credits = credits;
             this.studentID = studentID;
         }
+
+
     }
 }

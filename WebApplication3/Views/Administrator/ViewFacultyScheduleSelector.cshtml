@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "View Faculty Schedule";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/searchTable.css" />
+<form method="post">
+    <table style="margin-top:5px;" class="searchTable">
+        <tr>
+            <td>
+                <input type="text" name="id_box" placeholder="Faculty ID" />
+                <input type="submit" value="GO" />
+            </td>
+        </tr>
+    </table>
+
+    @{
+        if (IsPost)
+        {
+            @Html.Action("ViewFacultySchedule", "Administrator", new { facultyID = Request["id_box"]});
+        }
+    }
+</form>
+
