@@ -7,9 +7,9 @@ namespace WebApplication3.HelperClasses
 {
     public class Department
     {
-        public String departmentID;
-        public String departmentShortName;
-        public String departmentFullName;
+        public String departmentID { get; set; }
+        public String departmentShortName { get; set; }
+        public String departmentFullName { get; set; }
 
         public Department(string departmentID,string departmentFullName)
         {

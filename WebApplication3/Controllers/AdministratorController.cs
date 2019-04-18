@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication3.HelperClasses;
+
 
 namespace WebApplication3.Controllers
 {
@@ -17,7 +19,7 @@ namespace WebApplication3.Controllers
 
         public ActionResult AddCourseOptions()
         {
-            return View(WebApplication3.Models.StudentDbConnectionClass.createSectionSearchHelper());
+            return View(Models.AdminDbConnectionClass.getDepartmentInfo());
         }
 
         public ActionResult SearchMasterScheduleSelector()

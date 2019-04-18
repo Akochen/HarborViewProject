@@ -14,7 +14,7 @@ namespace WebApplication3.Models
         {
             List<Department> departments = new List<Department>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "select department_full_name from department";
+            String queryString = "select department_id,department_full_name from department";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
