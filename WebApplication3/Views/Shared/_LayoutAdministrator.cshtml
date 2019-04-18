@@ -24,14 +24,14 @@
                     <div class="dropdown-content">
                         @Html.ActionLink("Add Section", "SearchSection", "Administrator")
                         @Html.ActionLink("Update Section", "RegisterForClassesSelector", "Administrator")
-                        @Html.ActionLink("Search ALl Sections", "SearchMasterScheduleSelector", "Administrator")
+                        @Html.ActionLink("Search All Sections", "SearchMasterScheduleSelector", "Administrator")
                     </div>
                 </li>
                 <li class="dropdown">
                     <a href="javascript:void(0)">Faculty Academics</a>
                     <div class="dropdown-content">
-                        @Html.ActionLink("View Advisor Details", "RegisterForClassesSelector", "Administrator")
-                        @Html.ActionLink("View Schedule History", "createViewStudentScheduleHelper", "Administrator")
+                        @Html.ActionLink("View Schedule History", "ViewFacultyScheduleSelector", "Administrator")
+                        @Html.ActionLink("View Advisor Details", "ViewAnAdvisorAviseeListSelector", "Administrator")
                     </div>
                 </li>
                 <li class="dropdown">
@@ -40,7 +40,7 @@
                         @Html.ActionLink("Update Hold", "SearchSection", "Administrator")
                         @Html.ActionLink("Update Grade", "RegisterForClassesSelector", "Administrator")
                         @Html.ActionLink("Update Information", "RegisterForClassesSelector", "Administrator")
-                        @Html.ActionLink("View Transcript", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("View Transcript", "ViewTranscriptSelector", "Administrator")
                         @Html.ActionLink("View Degree Audit", "RegisterForClassesSelector", "Administrator")
                         @Html.ActionLink("View Schedule By ID", "ViewStudentScheduleSelector", "Administrator")
                     </div>
