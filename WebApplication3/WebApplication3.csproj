@@ -249,6 +249,7 @@
     <Content Include="Views\Administrator\ViewAnAdvisorAviseeList.cshtml" />
     <Content Include="Views\Administrator\ViewStudentScheduleSelector.cshtml" />
     <Content Include="Views\Administrator\ViewStudentSchedule.cshtml" />
+    <Content Include="Views\Student\ViewDegreeAuditSelector.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

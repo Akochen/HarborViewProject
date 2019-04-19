@@ -8,16 +8,19 @@ namespace WebApplication3.HelperClasses
     public class DegreeAuditMajorReqs
     {
         public String courseID;
+        public String courseNum;
         public String courseName;
-        public String prereqsToTake;
-        public String isComplete;
+        public String prereqsToTake { get; set; }
+        public String courseStatus { get; set; }
+        public int credits;
+        public String grade;
 
-        public DegreeAuditMajorReqs(string courseID, string courseName, string prereqsToTake, string isComplete)
+        public DegreeAuditMajorReqs(string courseID, string courseNum, string courseName, int credits)
         {
             this.courseID = courseID;
+            this.courseNum = courseNum;
             this.courseName = courseName;
-            this.prereqsToTake = prereqsToTake;
-            this.isComplete = isComplete;
+            this.credits = credits;
         }
     }
 }

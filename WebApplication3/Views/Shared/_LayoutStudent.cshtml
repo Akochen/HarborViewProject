@@ -11,7 +11,7 @@
             <img src="~/Content/HVU Logo.png" class="logo" alt="HVU Logo">
             <ul>
                 <li>
-                @Html.ActionLink("Home", "StudentHome", "Student")
+                    @Html.ActionLink("Home", "StudentHome", "Student")
                 </li>
                 <li class="dropdown">
                     <a href="javascript:void(0)">Registration</a>
@@ -20,7 +20,7 @@
                         @Html.ActionLink("Register", "RegisterForClassesSelector", "Student")
                         @Html.ActionLink("Drop Class", "RemoveEnrollmentSelector", "Student")
                     </div>
-                </li>   
+                </li>
                 <li class="dropdown">
                     <a href="javascript:void(0)" class="dropbtn">Academics</a>
                     <div class="dropdown-content">
@@ -33,7 +33,12 @@
                         }
                     </div>
                 </li>
-                <li><a href=#audit>Degree Audit</a></li>
+                <li>
+                    @if (Session["userID"] != null)
+                    {
+                        @Html.ActionLink("Degree Audit", "ViewDegreeAuditSelector", "Student", new { studentID = Session["UserID"].ToString() }, null)
+                    }
+                </li>
                 <li class="active">
                     @Html.ActionLink("Log Out", "Index", "Home")
                 </li>

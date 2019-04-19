@@ -265,13 +265,5 @@ namespace WebApplication3.Models
 
             return enrollments;
         }
-
-        public static DegreeAuditData createDegreeAudit(String studentID)
-        {
-            String getMajorString = "SELECT student_id,major_name FROM student_major_list sml INNER JOIN major m ON m.major_id = sml.major_id WHERE student_id = " + studentID;
-            String 
-            
-            return null;
-        }
     }
 }

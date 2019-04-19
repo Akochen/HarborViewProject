@@ -101,6 +101,17 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.StudentDbConnectionClass.viewTranscript(userID));
         }
+
+        public ActionResult ViewDegreeAuditSelector(String studentID)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.createDegreeAuditSelector(studentID));
+        }
+
+        [HttpPost]
+        public ActionResult ViewDegreeAudit(String studentID, String majorID)
+        {
+            return View(WebApplication3.Models.StudentDbConnectionClass.degreeAudit(studentID, majorID));
+        }
     }
 }
 
