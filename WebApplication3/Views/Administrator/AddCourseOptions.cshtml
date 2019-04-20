@@ -1,5 +1,5 @@
 ﻿@using WebApplication3.HelperClasses;
-@model List<Department>
+@model AddCourse
 @{
     ViewBag.Title = "AddCourseOptions";
     Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
@@ -8,23 +8,85 @@
 
 <link rel="stylesheet" href="~/Content/Background.css" />
 
-<form name="course" method="post">
-    Department:  <select id="departmentSelector" name="departmentSelector">
-        <option value="startselection">---Select:---</option>
-        @foreach (var v in Model)
-        {
-            <option value="@v">@v.departmentFullName</option>
-        }
-    </select>
-    <br />
-    Course Number: <input type="text" name="LastName" value=""><br />
-    Course Name: <input type="text" name="LastName" value=""><br />
-    Number of Credits: <input type="text" name="LastName" value=""><br />
-    Is Elective: <input type="text" name="LastName" value=""><br />
-    Is Graduate Course: <input type="text" name="LastName" value=""><br /><br />
-    Description:<br><textarea rows="5" cols="50" " name="LastName" form="course"></textarea><br />
-    <input type="submit" value="Submit">
+<form name="addCourse" method="post">
+    <div>
+        <table class="dataTable" id="lines">
+            @*<tr>
+                    <td><strong>Department:</strong> </td>
+                    <td>
+                        <select id="departmentSelector" name="departmentSelector">
+                            <option value="startselection">---Select:---</option>
+                            @foreach (var dept in Model.departments)
+                            {
+                                <option value="@dept">@dept.departmentFullName</option>
+                            }
+                        </select>
+                    </td>
+                </tr>*@
+
+            <tr>
+                    <td><strong>Major:</strong> </td>
+                    <td>
+                        <select id="majorSelector" name="majorSelector">
+                            <option value="startselection">---Select:---</option>
+                            @foreach (var v in Model.majors)
+                            {
+                                <option value="@v">@v.name</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+            <tr>
+                <td><strong>Course Number:</strong> </td>
+                <td><input type="text" name="courseNumber" value=""></td>
+            </tr>
+            <tr>
+                <td><strong>Course Name:</strong> </td>
+                <td><input type="text" name="courseName" value=""></td>
+            </tr>
+            <tr>
+                <td><strong>Number of Credits:</strong> </td>
+                <td><input type="text" name="credits" value=""></td>
+            </tr>
+            <tr>
+                <td><strong> Is This An Elective:</strong> </td>
+                <td>
+                    <select id="elective" name="electiveSelector">
+                        <option value="select">---Select---</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Is This A Graduate Course:</strong> </td>
+                <td>
+                    <select id="grad" name="gradSelector">
+                        <option value="select">---Select---</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong> Description:</strong> </td>
+                <td><textarea rows="5" cols="50" name="desc" form="desc"></textarea></td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr>
+                <td><strong>Add Prerequisites for this course:</strong> </td>
+                <td><input type="text" name="pr1" value="" placeholder="(OPTIONAL)"></td>
+                <td><input type="text" name="pr2" value="" placeholder="(OPTIONAL)"></td>
+            </tr>
+            <tr>
+                <td><strong>Add Courses this is a prerequisite for:</strong> </td>
+                <td><input type="text" name="cr1" value="" placeholder="(OPTIONAL)"></td>
+                <td><input type="text" name="cr2" value="" placeholder="(OPTIONAL)"></td>
+            </tr>
+        </table>
+    </div>
 </form>
-
-
-

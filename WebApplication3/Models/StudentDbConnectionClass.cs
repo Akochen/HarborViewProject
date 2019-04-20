@@ -784,9 +784,11 @@ namespace WebApplication3.Models
                     while (reader.Read())
                     {
                         majorReqs.Add(new DegreeAuditMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetInt32(3)));
+                        return null;
                     }
                 }
             }
+            return null;
         }
     }
 

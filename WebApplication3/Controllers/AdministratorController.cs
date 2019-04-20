@@ -19,7 +19,7 @@ namespace WebApplication3.Controllers
 
         public ActionResult AddCourseOptions()
         {
-            return View(Models.AdminDbConnectionClass.getDepartmentInfo());
+            return View(Models.AdminDbConnectionClass.addCourseHelper2());
         }
 
         public ActionResult SearchMasterScheduleSelector()

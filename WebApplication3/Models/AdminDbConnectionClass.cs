@@ -265,5 +265,51 @@ namespace WebApplication3.Models
 
             return enrollments;
         }
+
+        public static AddCourse addCourseHelper2()
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String deptString = "SELECT [department_full_name] FROM [HarborViewUniversity].[dbo].[department]";
+            String majorString = "SELECT [major_name] FROM [HarborViewUniversity].[dbo].[major]";
+            String minorString = "SELECT [minor_name] FROM [HarborViewUniversity].[dbo].[minor]";
+            List<Department> departments = new List<Department>();
+            List<Major> majors = new List<Major>();
+            List<Minor> minors = new List<Minor>();
+            AddCourse helper = new AddCourse(departments, majors, minors);
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand c1 = new SqlCommand(deptString, connection);
+                connection.Open();
+                using (var reader = c1.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        departments.Add(new Department(reader.GetString(0)));
+                    }
+                    connection.Close();
+                }
+                SqlCommand c2 = new SqlCommand(majorString, connection);
+                connection.Open();
+                using (var reader = c1.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        majors.Add(new Major(reader.GetString(0)));
+                    }
+                    connection.Close();
+                }
+                SqlCommand c3 = new SqlCommand(minorString, connection);
+                connection.Open();
+                using (var reader = c1.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        minors.Add(new Minor(reader.GetString(0)));
+                    }
+                    connection.Close();
+                }
+            }
+            return helper;
+        }
     }
 }

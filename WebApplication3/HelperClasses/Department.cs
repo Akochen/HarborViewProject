@@ -16,5 +16,12 @@ namespace WebApplication3.HelperClasses
             this.departmentID = departmentID;
             this.departmentFullName = departmentFullName;
         }
+        public Department(string departmentFullName)
+        {
+            this.departmentFullName = departmentFullName;
+        }
+        public Department()
+        {
+        }
     }
 }
