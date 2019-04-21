@@ -311,5 +311,30 @@ namespace WebApplication3.Models
             }
             return helper;
         }
+
+        public static String addCourse(AddCourse acForm)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String courseTableInsertString = "";
+            String majorReqTableInsert = "";
+            String minorReqTableInsert = "";
+            String preReqTableInsert = "";
+
+            //check department is valid
+            try
+            {
+                if (acForm.department.Equals("default") || acForm.department == null)
+                {
+                    return "You must enter a valid Department";
+                }
+
+                var message = "HELLO WORLD!!!";
+                return message;
+            }
+            catch(Exception m)
+            {
+                return "You must enter a valid Department";
+            }
+        }
     }
 }
