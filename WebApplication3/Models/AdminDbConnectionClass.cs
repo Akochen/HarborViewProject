@@ -290,7 +290,7 @@ namespace WebApplication3.Models
                 }
                 SqlCommand c2 = new SqlCommand(majorString, connection);
                 connection.Open();
-                using (var reader = c1.ExecuteReader())
+                using (var reader = c2.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -300,7 +300,7 @@ namespace WebApplication3.Models
                 }
                 SqlCommand c3 = new SqlCommand(minorString, connection);
                 connection.Open();
-                using (var reader = c1.ExecuteReader())
+                using (var reader = c3.ExecuteReader())
                 {
                     while (reader.Read())
                     {

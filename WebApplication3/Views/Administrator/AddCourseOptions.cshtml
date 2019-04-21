@@ -11,31 +11,43 @@
 <form name="addCourse" method="post">
     <div>
         <table class="dataTable" id="lines">
-            @*<tr>
-                    <td><strong>Department:</strong> </td>
-                    <td>
-                        <select id="departmentSelector" name="departmentSelector">
-                            <option value="startselection">---Select:---</option>
-                            @foreach (var dept in Model.departments)
-                            {
-                                <option value="@dept">@dept.departmentFullName</option>
-                            }
-                        </select>
-                    </td>
-                </tr>*@
+            <tr>
+                <td><strong>Department:</strong> </td>
+                <td>
+                    <select id="departmentSelector" name="departmentSelector">
+                        <option value="startselection">---Select---</option>
+                        @foreach (var dept in Model.departments)
+                        {
+                            <option value="@dept">@dept.departmentFullName</option>
+                        }
+                    </select>
+                </td>
+            </tr>
 
             <tr>
-                    <td><strong>Major:</strong> </td>
-                    <td>
-                        <select id="majorSelector" name="majorSelector">
-                            <option value="startselection">---Select:---</option>
-                            @foreach (var v in Model.majors)
-                            {
-                                <option value="@v">@v.name</option>
-                            }
-                        </select>
-                    </td>
-                </tr>
+                <td><strong>Major:</strong> </td>
+                <td>
+                    <select id="majorSelector" name="majorSelector">
+                        <option value="startselection">---Select---</option>
+                        @foreach (var major in Model.majors)
+                        {
+                            <option value="@major">@major.name</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Minor:</strong> </td>
+                <td>
+                    <select id="minorSelector" name="minorSelector">
+                        <option value="startselection">---Optional---</option>
+                        @foreach (var minor in Model.minors)
+                        {
+                            <option value="@minor">@minor.name</option>
+                        }
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td><strong>Course Number:</strong> </td>
                 <td><input type="text" name="courseNumber" value=""></td>
@@ -86,6 +98,31 @@
                 <td><strong>Add Courses this is a prerequisite for:</strong> </td>
                 <td><input type="text" name="cr1" value="" placeholder="(OPTIONAL)"></td>
                 <td><input type="text" name="cr2" value="" placeholder="(OPTIONAL)"></td>
+            </tr>
+            <tr>
+                <td><strong> Is this course a major requirement:</strong> </td>
+                <td>
+                    <select id="majorReq" name="majorReq">
+                        <option value="select">---Select---</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong> Is this course a minor requirement:</strong> </td>
+                <td>
+                    <select id="minReq" name="minReq">
+                        <option value="select">---Select---</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" id="submit" value="Submit" />
+                </td>
             </tr>
         </table>
     </div>
