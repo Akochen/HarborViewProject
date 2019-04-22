@@ -315,24 +315,88 @@ namespace WebApplication3.Models
         public static String addCourse(AddCourse acForm)
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String getCourseNumbersString = @"SELECT c.course_num FROM course c INNER JOIN department d ON d.department_id = c.department_id WHERE d.department_full_name = 'Computer Science'";
+            List<String> currentCourseNumbers;
             String courseTableInsertString = "";
             String majorReqTableInsert = "";
             String minorReqTableInsert = "";
             String preReqTableInsert = "";
             String returnMessage = "";
-            acForm.department = null;
-            //check department is valid
+            //acForm.department = null;
+
+
             try
             {
-                if (acForm.department.Equals("default") || acForm.department == null)
+                if (acForm.department.Equals("default"))//check department is valid
                 {
-                    returnMessage = "The Department Value is NULL. Please enter a valid department number";
+                    returnMessage = "The Department is required";
                 }
-                var department = acForm.department;
+
+                if (acForm.major.Equals("default"))//check major is valid
+                {
+                    returnMessage = "The Major is required";
+                }
+
+                //check course number
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    SqlCommand c1 = new SqlCommand(getCourseNumbersString, connection);
+                    currentCourseNumbers = new List<string>();
+                    connection.Open();
+                    using (var reader = c1.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            currentCourseNumbers.Add(reader.GetInt32(0).ToString());
+                        }
+                        connection.Close();
+                    }
+
+                }
+                for (int i = 0; i < currentCourseNumbers.Count;i++) //check if duplicate course number exists
+                {
+                    if (acForm.courseNumber.Equals(currentCourseNumbers.ElementAt(i)))
+                    {
+                        return "This course number already exists in this department. Please select another course number";
+                    }
+                }
+
+                if (acForm.major.Equals("default"))//check if credits is valid
+                {
+                    returnMessage = "The number of credits is required";
+                }
+
+                //check elective validation
+                if (acForm.isElective.Equals("default"))
+                {
+                    returnMessage = "Select if this course is an elective";
+                }
+                else if (acForm.isElective.Equals("Yes"))
+                {
+                    acForm.isElective.Equals("1");
+                }else acForm.isElective.Equals("0");
+
+
+                //check graduate course validation
+                if (acForm.isElective.Equals("default"))
+                {
+                    returnMessage = "Select if this course is a graduate course";
+                }
+                else if (acForm.isGrad.Equals("Yes"))
+                {
+                    acForm.isGrad.Equals("1");
+                }
+                else acForm.isGrad.Equals("0");
+
+
             }
-            catch(NullReferenceException m )
+            catch (Exception ex)
             {
-                
+                return ex.Message;
+            }
+            finally
+            {
+                var department = acForm.department;
             }
             returnMessage = "New Course Added Successfully";
             return returnMessage;

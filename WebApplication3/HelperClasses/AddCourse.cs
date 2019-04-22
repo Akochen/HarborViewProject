@@ -51,26 +51,5 @@ namespace WebApplication3.HelperClasses
             this.isMajorReq = isMajorReq;
             this.isMinorReq = isMinorReq;
         }
-
-        public int isAnElective(String input)
-        {
-            var result = 0;
-            if (input == "Yes")
-            {
-                result = 1;
-            }
-            else result = 0;
-            return result;
-        }
-        public int isGradCourse(String input)
-        {
-            var result = 0;
-            if (input == "Yes")
-            {
-                result = 1;
-            }
-            else result = 0;
-            return result;
-        }
     }
 }

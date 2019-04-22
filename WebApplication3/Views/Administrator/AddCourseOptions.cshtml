@@ -29,7 +29,7 @@
                 <td><strong>Major:</strong> </td>
                 <td>
                     <select id="majorSelector" name="majorSelector">
-                        <option value="major">---Select---</option>
+                        <option value="default">---Select---</option>
                         @foreach (var major in Model.majors)
                         {
                             <option value="@major">@major.name</option>
@@ -41,7 +41,7 @@
                 <td><strong>Minor:</strong> </td>
                 <td>
                     <select id="minorSelector" name="minorSelector">
-                        <option value="minor">---Optional---</option>
+                        <option value="default">---Optional---</option>
                         @foreach (var minor in Model.minors)
                         {
                             <option value="@minor">@minor.name</option>
@@ -59,13 +59,21 @@
             </tr>
             <tr>
                 <td><strong>Number of Credits:</strong> </td>
-                <td><input type="text" name="credits" value=""></td>
+                <td>
+                    <select id="creditSelector" name="creditSelector">
+                        <option value="default">---Select---</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><strong> Is This An Elective:</strong> </td>
                 <td>
                     <select id="elective" name="electiveSelector">
-                        <option value="select">---Select---</option>
+                        <option value="default">---Select---</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
@@ -75,7 +83,7 @@
                 <td><strong>Is This A Graduate Course:</strong> </td>
                 <td>
                     <select id="grad" name="gradSelector">
-                        <option value="select">---Select---</option>
+                        <option value="default">---Select---</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
@@ -132,14 +140,14 @@
     @{
         if (IsPost)
         {
-            String  department = Request.Form["departmentSelector"];
+            String department = Request.Form["departmentSelector"];
             String major = Request.Form["majorSelector"];
             String minor = Request.Form["minorSelector"];
             String courseNumber = Request.Form["courseNumber"];
             String courseName = Request.Form["courseName"];
-            String credits = Request.Form["credits"];
-            String isElective = Request.Form["elective"];
-            String isGrad = Request.Form["grad"];
+            String credits = Request.Form["creditSelector"];
+            String isElective = Request.Form["electiveSelector"];
+            String isGrad = Request.Form["gradSelector"];
             String description = Request.Form["desc"];
             String pr1 = Request.Form["pr1"];
             String pr2 = Request.Form["pr2"];
