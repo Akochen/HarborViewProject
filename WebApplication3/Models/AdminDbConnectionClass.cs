@@ -319,22 +319,23 @@ namespace WebApplication3.Models
             String majorReqTableInsert = "";
             String minorReqTableInsert = "";
             String preReqTableInsert = "";
-
+            String returnMessage = "";
+            acForm.department = null;
             //check department is valid
             try
             {
                 if (acForm.department.Equals("default") || acForm.department == null)
                 {
-                    return "You must enter a valid Department";
+                    returnMessage = "The Department Value is NULL. Please enter a valid department number";
                 }
-
-                var message = "HELLO WORLD!!!";
-                return message;
+                var department = acForm.department;
             }
-            catch(Exception m)
+            catch(NullReferenceException m )
             {
-                return "You must enter a valid Department";
+                
             }
+            returnMessage = "New Course Added Successfully";
+            return returnMessage;
         }
     }
 }

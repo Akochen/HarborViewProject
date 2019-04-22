@@ -173,6 +173,7 @@
     <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\FacultySemester.cs" />
     <Compile Include="HelperClasses\GradeList.cs" />
+    <Compile Include="HelperClasses\NullException.cs" />
     <Compile Include="HelperClasses\SemesterDataHelper.cs" />
     <Compile Include="HelperClasses\StudentEnrollment.cs" />
     <Compile Include="HelperClasses\StudentInfo.cs" />
