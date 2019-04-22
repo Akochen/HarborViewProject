@@ -378,7 +378,7 @@ namespace WebApplication3.Models
 
 
                 //check graduate course validation
-                if (acForm.isElective.Equals("default"))
+                if (acForm..Equals("default"))
                 {
                     returnMessage = "Select if this course is a graduate course";
                 }
@@ -396,7 +396,8 @@ namespace WebApplication3.Models
             }
             finally
             {
-                var department = acForm.department;
+                var department = acForm.department;  
+                int elective = Int32.Parse(acForm.isElective);
             }
             returnMessage = "New Course Added Successfully";
             return returnMessage;
