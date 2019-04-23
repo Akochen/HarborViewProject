@@ -14,5 +14,10 @@ namespace WebApplication3.HelperClasses
             this.name = name;
             this.requirements = requirements;
         }
+
+        public Minor(String name)
+        {
+            this.name = name;
+        }
     }
 }

@@ -16,10 +16,15 @@ namespace WebApplication3.Controllers
         {
             return View();
         }
-
+        //[HttpPost]
         public ActionResult AddCourseOptions()
         {
-            return View(Models.AdminDbConnectionClass.getDepartmentInfo());
+            return View(Models.AdminDbConnectionClass.addCourseHelper2());
+        }
+
+        public ActionResult AddCourse(AddCourse form)
+        {
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.addCourse(form));
         }
 
         public ActionResult SearchMasterScheduleSelector()

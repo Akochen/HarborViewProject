@@ -12,6 +12,7 @@ namespace WebApplication3.HelperClasses
         public String prereqs { get; set; }
         public String description { get; set; }
         public int credits { get; set; }
+        public String courseNumber { get; set; }
 
         public Course(String shortName, String fullName, String prereqs, String description, int credits)
         {
@@ -20,6 +21,11 @@ namespace WebApplication3.HelperClasses
             this.prereqs = prereqs;
             this.description = description;
             this.credits = credits;
+        }
+
+        public Course(string courseNumber)
+        {
+            this.courseNumber = courseNumber;
         }
     }
 }

@@ -163,6 +163,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\AddCourse.cs" />
     <Compile Include="HelperClasses\Advisee.cs" />
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\FacultySemester.cs" />
     <Compile Include="HelperClasses\GradeList.cs" />
+    <Compile Include="HelperClasses\NullException.cs" />
     <Compile Include="HelperClasses\SemesterDataHelper.cs" />
     <Compile Include="HelperClasses\StudentEnrollment.cs" />
     <Compile Include="HelperClasses\StudentInfo.cs" />
@@ -254,6 +256,7 @@
     <Content Include="Views\Administrator\UpdateStudentGradeStudentSelector.cshtml" />
     <Content Include="Views\Administrator\UpdateStudentGradeClassSelector.cshtml" />
     <Content Include="Views\Administrator\UpdateStudentGradeGradeSelector.cshtml" />
+    <Content Include="Views\Administrator\AddCourse.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -24,5 +24,9 @@ namespace WebApplication3.HelperClasses
             this.name = name;
             this.majorID = majorID;
         }
+        public Major(string name)
+        {
+            this.name = name;
+        }
     }
 }
