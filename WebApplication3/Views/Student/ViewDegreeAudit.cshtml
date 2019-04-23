@@ -1,0 +1,25 @@
+﻿@model WebApplication3.HelperClasses.DegreeAuditData
+
+@{ 
+    Layout = null;
+}
+
+<table id="majorReqs">
+    <tr>
+        <th>CID</th>
+        <th>Course Name</th>
+        <th>Prerequisites</th>
+        <th>Grade</th>
+        <th>Credits</th>
+    </tr>
+    @foreach(var mReq in Model.majorReqs)
+    {
+        <tr>
+            <td>@mReq.courseNum</td>
+            <td>@mReq.courseName</td>
+            <td>@* prerequisites go here *@</td>
+            <td>@mReq.grade</td>
+            <td>@mReq.credits</td>
+        </tr>
+    }
+</table>

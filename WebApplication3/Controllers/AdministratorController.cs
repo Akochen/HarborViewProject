@@ -66,8 +66,7 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.viewAdvisorAdviseeList(userID));
         }
-
-        //****************************************************************//
+        
         public ActionResult ViewFacultySchedule(String facultyID)
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.viewFacultySchedule(facultyID));
@@ -76,6 +75,28 @@ namespace WebApplication3.Controllers
         public ActionResult ViewFacultyScheduleSelector()
         {
             return View();
+        }
+
+        public ActionResult UpdateStudentGradeStudentSelector()
+        {
+            return View();
+        }
+
+        public ActionResult UpdateStudentGradeClassSelector(String studentID)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.createUpdateGradeList(studentID));
+        }
+
+        public ActionResult UpdateStudentGradeGradeSelector(string courseID, string name, string sectionID, string grade, string studentID)
+        {
+            StudentEnrollment s = new StudentEnrollment(courseID, name, sectionID, grade, studentID);
+            return View(s);
+        }
+
+        public String UpdateGrade(string courseID, string name, string sectionID, string grade, string studentID)
+        {
+            StudentEnrollment s = new StudentEnrollment(courseID, name, sectionID, grade, studentID);
+            return WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
         }
     }
 }

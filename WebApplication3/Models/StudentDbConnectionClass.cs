@@ -772,9 +772,16 @@ namespace WebApplication3.Models
                                             INNER JOIN major m ON m.major_id = mr.major_id
                                             INNER JOIN department d ON d.department_id = m.department_id
                                             WHERE m.major_id = " + majorID;
-            String getClassesTakenString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE [year] = '" + SemesterDataHelper.getSemesterYear() + "' AND semster = '" + SemesterDataHelper.getSemesterSeason() + "' AND student_id = " + studentID;
+            String getClassesTakenString = @"SELECT DISTINCT s.course_id,sh.grade,c.course_credits
+                                            FROM student_semester_history sh
+                                            INNER JOIN section s ON s.section_id = sh.section_id
+                                            INNER JOIN course c ON c.course_id = s.course_id
+                                            WHERE sh.student_id = 1 
+                                                AND (sh.grade = 'C' OR sh.grade = 'C+' OR sh.grade = 'B-' OR sh.grade = 'B' OR sh.grade = 'B+' OR sh.grade = 'A-' OR sh.grade = 'A')";
+            String getClassesInProgresss = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE [year] = '" + SemesterDataHelper.getSemesterYear() + "' AND semster = '" + SemesterDataHelper.getSemesterSeason() + "' AND student_id = " + studentID;
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             List<DegreeAuditMajorReqs> majorReqs = new List<DegreeAuditMajorReqs>();
+            
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(getMajorInfoString, connection);
@@ -783,11 +790,17 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        majorReqs.Add(new DegreeAuditMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetInt32(3)));
+                        majorReqs.Add(new DegreeAuditMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetByte(3)));
                     }
                 }
             }
+
+
+            DegreeAuditData data = new DegreeAuditData(majorReqs);
+            return data;
         }
+
+        
     }
 
 }
