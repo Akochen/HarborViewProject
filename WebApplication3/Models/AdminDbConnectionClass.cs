@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -266,6 +266,7 @@ namespace WebApplication3.Models
             return enrollments;
         }
 
+<<<<<<< HEAD
         public static AddCourse addCourseHelper2()
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
@@ -467,7 +468,66 @@ namespace WebApplication3.Models
 
             }
             return returnMessage;
+=======
+        public static List<Hold> viewHolds(String userID)
+        {
+            List<Hold> holds = new List<Hold>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT  [hold_type_name] ,[semester] ,[year] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + userID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        holds.Add(new Hold(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                    }
+                }
+                connection.Close();
+            }
 
+            return holds;
+        }
+
+        public static String removeHold(String holdType, String studentID, String year, String semester)
+        {
+            List<Hold> holds = new List<Hold>();
+            int holdTypeID = 0;
+            if(holdType.Equals("Academic"))
+            {
+                holdTypeID = 1;
+            }
+            else if(holdType.Equals("Financial"))
+            {
+                holdTypeID = 3;
+            }
+            else if(holdType.Equals("Administrative"))
+            {
+                holdTypeID = 2;
+            }
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String insertString = "DELETE FROM hold WHERE student_id = " + studentID + "AND hold_type_id = " + holdTypeID;
+            String result = "";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(insertString, connection);
+                connection.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    result = "Success message";
+                }
+                catch
+                {
+                    result = "ERROR: Could not remove hold";
+                }
+                connection.Close();
+
+                return result;
+            }
+>>>>>>> 0fe722a... Administrator can now remove holds
         }
     }
 }
