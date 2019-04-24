@@ -15,8 +15,8 @@
             <tr>
                 <td><strong>Department:</strong> </td>
                 <td>
-                    <select id="departmentSelector" name="departmentSelector">
-                        <option value="default">---Select---</option>
+                    <select id="departmentSelector" name="departmentSelector" required>
+                        <option value="">---Select---</option>
                         @foreach (var dept in Model.departments)
                         {
                             <option value="@dept">@dept.departmentFullName</option>
@@ -25,43 +25,20 @@
                 </td>
             </tr>
 
-            <tr>
-                <td><strong>Major:</strong> </td>
-                <td>
-                    <select id="majorSelector" name="majorSelector">
-                        <option value="default">---Select---</option>
-                        @foreach (var major in Model.majors)
-                        {
-                            <option value="@major">@major.name</option>
-                        }
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Minor:</strong> </td>
-                <td>
-                    <select id="minorSelector" name="minorSelector">
-                        <option value="default">---Optional---</option>
-                        @foreach (var minor in Model.minors)
-                        {
-                            <option value="@minor">@minor.name</option>
-                        }
-                    </select>
-                </td>
-            </tr>
+
             <tr>
                 <td><strong>Course Number:</strong> </td>
-                <td><input type="text" name="courseNumber" value=""></td>
+                <td><input type="text" name="courseNumber" value="" required></td>
             </tr>
             <tr>
                 <td><strong>Course Name:</strong> </td>
-                <td><input type="text" name="courseName" value=""></td>
+                <td><input type="text" name="courseName" value="" required></td>
             </tr>
             <tr>
                 <td><strong>Number of Credits:</strong> </td>
                 <td>
-                    <select id="creditSelector" name="creditSelector">
-                        <option value="default">---Select---</option>
+                    <select id="creditSelector" name="creditSelector" required>
+                        <option value="">---Select---</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -72,8 +49,8 @@
             <tr>
                 <td><strong> Is This An Elective:</strong> </td>
                 <td>
-                    <select id="elective" name="electiveSelector">
-                        <option value="default">---Select---</option>
+                    <select id="elective" name="electiveSelector" required>
+                        <option value="">---Select---</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
@@ -82,8 +59,8 @@
             <tr>
                 <td><strong>Is This A Graduate Course:</strong> </td>
                 <td>
-                    <select id="grad" name="gradSelector">
-                        <option value="default">---Select---</option>
+                    <select id="grad" name="gradSelector" required>
+                        <option value="">---Select---</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
@@ -91,7 +68,7 @@
             </tr>
             <tr>
                 <td><strong> Description:</strong> </td>
-                <td><textarea rows="5" cols="50" name="desc" form="desc"></textarea></td>
+                <td><textarea rows="5" cols="50" value="" name="desc" required form="desc"></textarea></td>
             </tr>
         </table>
     </div>
@@ -99,19 +76,19 @@
     <div>
         <table>
             <tr>
-                <td><strong>Add Prerequisites for this course:</strong> </td>
-                <td><input type="text" name="pr1" value="" placeholder="(OPTIONAL)"></td>
-                <td><input type="text" name="pr2" value="" placeholder="(OPTIONAL)"></td>
-            </tr>
-            <tr>
-                <td><strong>Add Courses this is a prerequisite for:</strong> </td>
-                <td><input type="text" name="cr1" value="" placeholder="(OPTIONAL)"></td>
-                <td><input type="text" name="cr2" value="" placeholder="(OPTIONAL)"></td>
-            </tr>
-            <tr>
+                <td><strong>Major:</strong> </td>
+                <td>
+                    <select id="majorSelector" name="majorSelector" required>
+                        <option value="">---Optional---</option>
+                        @foreach (var major in Model.majors)
+                        {
+                            <option value="@major">@major.name</option>
+                        }
+                    </select>
+                </td>
                 <td><strong> Is this course a major requirement:</strong> </td>
                 <td>
-                    <select id="majorReq" name="majorReq">
+                    <select id="majorReq" name="majorReq" required>
                         <option value="select">---Select---</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
@@ -119,21 +96,47 @@
                 </td>
             </tr>
             <tr>
+                <td><strong>Minor:</strong> </td>
+                <td>
+                    <select id="minorSelector" name="minorSelector">
+                        <option value="">---Optional---</option>
+                        @foreach (var minor in Model.minors)
+                        {
+                            <option value="@minor">@minor.name</option>
+                        }
+                    </select>
+                </td>
                 <td><strong> Is this course a minor requirement:</strong> </td>
                 <td>
-                    <select id="minReq" name="minReq">
+                    <select id="minReq" name="minReq" required>
                         <option value="select">---Select---</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" id="submit" value="Submit" />
                 </td>
             </tr>
         </table>
+    </div>
+    <div>
+    <table>
+
+        <tr>
+            <td><strong>Add Prerequisites for this course:</strong> </td>
+            <td><input type="text" name="pr1" value="" placeholder="(OPTIONAL)"></td>
+            <td><input type="text" name="pr2" value="" placeholder="(OPTIONAL)"></td>
+        </tr>
+        <tr>
+            <td><strong>Add Courses this is a prerequisite for:</strong> </td>
+            <td><input type="text" name="cr1" value="" placeholder="(OPTIONAL)"></td>
+            <td><input type="text" name="cr2" value="" placeholder="(OPTIONAL)"></td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="submit" id="submit" value="Submit" />
+            </td>
+        </tr>
+    </table>
     </div>
 </form>
 
