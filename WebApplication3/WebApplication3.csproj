@@ -143,6 +143,9 @@
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Views\Administrator\ViewFacultyScheduleSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewStudentHold.cshtml" />
+    <Content Include="Views\Administrator\ViewStudentHoldSelector.cshtml" />
+    <Content Include="Views\Administrator\removeHold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
