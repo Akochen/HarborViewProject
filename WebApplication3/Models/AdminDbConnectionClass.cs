@@ -270,13 +270,15 @@ namespace WebApplication3.Models
         public static AddCourse addCourseHelper2()
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String deptString = "SELECT [department_full_name] FROM [HarborViewUniversity].[dbo].[department]";
-            String majorString = "SELECT [major_name] FROM [HarborViewUniversity].[dbo].[major]";
-            String minorString = "SELECT [minor_name] FROM [HarborViewUniversity].[dbo].[minor]";
+            String deptString = "SELECT [department_full_name] FROM [HarborViewUniversity].[dbo].[department] order by department_full_name";
+            String courseString = "select course_name from course order by course_name";
+            //String majorString = "SELECT [major_name] FROM [HarborViewUniversity].[dbo].[major]";
+            //String minorString = "SELECT [minor_name] FROM [HarborViewUniversity].[dbo].[minor]";
             List<Department> departments = new List<Department>();
-            List<Major> majors = new List<Major>();
-            List<Minor> minors = new List<Minor>();
-            AddCourse helper = new AddCourse(departments, majors, minors);
+            List<Course> courses = new List<Course>();
+            //List<Major> majors = new List<Major>();
+            //List<Minor> minors = new List<Minor>();
+            AddCourse helper = new AddCourse(departments, courses);
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand c1 = new SqlCommand(deptString, connection);
@@ -289,58 +291,60 @@ namespace WebApplication3.Models
                     }
                     connection.Close();
                 }
-                SqlCommand c2 = new SqlCommand(majorString, connection);
+                SqlCommand c2 = new SqlCommand(courseString, connection);
                 connection.Open();
                 using (var reader = c2.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        majors.Add(new Major(reader.GetString(0)));
+                        courses.Add(new Course(reader.GetString(0)));
                     }
                     connection.Close();
                 }
-                SqlCommand c3 = new SqlCommand(minorString, connection);
-                connection.Open();
-                using (var reader = c3.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        minors.Add(new Minor(reader.GetString(0)));
-                    }
-                    connection.Close();
-                }
+                //SqlCommand c2 = new SqlCommand(majorString, connection);
+                //connection.Open();
+                //using (var reader = c2.ExecuteReader())
+                //{
+                //    while (reader.Read())
+                //    {
+                //        majors.Add(new Major(reader.GetString(0)));
+                //    }
+                //    connection.Close();
+                //}
+                //SqlCommand c3 = new SqlCommand(minorString, connection);
+                //connection.Open();
+                //using (var reader = c3.ExecuteReader())
+                //{
+                //    while (reader.Read())
+                //    {
+                //        minors.Add(new Minor(reader.GetString(0)));
+                //    }
+                //    connection.Close();
+                //}
             }
             return helper;
         }
 
         public static String addCourse(AddCourse acForm)
         {
+            string test = acForm.department;
+
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String getCourseNumbersString = @"SELECT c.course_num FROM course c INNER JOIN department d ON d.department_id = c.department_id WHERE d.department_full_name = " + acForm.department;
             String getDeptId = " SELECT department_id FROM department WHERE department_full_name = " + acForm.department;
-            String getMajorId = "SELECT major_id FROM major WHERE major_name = " + acForm.major;
-            String getMinorId = "SELECT minor_id FROM minor WHERE minor_name = " + acForm.minor;
+            String getPr1Id = "select course_id from course where course_name = "+acForm.pr1+" AND department_id = "+ getDeptId;
+            String getPr2Id = "select course_id from course where course_name = " + acForm.pr2 + " AND department_id = " + getDeptId;
+            String getCr1Id = "select course_id from course where course_name = " + acForm.cr1 + " AND department_id = " + getDeptId;
+            String getCr2Id = "select course_id from course where course_name = " + acForm.cr2 + " AND department_id = " + getDeptId;
             List<String> currentCourseNumbers;
-            String majorReqTableInsert = "";
-            String minorReqTableInsert = "";
-            String preReqTableInsert = "";
-            String returnMessage = "TEST";
-            //acForm.department = null;
-
-
+            String returnMessage = "Message FAIL";
+            String newCourseID = "";
+            //String getMajorId = "SELECT major_id FROM major WHERE major_name = " + acForm.major;
+            //String getMinorId = "SELECT minor_id FROM minor WHERE minor_name = " + acForm.minor;
+            //String majorReqTableInsert = "";
+            //String minorReqTableInsert = "";
             try
-            {
-                //if (acForm.department.Equals("default"))//check department is valid
-                //{
-                //    returnMessage = "The Department is required";
-                //}
-
-                //if (acForm.major.Equals("default"))//check major is valid
-                //{
-                //    returnMessage = "The Major is required";
-                //}
-
-                //check course number
+            {  //check course number
                 using (SqlConnection connection = new SqlConnection(cString))
                 {
                     SqlCommand c1 = new SqlCommand(getCourseNumbersString, connection);
@@ -363,83 +367,31 @@ namespace WebApplication3.Models
                         return "This course number already exists in this department. Please select another course number";
                     }
                 }
-
-                //if (acForm.major.Equals("default"))//check if credits is valid
-                //{
-                //    returnMessage = "The number of credits is required";
-                //}
-
                 //check elective validation
-                //if (acForm.isElective.Equals("default"))
-                //{
-                //    returnMessage = "Select if this course is an elective";
-                //}
-                //else 
-                if (acForm.isElective.Equals("Yes"))
-                {
+                if (acForm.isElective.Equals("Yes")) {
                     acForm.isElective.Equals("1");
                 }
                 else acForm.isElective.Equals("0");
 
 
                 //check graduate course validation
-                //if (acForm.Equals("default"))
-                //{
-                //    returnMessage = "Select if this course is a graduate course";
-                //}
-                //else 
-                if (acForm.isGrad.Equals("Yes"))
-                {
+                if (acForm.isGrad.Equals("Yes")) {
                     acForm.isGrad.Equals("1");
                 }
                 else acForm.isGrad.Equals("0");
 
-
-                //if (acForm.description.Equals(""))
-                //{
-                //    acForm.description = "required";
-                //    returnMessage = acForm.description;
+                //var isMajorReq = Int32.Parse(acForm.isMajorReq);
+                //var isMinorReq = Int32.Parse(acForm.isMinorReq);
+                ////major req
+                //if (acForm.isMajorReq.Equals("Yes")) {
+                //    acForm.isMajorReq = "1";
                 //}
-
-                //if(acForm.isMajorReq.Equals("default") || acForm.isMinorReq.Equals("default"))
-                //{
-                //    return "Please Select if this a requirement";
+                ////minor req 
+                //if (acForm.isMinorReq.Equals("Yes")) {
+                //    acForm.isMinorReq = "1";
                 //}
-                var isMajorReq = Int32.Parse(acForm.isMajorReq);
-                var isMinorReq = Int32.Parse(acForm.isMinorReq);
-                var pr1 = acForm.pr1;
-                var pr2 = acForm.pr2;
-                var cr1 = acForm.cr1;
-                var cr2 = acForm.cr2;
+                //  }
 
-                //check pre req
-                if (acForm.pr1.Equals("Yes")) {
-                    acForm.pr1 = "1";
-                }
-                if (acForm.pr2.Equals("Yes")) {
-                    acForm.pr2 = "1";
-                }
-                //check course req
-                if (acForm.cr1.Equals("Yes")) {
-                    acForm.cr1 = "1";
-                }
-                if (acForm.cr2.Equals("Yes")) {
-                    acForm.cr2 = "1";
-                }
-                //major req
-                if (acForm.isMajorReq.Equals("Yes")) {
-                    acForm.isMajorReq = "1";
-                }
-                //minor req 
-                if (acForm.isMinorReq.Equals("Yes")) {
-                    acForm.isMinorReq = "1";
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-            }
-            finally {
 
                 //(<department_id, int,>
                 // ,<course_num, int,>
@@ -449,25 +401,145 @@ namespace WebApplication3.Models
                 // ,<is_elective, bit,>
                 // ,<is_graduate_course, bit,>)
                 var department = Int32.Parse(getDeptId);
-                var major = Int32.Parse(getMajorId);
-                var minor = Int32.Parse(getMinorId);
                 var courseNumber = Int32.Parse(acForm.courseNumber);
+                var courseName = acForm.courseName;
+                var description = acForm.description;
                 int credits = Int32.Parse(acForm.credits);
                 var isElective = Int32.Parse(acForm.isElective);
                 var isGrad = Int32.Parse(acForm.isGrad);
-                var description = acForm.description;
-                var courseName = acForm.courseName;
+                //var major = Int32.Parse(getMajorId);
+                //var minor = Int32.Parse(getMinorId);
 
                 String courseTableInsertString = @"INSERT INTO [dbo].[course]([department_id],[course_num],[course_name],[course_description],[course_credits],[is_elective],[is_graduate_course])
-                                             VALUES(department,courseNumber,acForm.courseName,acForm.description,credits,isElective,isGrad)";
+                                                    VALUES(" + department + "," + courseNumber + ",'" + acForm.courseName + "','" + acForm.description + "','" + credits + "','" + isElective + "'," + isGrad + ")";
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    SqlCommand command = new SqlCommand(courseTableInsertString, connection);
+                    connection.Open();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        returnMessage = "New Course Added Successfully";
+                    }
+                    catch
+                    {
+                        returnMessage = "ERROR: The Course Failed to Insert Correctly";
+                    }
+                    connection.Close();
+                }        
+                var pr1 = acForm.pr1;
+                var pr2 = acForm.pr2;
+                var cr1 = acForm.cr1;
+                var cr2 = acForm.cr2;
+                //check pre req
+                //get id of the new course number to use for insert into pre req tables
+                String getNewCourseIDString = "select course_id from course WHERE course.course_num = " + courseNumber + "AND  course.department_id = " + department;
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    SqlCommand c1 = new SqlCommand(getNewCourseIDString, connection);
+                    connection.Open();
+                    using (var reader = c1.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            newCourseID = reader.GetInt32(0).ToString();
+                        }
+                        connection.Close();
+                    }
+                }
+                if (!(acForm.pr1.Equals("Optional")))
+                {
+                    String preReqTableInsert = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES((" + newCourseID + "," + pr1 + "";
+                    //insert query
+                    //update return message
+                    using (SqlConnection connection = new SqlConnection(cString))
+                    {
+                        SqlCommand command = new SqlCommand(preReqTableInsert, connection);
+                        connection.Open();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                           // returnMessage = "New Course Added Successfully";
+                        }
+                        catch
+                        {
+                            returnMessage = "ERROR: The Prereq Failed to Insert Correctly";
+                        }
+                        connection.Close();
+                    }
+                }
+                if (acForm.pr2.Equals("Yes"))
+                {
+                    String preReqTableInsert2 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES((" + newCourseID + "," + pr2 + "";
+                    //insert query
+                    //update return message
+                    using (SqlConnection connection = new SqlConnection(cString))
+                    {
+                        SqlCommand command = new SqlCommand(preReqTableInsert2, connection);
+                        connection.Open();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                           // returnMessage = "New Course Added Successfully";
+                        }
+                        catch
+                        {
+                            returnMessage = "ERROR: The Prereq Failed to Insert Correctly";
+                        }
+                        connection.Close();
+                    }
+                }
+                //check course req
+                if (acForm.cr1.Equals("Yes"))
+                {
+                    String preReqTableInsert3 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES((" + newCourseID + "," + cr1 + "";
+                    //insert query
+                    //update return message
+                    using (SqlConnection connection = new SqlConnection(cString))
+                    {
+                        SqlCommand command = new SqlCommand(preReqTableInsert3, connection);
+                        connection.Open();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                            //returnMessage = "New Course Added Successfully";
+                        }
+                        catch
+                        {
+                            returnMessage = "ERROR: The Course Req Failed to Insert Correctly";
+                        }
+                        connection.Close();
+                    }
+                }
+                if (acForm.cr2.Equals("Yes"))
+                {
+                    String preReqTableInsert4 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES((" + newCourseID + "," + cr2 + "";
+                    //insert query
+                    //update return message
+                    using (SqlConnection connection = new SqlConnection(cString))
+                    {
+                        SqlCommand command = new SqlCommand(preReqTableInsert4, connection);
+                        connection.Open();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                            //returnMessage = "Course Req Added";
+                        }
+                        catch
+                        {
+                            returnMessage = "ERROR: The Course Req Failed to Insert Correctly";
+                        }
+                        connection.Close();
+                    }
+                }
+
             }
-
+            catch (Exception ex)
             {
-                //do insert here
-                returnMessage = "New Course Added Successfully";
-
+                return ex.Message;
             }
             return returnMessage;
+
         }
             public static List<Hold> viewHolds(String userID)
             {

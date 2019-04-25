@@ -11,7 +11,7 @@ namespace WebApplication3.HelperClasses
         public String departmentShortName { get; set; }
         public String departmentFullName { get; set; }
 
-        public Department(string departmentID,string departmentFullName)
+        public Department(string departmentFullName,string departmentID)
         {
             this.departmentID = departmentID;
             this.departmentFullName = departmentFullName;
@@ -20,6 +20,7 @@ namespace WebApplication3.HelperClasses
         {
             this.departmentFullName = departmentFullName;
         }
+
         public Department()
         {
         }
