@@ -167,6 +167,7 @@
     <Compile Include="HelperClasses\Advisee.cs" />
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
+    <Compile Include="HelperClasses\Course.cs" />
     <Compile Include="HelperClasses\DegreeAuditData.cs" />
     <Compile Include="HelperClasses\DegreeAuditMajorReqs.cs" />
     <Compile Include="HelperClasses\Department.cs" />
@@ -183,7 +184,7 @@
     <Compile Include="HelperClasses\Hold.cs" />
     <Compile Include="HelperClasses\SectionSearchHelper.cs" />
     <Compile Include="HelperClasses\Section.cs" />
-    <Compile Include="HelperClasses\Course.cs" />
+    <Compile Include="HelperClasses\CatalogCourse.cs" />
     <Compile Include="HelperClasses\Major.cs" />
     <Compile Include="HelperClasses\Minor.cs" />
     <Compile Include="Models\AdminDbConnectionClass.cs" />
@@ -253,6 +254,7 @@
     <Content Include="Views\Administrator\ViewStudentSchedule.cshtml" />
     <Content Include="Views\Student\ViewDegreeAuditSelector.cshtml" />
     <Content Include="Views\Administrator\AddCourse.cshtml" />
+    <Content Include="Views\Student\ViewDegreeAudit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

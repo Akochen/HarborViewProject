@@ -1,0 +1,31 @@
+﻿@using WebApplication3.HelperClasses;
+@model DegreeAuditData
+@{ 
+    Layout = null;
+}
+<link rel="stylesheet" href="~/Content/TableTemplate.css" />
+
+<table id="majorReqs" class="resultsTable">
+    <tr class="tableheader">
+        <th></th>
+        <th>CID</th>
+        <th>Course</th>
+        <th>Prerequisites</th>
+        <th>Grade</th>
+        <th>Credits</th>
+    </tr>
+    @{ 
+        foreach(var v in Model.majorReqs)
+        {
+            <tr>
+                <td>@Html.Raw(@v.courseStatus)</td>
+                <td>@v.courseNum</td>
+                <td>@v.courseName</td>
+                <td>@v.prereqsToTake <br />@v.prereqsTaken</td>
+                <td>@v.grade</td>
+                <td>@v.credits</td>
+            </tr>
+            
+        }
+    }
+</table>

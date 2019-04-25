@@ -378,7 +378,7 @@ namespace WebApplication3.Models
 
 
                 //check graduate course validation
-                if (acForm..Equals("default"))
+                if (acForm.Equals("default"))
                 {
                     returnMessage = "Select if this course is a graduate course";
                 }

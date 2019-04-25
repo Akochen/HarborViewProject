@@ -32,5 +32,17 @@ namespace WebApplication3.HelperClasses
             gradeList.Add("F");
             return gradeList;
         }
+
+        public static bool isPassing(String grade)
+        {
+            string g = grade.ToLower().Replace(" ", string.Empty);
+            if(g == "c" || g == "c+" || g == "b-" || g == "b" || g == "b+" || g == "a-" || g == "a")
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
     }
 }
