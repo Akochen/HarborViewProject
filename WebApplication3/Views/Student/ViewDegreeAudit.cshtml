@@ -21,7 +21,7 @@
                 <td>@Html.Raw(@v.courseStatus)</td>
                 <td>@v.courseNum</td>
                 <td>@v.courseName</td>
-                <td>@v.prereqsToTake <br />@v.prereqsTaken</td>
+                <td><span style="color:red"> @v.prereqsToTake </span><br /> <span style="color:forestgreen"> @v.prereqsTaken </span></td>
                 <td>@v.grade</td>
                 <td>@v.credits</td>
             </tr>
