@@ -266,7 +266,7 @@ namespace WebApplication3.Models
             return enrollments;
         }
 
-<<<<<<< HEAD
+
         public static AddCourse addCourseHelper2()
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
@@ -316,7 +316,7 @@ namespace WebApplication3.Models
         public static String addCourse(AddCourse acForm)
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String getCourseNumbersString = @"SELECT c.course_num FROM course c INNER JOIN department d ON d.department_id = c.department_id WHERE d.department_full_name = "+acForm.department;
+            String getCourseNumbersString = @"SELECT c.course_num FROM course c INNER JOIN department d ON d.department_id = c.department_id WHERE d.department_full_name = " + acForm.department;
             String getDeptId = " SELECT department_id FROM department WHERE department_full_name = " + acForm.department;
             String getMajorId = "SELECT major_id FROM major WHERE major_name = " + acForm.major;
             String getMinorId = "SELECT minor_id FROM minor WHERE minor_name = " + acForm.minor;
@@ -413,17 +413,17 @@ namespace WebApplication3.Models
                 var cr2 = acForm.cr2;
 
                 //check pre req
-                if (acForm.pr1.Equals("Yes")){
-                    acForm.pr1 ="1";
+                if (acForm.pr1.Equals("Yes")) {
+                    acForm.pr1 = "1";
                 }
-                if (acForm.pr2.Equals("Yes")){
-                    acForm.pr2 ="1";
+                if (acForm.pr2.Equals("Yes")) {
+                    acForm.pr2 = "1";
                 }
                 //check course req
-                if (acForm.cr1.Equals("Yes")){
-                    acForm.cr1 ="1";
+                if (acForm.cr1.Equals("Yes")) {
+                    acForm.cr1 = "1";
                 }
-                if (acForm.cr2.Equals("Yes")){
+                if (acForm.cr2.Equals("Yes")) {
                     acForm.cr2 = "1";
                 }
                 //major req
@@ -439,15 +439,15 @@ namespace WebApplication3.Models
             {
                 ex.Message.ToString();
             }
-            finally { 
+            finally {
 
-          //(<department_id, int,>
-          // ,<course_num, int,>
-          // ,<course_name, varchar(50),>
-          // ,<course_description, varchar(max),>
-          // ,<course_credits, tinyint,>
-          // ,<is_elective, bit,>
-          // ,<is_graduate_course, bit,>)
+                //(<department_id, int,>
+                // ,<course_num, int,>
+                // ,<course_name, varchar(50),>
+                // ,<course_description, varchar(max),>
+                // ,<course_credits, tinyint,>
+                // ,<is_elective, bit,>
+                // ,<is_graduate_course, bit,>)
                 var department = Int32.Parse(getDeptId);
                 var major = Int32.Parse(getMajorId);
                 var minor = Int32.Parse(getMinorId);
@@ -468,66 +468,68 @@ namespace WebApplication3.Models
 
             }
             return returnMessage;
-=======
-        public static List<Hold> viewHolds(String userID)
-        {
-            List<Hold> holds = new List<Hold>();
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "SELECT  [hold_type_name] ,[semester] ,[year] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + userID;
-            using (SqlConnection connection = new SqlConnection(cString))
+        }
+            public static List<Hold> viewHolds(String userID)
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                using (var reader = command.ExecuteReader())
+                List<Hold> holds = new List<Hold>();
+                String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+                String queryString = "SELECT  [hold_type_name] ,[semester] ,[year] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + userID;
+                using (SqlConnection connection = new SqlConnection(cString))
                 {
-                    while (reader.Read())
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        holds.Add(new Hold(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                        while (reader.Read())
+                        {
+                            holds.Add(new Hold(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                        }
                     }
+                    connection.Close();
                 }
-                connection.Close();
+
+                return holds;
             }
 
-            return holds;
-        }
-
-        public static String removeHold(String holdType, String studentID, String year, String semester)
-        {
-            List<Hold> holds = new List<Hold>();
-            int holdTypeID = 0;
-            if(holdType.Equals("Academic"))
+            public static String removeHold(String holdType, String studentID, String year, String semester)
             {
-                holdTypeID = 1;
-            }
-            else if(holdType.Equals("Financial"))
-            {
-                holdTypeID = 3;
-            }
-            else if(holdType.Equals("Administrative"))
-            {
-                holdTypeID = 2;
-            }
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String insertString = "DELETE FROM hold WHERE student_id = " + studentID + "AND hold_type_id = " + holdTypeID;
-            String result = "";
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand command = new SqlCommand(insertString, connection);
-                connection.Open();
-                try
+                List<Hold> holds = new List<Hold>();
+                int holdTypeID = 0;
+                if (holdType.Equals("Academic"))
                 {
-                    command.ExecuteNonQuery();
-                    result = "Success message";
+                    holdTypeID = 1;
                 }
-                catch
+                else if (holdType.Equals("Financial"))
                 {
-                    result = "ERROR: Could not remove hold";
+                    holdTypeID = 3;
                 }
-                connection.Close();
+                else if (holdType.Equals("Administrative"))
+                {
+                    holdTypeID = 2;
+                }
+                String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+                String insertString = "DELETE FROM hold WHERE student_id = " + studentID + "AND hold_type_id = " + holdTypeID;
+                String result = "";
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    SqlCommand command = new SqlCommand(insertString, connection);
+                    connection.Open();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        result = "Success message";
+                    }
+                    catch
+                    {
+                        result = "ERROR: Could not remove hold";
+                    }
+                    connection.Close();
 
-                return result;
+                    return result;
+                }
+
             }
->>>>>>> 0fe722a... Administrator can now remove holds
-        }
+        
     }
+    
 }
