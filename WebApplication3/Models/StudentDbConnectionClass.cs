@@ -769,7 +769,7 @@ namespace WebApplication3.Models
         public static DegreeAuditData degreeAudit(String studentID, String majorID)
         {
             //SQL Statements
-            String getMajorInfoString = @"SELECT c.course_id,c2.course_id AS 'prereq_course_id',c2.course_name AS 'prereq_course_name'
+            String getMajorInfoString = @"SELECT c.course_id,CONCAT(d.department_short_name,c.course_num)AS course_number,c.course_name,c.course_credits
                                             FROM major_requirements mr
                                             INNER JOIN course c ON c.course_id = mr.course_id
                                             INNER JOIN major m ON m.major_id = mr.major_id
@@ -782,10 +782,7 @@ namespace WebApplication3.Models
                                             inner join department d on d.department_id = c.department_id
                                             INNER join major m on m.department_id = d.department_id
                                             where sh.student_id = 1";
-            String getPrereqsString = @"SELECT c.course_id,c.course_name AS 'course_name',c2.course_id AS 'prereq_course_id',c2.course_name AS 'prereq_course_name'
-                                        FROM prereq pr
-                                        LEFT OUTER JOIN course c ON pr.course_id = c.course_id
-                                        LEFT OUTER JOIN course c2 ON pr.pre_req_course_id = c2.course_id";
+            String getPrereqsString = "SELECT [course_id] ,[prereq_course_id] ,[prereq_course_name] FROM [HarborViewUniversity].[dbo].[prereq_view]";
             //Connection String
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             //Lists
@@ -836,14 +833,21 @@ namespace WebApplication3.Models
 
                 foreach(DataRow dr in prereqTable.Select("course_id = '" + mr.courseID + "'"))
                 {
-
+                    if (coursesTaken.Contains(dr[1]+""))
+                    {
+                        mr.prereqsTaken += dr[2] + " ";
+                    }
+                    else
+                    {
+                        mr.prereqsToTake += dr[2] + " ";
+                    }
                 }
-                mr.prereqsToTake = "";
-                mr.prereqsTaken = "";
                 mr.grade = "";
             }
             return new DegreeAuditData(majorReqs);
         }
+
+        
     }
 
 }

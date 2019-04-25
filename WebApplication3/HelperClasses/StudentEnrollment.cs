@@ -24,6 +24,7 @@ namespace WebApplication3.HelperClasses
         public String studentID { get; set; }
         public String credits { get; set; }
         public String grade { get; set; }
+        public String courseID;
 
         public StudentEnrollment(string studentID, string firstName, string lastName, string email,
             string phoneNumber, string dob, string sectionID, string courseName, string year, string semester, string credits)
@@ -53,6 +54,15 @@ namespace WebApplication3.HelperClasses
             this.credits = credits;
         }
 
+
+        public StudentEnrollment(string courseID, string name, string sectionID, string grade, string studentID)
+        {
+            this.courseID = courseID;
+            this.courseName = name;
+            this.sectionID = sectionID;
+            this.grade = grade;
+            this.studentID = studentID;
+        }
     }
 
 }

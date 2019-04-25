@@ -23,6 +23,8 @@ namespace WebApplication3.HelperClasses
             this.courseNum = courseNum;
             this.courseName = courseName;
             this.credits = credits;
+            prereqsTaken = "";
+            prereqsToTake = "";
         }
     }
 }

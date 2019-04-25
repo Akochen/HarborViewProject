@@ -1,0 +1,44 @@
+﻿@using WebApplication3.HelperClasses;
+@model StudentEnrollment
+@{
+    ViewBag.Title = "Update A Grade";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/searchTable.css" />
+@{
+    Layout = null;
+}
+<form method="post">
+    <table class="searchTable" id="lines">
+        <tr>
+            <th>Enter New Grade:</th>
+        </tr>
+        <tr>
+            <td>
+                <select id="gradeSelector" name="gradeSelector">
+                    @foreach (var v in WebApplication3.HelperClasses.GradeList.getGradeList())
+                    {
+                        <option value="@v">@v</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" name="gradeSubmit" value="Submit" />
+            </td>
+        </tr>
+
+    </table>
+</form>
+
+@{
+    if (IsPost)
+    {
+        @Html.Raw(Session["UserID"] + " TEST " + Request.Form["gradeSelector"])
+        @Html.Action("UpdateGrade", "Administrator", new { courseID = Model.courseID, name = Model.courseName, sectionID = Model.sectionID, grade = Request.Form["gradeSelector"], studentID = Model.studentID });
+        Response.Redirect(Url.Action("AdminHome", "Administrator"));
+    }
+}
+

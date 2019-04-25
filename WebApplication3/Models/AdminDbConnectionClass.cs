@@ -245,7 +245,7 @@ namespace WebApplication3.Models
 
         public static List<FacultySchedule> viewFacultySchedule(String userID)
         {
-            List<FacultySchedule> enrollments = new List<FacultySchedule>();
+            List<FacultySchedule> classList = new List<FacultySchedule>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String queryString = "SELECT [course_name],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number] FROM [HarborViewUniversity].[dbo].[faculty_schedule_view] WHERE [faculty_id] = " + userID;
             using (SqlConnection connection = new SqlConnection(cString))
@@ -256,14 +256,55 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        enrollments.Add(new FacultySchedule(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
+                        classList.Add(new FacultySchedule(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
                             , reader.GetInt32(7).ToString()));
                     }
                 }
                 connection.Close();
             }
 
-            return enrollments;
+            return classList;
+        }
+
+        public static List<StudentEnrollment> createUpdateGradeList(String studentID)
+        {
+            List<StudentEnrollment> classesTaken = new List<StudentEnrollment>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = @"SELECT DISTINCT s.course_id,c.course_name,sh.section_id,sh.grade, sh.student_id
+                                FROM student_semester_history sh
+                                INNER JOIN section s ON s.section_id = sh.section_id
+                                INNER JOIN course c ON c.course_id = s.course_id
+                                where sh.student_id = " + studentID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        classesTaken.Add(new StudentEnrollment(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetInt32(2).ToString(), reader.GetString(3), reader.GetInt32(4).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+
+            return classesTaken;
+        }
+
+        public static String updateGrade(StudentEnrollment s)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "UPDATE student_semester_history SET grade = '" + s.grade + "' WHERE student_id = " + s.studentID + " AND section_id = " + s.sectionID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            return "";
         }
 
 
