@@ -143,6 +143,9 @@
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Views\Administrator\ViewFacultyScheduleSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewStudentHold.cshtml" />
+    <Content Include="Views\Administrator\ViewStudentHoldSelector.cshtml" />
+    <Content Include="Views\Administrator\removeHold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -167,9 +170,11 @@
     <Compile Include="HelperClasses\Advisee.cs" />
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
+    <Compile Include="HelperClasses\Course.cs" />
     <Compile Include="HelperClasses\DegreeAuditData.cs" />
     <Compile Include="HelperClasses\DegreeAuditMajorReqs.cs" />
     <Compile Include="HelperClasses\Department.cs" />
+    <Compile Include="HelperClasses\DepartmentEnum.cs" />
     <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\FacultySemester.cs" />
     <Compile Include="HelperClasses\GradeList.cs" />
@@ -183,7 +188,7 @@
     <Compile Include="HelperClasses\Hold.cs" />
     <Compile Include="HelperClasses\SectionSearchHelper.cs" />
     <Compile Include="HelperClasses\Section.cs" />
-    <Compile Include="HelperClasses\Course.cs" />
+    <Compile Include="HelperClasses\CatalogCourse.cs" />
     <Compile Include="HelperClasses\Major.cs" />
     <Compile Include="HelperClasses\Minor.cs" />
     <Compile Include="Models\AdminDbConnectionClass.cs" />
@@ -257,6 +262,7 @@
     <Content Include="Views\Administrator\UpdateStudentGradeClassSelector.cshtml" />
     <Content Include="Views\Administrator\UpdateStudentGradeGradeSelector.cshtml" />
     <Content Include="Views\Administrator\AddCourse.cshtml" />
+    <Content Include="Views\Student\ViewDegreeAudit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

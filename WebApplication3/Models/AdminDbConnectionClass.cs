@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -307,6 +307,7 @@ namespace WebApplication3.Models
             return "";
         }
 
+
         public static AddCourse addCourseHelper2()
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
@@ -323,7 +324,7 @@ namespace WebApplication3.Models
                 connection.Open();
                 using (var reader = c1.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         departments.Add(new Department(reader.GetString(0)));
                     }
@@ -356,27 +357,29 @@ namespace WebApplication3.Models
         public static String addCourse(AddCourse acForm)
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String getCourseNumbersString = @"SELECT c.course_num FROM course c INNER JOIN department d ON d.department_id = c.department_id WHERE d.department_full_name = 'Computer Science'";
+            String getCourseNumbersString = @"SELECT c.course_num FROM course c INNER JOIN department d ON d.department_id = c.department_id WHERE d.department_full_name = " + acForm.department;
+            String getDeptId = " SELECT department_id FROM department WHERE department_full_name = " + acForm.department;
+            String getMajorId = "SELECT major_id FROM major WHERE major_name = " + acForm.major;
+            String getMinorId = "SELECT minor_id FROM minor WHERE minor_name = " + acForm.minor;
             List<String> currentCourseNumbers;
-            String courseTableInsertString = "";
             String majorReqTableInsert = "";
             String minorReqTableInsert = "";
             String preReqTableInsert = "";
-            String returnMessage = "";
+            String returnMessage = "TEST";
             //acForm.department = null;
 
 
             try
             {
-                if (acForm.department.Equals("default"))//check department is valid
-                {
-                    returnMessage = "The Department is required";
-                }
+                //if (acForm.department.Equals("default"))//check department is valid
+                //{
+                //    returnMessage = "The Department is required";
+                //}
 
-                if (acForm.major.Equals("default"))//check major is valid
-                {
-                    returnMessage = "The Major is required";
-                }
+                //if (acForm.major.Equals("default"))//check major is valid
+                //{
+                //    returnMessage = "The Major is required";
+                //}
 
                 //check course number
                 using (SqlConnection connection = new SqlConnection(cString))
@@ -394,7 +397,7 @@ namespace WebApplication3.Models
                     }
 
                 }
-                for (int i = 0; i < currentCourseNumbers.Count;i++) //check if duplicate course number exists
+                for (int i = 0; i < currentCourseNumbers.Count; i++) //check if duplicate course number exists
                 {
                     if (acForm.courseNumber.Equals(currentCourseNumbers.ElementAt(i)))
                     {
@@ -402,46 +405,172 @@ namespace WebApplication3.Models
                     }
                 }
 
-                if (acForm.major.Equals("default"))//check if credits is valid
-                {
-                    returnMessage = "The number of credits is required";
-                }
+                //if (acForm.major.Equals("default"))//check if credits is valid
+                //{
+                //    returnMessage = "The number of credits is required";
+                //}
 
                 //check elective validation
-                if (acForm.isElective.Equals("default"))
-                {
-                    returnMessage = "Select if this course is an elective";
-                }
-                else if (acForm.isElective.Equals("Yes"))
+                //if (acForm.isElective.Equals("default"))
+                //{
+                //    returnMessage = "Select if this course is an elective";
+                //}
+                //else 
+                if (acForm.isElective.Equals("Yes"))
                 {
                     acForm.isElective.Equals("1");
-                }else acForm.isElective.Equals("0");
+                }
+                else acForm.isElective.Equals("0");
 
 
                 //check graduate course validation
-                if (acForm..Equals("default"))
-                {
-                    returnMessage = "Select if this course is a graduate course";
-                }
-                else if (acForm.isGrad.Equals("Yes"))
+                //if (acForm.Equals("default"))
+                //{
+                //    returnMessage = "Select if this course is a graduate course";
+                //}
+                //else 
+                if (acForm.isGrad.Equals("Yes"))
                 {
                     acForm.isGrad.Equals("1");
                 }
                 else acForm.isGrad.Equals("0");
 
 
+                //if (acForm.description.Equals(""))
+                //{
+                //    acForm.description = "required";
+                //    returnMessage = acForm.description;
+                //}
+
+                //if(acForm.isMajorReq.Equals("default") || acForm.isMinorReq.Equals("default"))
+                //{
+                //    return "Please Select if this a requirement";
+                //}
+                var isMajorReq = Int32.Parse(acForm.isMajorReq);
+                var isMinorReq = Int32.Parse(acForm.isMinorReq);
+                var pr1 = acForm.pr1;
+                var pr2 = acForm.pr2;
+                var cr1 = acForm.cr1;
+                var cr2 = acForm.cr2;
+
+                //check pre req
+                if (acForm.pr1.Equals("Yes")) {
+                    acForm.pr1 = "1";
+                }
+                if (acForm.pr2.Equals("Yes")) {
+                    acForm.pr2 = "1";
+                }
+                //check course req
+                if (acForm.cr1.Equals("Yes")) {
+                    acForm.cr1 = "1";
+                }
+                if (acForm.cr2.Equals("Yes")) {
+                    acForm.cr2 = "1";
+                }
+                //major req
+                if (acForm.isMajorReq.Equals("Yes")) {
+                    acForm.isMajorReq = "1";
+                }
+                //minor req 
+                if (acForm.isMinorReq.Equals("Yes")) {
+                    acForm.isMinorReq = "1";
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                ex.Message.ToString();
             }
-            finally
+            finally {
+
+                //(<department_id, int,>
+                // ,<course_num, int,>
+                // ,<course_name, varchar(50),>
+                // ,<course_description, varchar(max),>
+                // ,<course_credits, tinyint,>
+                // ,<is_elective, bit,>
+                // ,<is_graduate_course, bit,>)
+                var department = Int32.Parse(getDeptId);
+                var major = Int32.Parse(getMajorId);
+                var minor = Int32.Parse(getMinorId);
+                var courseNumber = Int32.Parse(acForm.courseNumber);
+                int credits = Int32.Parse(acForm.credits);
+                var isElective = Int32.Parse(acForm.isElective);
+                var isGrad = Int32.Parse(acForm.isGrad);
+                var description = acForm.description;
+                var courseName = acForm.courseName;
+
+                String courseTableInsertString = @"INSERT INTO [dbo].[course]([department_id],[course_num],[course_name],[course_description],[course_credits],[is_elective],[is_graduate_course])
+                                             VALUES(department,courseNumber,acForm.courseName,acForm.description,credits,isElective,isGrad)";
+            }
+
             {
-                var department = acForm.department;  
-                int elective = Int32.Parse(acForm.isElective);
+                //do insert here
+                returnMessage = "New Course Added Successfully";
+
             }
-            returnMessage = "New Course Added Successfully";
             return returnMessage;
         }
+            public static List<Hold> viewHolds(String userID)
+            {
+                List<Hold> holds = new List<Hold>();
+                String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+                String queryString = "SELECT  [hold_type_name] ,[semester] ,[year] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + userID;
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            holds.Add(new Hold(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return holds;
+            }
+
+            public static String removeHold(String holdType, String studentID, String year, String semester)
+            {
+                List<Hold> holds = new List<Hold>();
+                int holdTypeID = 0;
+                if (holdType.Equals("Academic"))
+                {
+                    holdTypeID = 1;
+                }
+                else if (holdType.Equals("Financial"))
+                {
+                    holdTypeID = 3;
+                }
+                else if (holdType.Equals("Administrative"))
+                {
+                    holdTypeID = 2;
+                }
+                String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+                String insertString = "DELETE FROM hold WHERE student_id = " + studentID + "AND hold_type_id = " + holdTypeID;
+                String result = "";
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    SqlCommand command = new SqlCommand(insertString, connection);
+                    connection.Open();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        result = "Success message";
+                    }
+                    catch
+                    {
+                        result = "ERROR: Could not remove hold";
+                    }
+                    connection.Close();
+
+                    return result;
+                }
+
+            }
+        
     }
+    
 }

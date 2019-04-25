@@ -7,6 +7,7 @@ namespace WebApplication3.HelperClasses
 {
     public class StudentEnrollment
     {
+
         public String firstName { get; set; }
         public String lastName { get; set; }
         public String email { get; set; }
@@ -25,15 +26,15 @@ namespace WebApplication3.HelperClasses
         public String grade { get; set; }
         public String courseID;
 
-        public StudentEnrollment(string studentID, string firstName, string lastName, string email, 
-            string phoneNumber, string dob, string sectionID, string courseName,string year,string semester,string credits)
+        public StudentEnrollment(string studentID, string firstName, string lastName, string email,
+            string phoneNumber, string dob, string sectionID, string courseName, string year, string semester, string credits)
         {
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
             this.phoneNumber = phoneNumber;
             this.dob = dob;
-            this.sectionID = sectionID;      
+            this.sectionID = sectionID;
             this.courseName = courseName;
             this.year = year;
             this.semester = semester;

@@ -57,7 +57,7 @@ namespace WebApplication3.Models
             String courseString = "SELECT [Course_Name], [Course], [Prereqs], [Description], [Credits] FROM[HarborViewUniversity].[dbo].[catalog_courses] ORDER BY [Course_Name] ASC";
             //Fill Courses List
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            List<Course> coursesList = new List<Course>();
+            List<CatalogCourse> coursesList = new List<CatalogCourse>();
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(courseString, connection);
@@ -65,7 +65,7 @@ namespace WebApplication3.Models
                 SqlDataReader reader = command.ExecuteReader();
                 while(reader.Read())
                 {
-                    coursesList.Add(new Course(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4)));
+                    coursesList.Add(new CatalogCourse(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4)));
                 }
                 connection.Close();
             }

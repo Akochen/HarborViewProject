@@ -71,7 +71,7 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.viewAdvisorAdviseeList(userID));
         }
-        
+
         public ActionResult ViewFacultySchedule(String facultyID)
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.viewFacultySchedule(facultyID));
@@ -102,6 +102,21 @@ namespace WebApplication3.Controllers
         {
             StudentEnrollment s = new StudentEnrollment(courseID, name, sectionID, grade, studentID);
             return WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
+        }
+
+        public ActionResult ViewStudentHoldSelector()
+        {
+            return View();
+        }
+
+        public ActionResult ViewStudentHold(String studentID)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.viewHolds(studentID));
+        }
+
+        public ActionResult removeHold(String holdType, String studentID, String year, String semester)
+        {
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.removeHold(holdType, studentID, year, semester));
         }
     }
 }
