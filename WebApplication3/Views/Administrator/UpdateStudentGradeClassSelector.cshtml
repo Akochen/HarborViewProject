@@ -1,0 +1,34 @@
+﻿@using WebApplication3.HelperClasses;
+@model List<StudentEnrollment>
+@{
+    ViewBag.Title = "Update A Grade";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/Content/TableTemplate.css" />
+<table class="resultsTable">
+    <tr class="tableheader">
+        <th>
+            CID
+        </th>
+        <th>
+            Course Name
+        </th>
+        <th>
+            Grade
+        </th>
+        <th>
+
+        </th>
+
+    </tr>
+    @foreach (var v in Model)
+    {
+        <tr>
+            <td>@v.courseID</td>
+            <td>@v.courseName</td>
+            <td>@v.grade</td>
+            <td>@Html.ActionLink("Update", "UpdateStudentGradeGradeSelector", "Administrator", new { courseID = v.courseID, name = v.courseName, sectionID = v.sectionID, grade = v.grade, studentID = v.studentID }, null)</td>
+        </tr>
+    }
+</table>
+

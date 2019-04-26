@@ -5,7 +5,10 @@
 }
 
 <link rel="stylesheet" href="~/Content/Background.css" />
-@Html.Raw(Model)
 @{
+    if (!IsPost)
+    {
+        @Html.Raw(Model)
+    }
     @Html.Action("RegisterForClassesSelector", "Student");
 }

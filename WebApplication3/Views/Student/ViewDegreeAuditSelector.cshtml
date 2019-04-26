@@ -4,20 +4,26 @@
     ViewBag.Title = "ViewDegreeAuditSelector";
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
+<link rel="stylesheet" href="~/Content/searchTable.css" />
+<table class="searchTable">
+    <tr>
+        <td>
+            <form method="post">
+                <select name="majorSelector">
+                    @foreach (var v in Model)
+                    {
+                        <option value="@v.majorID">@v.name</option>
+                    }
+                </select>
+                <input type="submit" value="GO" />
+            </form>
+        </td>
+    </tr>
+</table>
 
-<form method="post">
-    <select name="majorSelector">
-        @foreach (var v in Model)
-        {
-            <option value="@v.majorID">@v.name</option>
-        }
-    </select>
-    <input type="submit" value="GO" />
-
-    @{
-        if (IsPost)
-        {
-            @Html.Action("ViewDegreeAudit", "Student", new {  majorID = Request.Form["majorSelector"], studentID = Session["UserID"] });
-        }
+@{
+    if (IsPost)
+    {
+        @Html.Action("ViewDegreeAudit", "Student", new { majorID = Request.Form["majorSelector"], studentID = Session["UserID"] });
     }
-</form>
+}

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -766,30 +768,86 @@ namespace WebApplication3.Models
 
         public static DegreeAuditData degreeAudit(String studentID, String majorID)
         {
+            //SQL Statements
             String getMajorInfoString = @"SELECT c.course_id,CONCAT(d.department_short_name,c.course_num)AS course_number,c.course_name,c.course_credits
                                             FROM major_requirements mr
                                             INNER JOIN course c ON c.course_id = mr.course_id
                                             INNER JOIN major m ON m.major_id = mr.major_id
                                             INNER JOIN department d ON d.department_id = m.department_id
                                             WHERE m.major_id = " + majorID;
-            String getClassesTakenString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE [year] = '" + SemesterDataHelper.getSemesterYear() + "' AND semster = '" + SemesterDataHelper.getSemesterSeason() + "' AND student_id = " + studentID;
+            String getClassesTakenString = @"SELECT DISTINCT s.course_id,sh.grade
+                                            FROM student_semester_history sh
+                                            INNER JOIN section s ON s.section_id = sh.section_id
+                                            INNER JOIN course c ON c.course_id = s.course_id
+                                            inner join department d on d.department_id = c.department_id
+                                            INNER join major m on m.department_id = d.department_id
+                                            where sh.student_id = 1";
+            String getPrereqsString = "SELECT [course_id] ,[prereq_course_id] ,[prereq_course_name] FROM [HarborViewUniversity].[dbo].[prereq_view]";
+            //Connection String
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            //Lists
             List<DegreeAuditMajorReqs> majorReqs = new List<DegreeAuditMajorReqs>();
+            Hashtable coursesTaken = new Hashtable();
+            DataTable prereqTable = new DataTable();
+            //Create connect
             using (SqlConnection connection = new SqlConnection(cString))
             {
+                //Get list of major requirements
                 SqlCommand command = new SqlCommand(getMajorInfoString, connection);
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        majorReqs.Add(new DegreeAuditMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetInt32(3)));
-                        return null;
+                        majorReqs.Add(new DegreeAuditMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetByte(3)));
                     }
                 }
+
+                //Get classes taken by student
+                SqlCommand command2 = new SqlCommand(getClassesTakenString, connection);
+                using (var reader = command2.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        coursesTaken.Add(reader.GetInt32(0).ToString(), reader.GetString(1));
+                    }
+                }
+
+                //Get prereqs for major reqs
+                SqlCommand cmd = new SqlCommand(getPrereqsString, connection);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                // this will query your database and return the result to your datatable
+                da.Fill(prereqTable);
+                da.Dispose();
+                connection.Close();
             }
-            return null;
+            foreach(var mr in majorReqs)
+            {
+                if (coursesTaken.Contains(mr.courseID))
+                {
+                    if (GradeList.isPassing((string)coursesTaken[mr.courseID]))
+                    {
+                        mr.courseStatus = "&#x2611";
+                    }
+                }
+
+                foreach(DataRow dr in prereqTable.Select("course_id = '" + mr.courseID + "'"))
+                {
+                    if (coursesTaken.Contains(dr[1]+""))
+                    {
+                        mr.prereqsTaken += dr[2] + " ";
+                    }
+                    else
+                    {
+                        mr.prereqsToTake += dr[2] + " ";
+                    }
+                }
+                mr.grade = "";
+            }
+            return new DegreeAuditData(majorReqs);
         }
+
+        
     }
 
 }

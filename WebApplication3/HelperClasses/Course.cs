@@ -7,25 +7,21 @@ namespace WebApplication3.HelperClasses
 {
     public class Course
     {
-        public String shortName { get; set; }
-        public String fullName { get; set; }
-        public String prereqs { get; set; }
-        public String description { get; set; }
-        public int credits { get; set; }
-        public String courseNumber { get; set; }
+        public string id;
+        public string prereq;
+        public string prereqName;
+        public string courseName;
 
-        public Course(String shortName, String fullName, String prereqs, String description, int credits)
+        public Course(string id, string prereq, string prereqName)
         {
-            this.shortName = shortName;
-            this.fullName = fullName;
-            this.prereqs = prereqs;
-            this.description = description;
-            this.credits = credits;
+            this.id = id;
+            this.prereq = prereq;
+            this.prereqName = prereqName;
         }
 
-        public Course(string courseNumber)
+        public Course(string courseName)
         {
-            this.courseNumber = courseNumber;
+            this.courseName = courseName;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace WebApplication3.HelperClasses
     public class AddCourse
     {
         public List<Department> departments { set; get; }
+        public List<Course> courses { set; get; }
         public List<Major> majors { set; get; }
         public List<Minor> minors { set; get; }
         public String department { set; get; }
@@ -26,18 +27,22 @@ namespace WebApplication3.HelperClasses
         public String isMajorReq { set; get; }
         public String isMinorReq { set; get; }
 
-        public AddCourse(List<Department> departments, List<Major> majors, List<Minor> minors)
+        //public AddCourse(List<Department> departments, List<Major> majors, List<Minor> minors)
+        //{
+        //    this.departments = departments;
+        //    this.majors = majors;
+        //    this.minors = minors;
+        //}
+
+        public AddCourse(List<Department> departments, List<Course> courses)
         {
             this.departments = departments;
-            this.majors = majors;
-            this.minors = minors;
+            this.courses = courses;
         }
 
-        public AddCourse(string department, string major, string minor, string courseNumber, string courseName, string credits, string isElective, string isGrad, string description, string pr1, string pr2, string cr1, string cr2, string isMajorReq, string isMinorReq)
+        public AddCourse(string department, string courseNumber, string courseName, string credits, string isElective, string isGrad, string description, string pr1, string pr2, string cr1, string cr2)
         {
             this.department = department;
-            this.major = major;
-            this.minor = minor;
             this.courseNumber = courseNumber;
             this.courseName = courseName;
             this.credits = credits;
@@ -48,8 +53,7 @@ namespace WebApplication3.HelperClasses
             this.pr2 = pr2;
             this.cr1 = cr1;
             this.cr2 = cr2;
-            this.isMajorReq = isMajorReq;
-            this.isMinorReq = isMinorReq;
         }
+
     }
 }
