@@ -77,49 +77,13 @@
 
             <tr>
                 <td><strong>Add Prerequisites for this course:</strong> </td>
-                <td>
-                    @*<input type="text" name="pr1" value="" placeholder="(OPTIONAL)">*@
-                    <select id="pr1" name="pr1">
-                        <option value="">(OPTIONAL)</option>
-                        @foreach (var course in Model.courses)
-                        {
-                            <option value="@course">@course.courseName</option>
-                        }
-                    </select>
-                </td>
-                <td>
-                    @*<input type="text" name="pr2" value="" placeholder="(OPTIONAL)">*@
-                    <select id="pr2" name="pr2">
-                        <option value="">(OPTIONAL)</option>
-                        @foreach (var course in Model.courses)
-                        {
-                            <option value="@course">@course.courseName</option>
-                        }
-                    </select>
-                </td>
+                <td><input type="text" name="pr1" value="" placeholder="(OPTIONAL)"></td>
+                <td><input type="text" name="pr2" value="" placeholder="(OPTIONAL)"></td>
             </tr>
             <tr>
                 <td><strong>Add Courses this is a prerequisite for:</strong> </td>
-                <td>
-                    @*<input type="text" name="cr1" value="" placeholder="(OPTIONAL)">*@
-                    <select id="cr1" name="cr1">
-                        <option value="">(OPTIONAL)</option>
-                        @foreach (var course in Model.courses)
-                        {
-                            <option value="@course">@course.courseName</option>
-                        }
-                    </select>
-                </td>
-                <td>
-                    @*<input type="text" name="cr2" value="" placeholder="(OPTIONAL)">*@
-                    <select id="cr2" name="cr2">
-                        <option value="">(OPTIONAL)</option>
-                        @foreach (var course in Model.courses)
-                        {
-                            <option value="@course">@course.courseName</option>
-                        }
-                    </select>
-                </td>
+                <td><input type="text" name="cr1" value="" placeholder="(OPTIONAL)"></td>
+                <td><input type="text" name="cr2" value="" placeholder="(OPTIONAL)"></td>
             </tr>
 
             <tr>
@@ -129,7 +93,7 @@
             </tr>
         </table>
     </div>
-    @*<div>
+    <div>
         <table>
             <tr>
                 <td><strong>Major:</strong> </td>
@@ -172,7 +136,7 @@
                 </td>
             </tr>
         </table>
-    </div>*@
+    </div>
 </form>
 
     @{
