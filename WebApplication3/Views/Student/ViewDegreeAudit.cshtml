@@ -54,7 +54,7 @@
                                 <td>@v.grade</td>
                                 <td>@v.credits</td>
                                 @{
-                                    if (v.courseStatus.Equals("&#x2611"))
+                                    if (!v.grade.Equals(""))
                                     {
                                         majorReqCreditsTaken += v.credits;
                                     }
@@ -117,7 +117,7 @@
                                 <td>@v.grade</td>
                                 <td>@v.credits</td>
                                 @{
-                                    if (v.courseStatus.Equals("&#x2611"))
+                                    if (!v.grade.Equals(""))
                                     {
                                         majorElecCreditsTaken += v.credits;
                                     }

@@ -898,6 +898,12 @@ namespace WebApplication3.Models
                     }
                 }
 
+
+                if (inProgress.Contains(el.courseID))
+                {
+                    el.courseStatus = "&#x2610";
+                }
+
                 foreach (DataRow dr in prereqTable.Select("course_id = '" + el.courseID + "'"))
                 {
                     if (coursesTaken.Contains(dr[1] + ""))

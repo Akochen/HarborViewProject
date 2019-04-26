@@ -22,6 +22,7 @@ namespace WebApplication3.HelperClasses
             this.credits = credits;
             prereqsTaken = "";
             prereqsToTake = "";
+            grade = "";
         }
     }
 }
