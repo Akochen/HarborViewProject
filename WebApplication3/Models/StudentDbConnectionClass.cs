@@ -768,13 +768,20 @@ namespace WebApplication3.Models
 
         public static DegreeAuditData degreeAudit(String studentID, String majorID)
         {
-            //SQL Statements
+            //SQL Statements for major reqs
             String getMajorInfoString = @"SELECT c.course_id,CONCAT(d.department_short_name,c.course_num)AS course_number,c.course_name,c.course_credits
                                             FROM major_requirements mr
                                             INNER JOIN course c ON c.course_id = mr.course_id
                                             INNER JOIN major m ON m.major_id = mr.major_id
                                             INNER JOIN department d ON d.department_id = m.department_id
                                             WHERE m.major_id = " + majorID;
+            //SQL Statements for electives
+            String getMajorElectivesString = @"SELECT c.course_id, CONCAT(d.department_short_name, c.course_num) AS 'course_num' ,c.course_name, c.course_credits
+                                                FROM [HarborViewUniversity].[dbo].[major_elective] m
+                                                JOIN course c ON c.course_id = m.course_id
+                                                JOIN department d ON c.department_id = d.department_id
+                                                WHERE m.major_id = " + majorID;
+            //SQL to get classes already taken
             String getClassesTakenString = @"SELECT DISTINCT s.course_id,sh.grade
                                             FROM student_semester_history sh
                                             INNER JOIN section s ON s.section_id = sh.section_id
@@ -782,16 +789,26 @@ namespace WebApplication3.Models
                                             inner join department d on d.department_id = c.department_id
                                             INNER join major m on m.department_id = d.department_id
                                             where sh.student_id = 1";
-            String getPrereqsString = "SELECT [course_id] ,[prereq_course_id] ,[prereq_course_name] FROM [HarborViewUniversity].[dbo].[prereq_view]";
+            //SQL to get classes currently being taken
+            String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = 1";
+            //SQL to get prereqs for major courses
+            String getPrereqsString = "SELECT [course_id] ,[prereq_course_id] ,[prereq_course_name] FROM [HarborViewUniversity].[dbo].[prereq_view] WHERE [major_id] = " + majorID;
             //Connection String
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            //Lists
+            //List of major reqs
             List<DegreeAuditMajorReqs> majorReqs = new List<DegreeAuditMajorReqs>();
+            //List of courses taken
             Hashtable coursesTaken = new Hashtable();
+            //Prerequisites for courses
             DataTable prereqTable = new DataTable();
+            //List of courses currently being taken
+            List<string> inProgress = new List<string>();
+            //Lists for major electives
+            List<DegreeAuditElectives> majorElectives = new List<DegreeAuditElectives>();
             //Create connect
             using (SqlConnection connection = new SqlConnection(cString))
             {
+                //Major Requirements
                 //Get list of major requirements
                 SqlCommand command = new SqlCommand(getMajorInfoString, connection);
                 connection.Open();
@@ -819,6 +836,27 @@ namespace WebApplication3.Models
                 // this will query your database and return the result to your datatable
                 da.Fill(prereqTable);
                 da.Dispose();
+
+                //Major Electives
+                //get list of major requirements
+                SqlCommand command3 = new SqlCommand(getMajorElectivesString, connection);
+                using (var reader = command3.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        majorElectives.Add(new DegreeAuditElectives(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetByte(3)));
+                    }
+                }
+
+                SqlCommand command4 = new SqlCommand(getClassesInProgressString, connection);
+                using (var reader = command4.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        inProgress.Add(reader.GetInt32(0).ToString());
+                    }
+                }
+
                 connection.Close();
             }
             foreach(var mr in majorReqs)
@@ -831,20 +869,50 @@ namespace WebApplication3.Models
                     }
                 }
 
+                if (inProgress.Contains(mr.courseID))
+                {
+                    mr.courseStatus = "&#x2610";
+                }
+
                 foreach(DataRow dr in prereqTable.Select("course_id = '" + mr.courseID + "'"))
                 {
                     if (coursesTaken.Contains(dr[1]+""))
                     {
-                        mr.prereqsTaken += dr[2] + " ";
+                        mr.prereqsTaken += " " + dr[2] + ",";
+                        mr.grade = (string)coursesTaken[mr.courseID];
                     }
                     else
                     {
-                        mr.prereqsToTake += dr[2] + " ";
+                        mr.prereqsToTake += " " + dr[2] + ",";
                     }
                 }
-                mr.grade = "";
             }
-            return new DegreeAuditData(majorReqs);
+            
+            foreach(var el in majorElectives)
+            {
+                if (coursesTaken.Contains(el.courseID))
+                {
+                    if (GradeList.isPassing((string)coursesTaken[el.courseID]))
+                    {
+                        el.courseStatus = "&#x2611";
+                    }
+                }
+
+                foreach (DataRow dr in prereqTable.Select("course_id = '" + el.courseID + "'"))
+                {
+                    if (coursesTaken.Contains(dr[1] + ""))
+                    {
+                        el.prereqsTaken += " " + dr[2] + ",";
+                        el.grade = (string)coursesTaken[el.courseID];
+                    }
+                    else
+                    {
+                        el.prereqsToTake += " " + dr[2] + ",";
+                    }
+                }
+            }
+            
+            return new DegreeAuditData(majorReqs, majorElectives);
         }
 
         

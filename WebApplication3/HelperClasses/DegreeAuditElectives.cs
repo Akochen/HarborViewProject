@@ -2,7 +2,7 @@
 
 namespace WebApplication3.HelperClasses
 {
-    public class DegreeAuditMajorReqs
+    public class DegreeAuditElectives
     {
         public String courseID;
         public String courseNum;
@@ -13,7 +13,7 @@ namespace WebApplication3.HelperClasses
         public int credits;
         public String grade;
 
-        public DegreeAuditMajorReqs(string courseID, string courseNum, string courseName, int credits)
+        public DegreeAuditElectives(string courseID, string courseNum, string courseName, int credits)
         {
             courseStatus = "&#x2612";
             this.courseID = courseID;

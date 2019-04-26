@@ -1,31 +1,147 @@
 ﻿@using WebApplication3.HelperClasses;
 @model DegreeAuditData
-@{ 
+@{
     Layout = null;
 }
 <link rel="stylesheet" href="~/Content/TableTemplate.css" />
+<table style="width:100%;">
+    <tr>
+        <td>
+            <div style="width:80%;margin-left:auto; margin-right:auto;">
+                <div style="border:solid black 1px; height:30px; width:100%;">
+                    <div id="reqs_bar" style="background-color:forestgreen; height: 100%; text-align:center; margin-left:0;">
+                        <p id="reqs_text" style="margin:auto; text-align:center;height:100%">
 
-<table id="majorReqs" class="resultsTable">
-    <tr class="tableheader">
-        <th></th>
-        <th>CID</th>
-        <th>Course</th>
-        <th>Prerequisites</th>
-        <th>Grade</th>
-        <th>Credits</th>
+                        </p>
+                    </div>
+                </div>
+                <table id="majorReqs" class="resultsTable" style="width:100%;">
+                    <tr class="tableheader">
+                        <th></th>
+                        <th>CID</th>
+                        <th>Course</th>
+                        <th>Prerequisites</th>
+                        <th>Grade</th>
+                        <th>Credits</th>
+                    </tr>
+                    @{
+                        int majorReqCreditsTaken = 0;
+                        foreach (var v in Model.majorReqs)
+                        {
+                            <tr class="ul">
+                                <td>@Html.Raw(@v.courseStatus)</td>
+                                <td>@v.courseNum</td>
+                                <td>@v.courseName</td>
+                                <td>
+                                    @{
+                                        string front = "<span style=\"color:red\"> ";
+                                        string toTake = v.prereqsToTake;
+                                        string middle = "</span><span style=\"color:forestgreen\"> ";
+                                        string taken = v.prereqsTaken;
+                                        string end = " </span>";
+                                        string output;
+                                        if (taken.Equals(""))
+                                        {
+                                            output = front + toTake.TrimEnd(',') + middle + taken + end;
+                                        }
+                                        else
+                                        {
+                                            output = front + toTake + middle + taken.TrimEnd(',') + end;
+                                        }
+                                        @Html.Raw(output);
+                                    }
+                                </td>
+                                <td>@v.grade</td>
+                                <td>@v.credits</td>
+                                @{
+                                    if (v.courseStatus.Equals("&#x2611"))
+                                    {
+                                        majorReqCreditsTaken += v.credits;
+                                    }
+                                }
+                            </tr>
+
+                        }
+                    }
+                </table>
+            </div>
+        </td>
     </tr>
-    @{ 
-        foreach(var v in Model.majorReqs)
-        {
-            <tr>
-                <td>@Html.Raw(@v.courseStatus)</td>
-                <td>@v.courseNum</td>
-                <td>@v.courseName</td>
-                <td><span style="color:red"> @v.prereqsToTake </span><br /> <span style="color:forestgreen"> @v.prereqsTaken </span></td>
-                <td>@v.grade</td>
-                <td>@v.credits</td>
-            </tr>
-            
-        }
-    }
+    <tr>
+        <td>
+            <div style="width:80%;margin-top:10px;margin-left:auto; margin-right:auto;">
+                <div style="border:solid black 1px; height:30px; width:100%;">
+                    <div id="electives_bar" style="background-color:forestgreen; height: 100%; text-align:center; margin-left:0;">
+                        <p id="electives_text" style="margin:auto; text-align:center;height:100%">
+
+                        </p>
+                    </div>
+                </div>
+
+                <table id="majorElectives" class="resultsTable" style="width:100%;">
+                    <tr class="tableheader">
+                        <th></th>
+                        <th>CID</th>
+                        <th>Course</th>
+                        <th>Prerequisites</th>
+                        <th>Grade</th>
+                        <th>Credits</th>
+                    </tr>
+                    @{
+                        int majorElecCreditsTaken = 0;
+                        foreach (var v in Model.majorElectives)
+                        {
+                            <tr class="ul">
+                                <td>@Html.Raw(@v.courseStatus)</td>
+                                <td>@v.courseNum</td>
+                                <td>@v.courseName</td>
+                                <td>
+                                    @{
+                                        string front = "<span style=\"color:red\"> ";
+                                        string toTake = v.prereqsToTake;
+                                        string middle = "</span><span style=\"color:forestgreen\"> ";
+                                        string taken = v.prereqsTaken;
+                                        string end = " </span>";
+                                        string output;
+                                        if (taken.Equals(""))
+                                        {
+                                            output = front + toTake.TrimEnd(',') + middle + taken + end;
+                                        }
+                                        else
+                                        {
+                                            output = front + toTake + middle + taken.TrimEnd(',') + end;
+                                        }
+                                        @Html.Raw(output);
+                                    }
+                                </td>
+                                <td>@v.grade</td>
+                                <td>@v.credits</td>
+                                @{
+                                    if (v.courseStatus.Equals("&#x2611"))
+                                    {
+                                        majorElecCreditsTaken += v.credits;
+                                    }
+                                }
+                            </tr>
+
+                        }
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
 </table>
+
+
+
+
+<script type="text/javascript">
+    var mReqBar = document.getElementById("reqs_bar");
+    var mReqText = document.getElementById("reqs_text");
+    var eleBar = document.getElementById("electives_bar");
+    var eleText = document.getElementById("electives_text");
+    mReqBar.style.width = (((@majorReqCreditsTaken) / 68) * 100) + "%";
+    mReqText.innerHTML = "Major Requirements: @majorReqCreditsTaken / 68 Credits Taken";
+    eleBar.style.width = (((@majorElecCreditsTaken) / 12) * 100) + "%";
+    eleText.innerHTML = "Major Requirements: @majorElecCreditsTaken / 12 Credits Taken";
+</script>
