@@ -132,6 +132,10 @@
     <Content Include="Views\Administrator\ViewStudentHold.cshtml" />
     <Content Include="Views\Administrator\ViewStudentHoldSelector.cshtml" />
     <Content Include="Views\Administrator\removeHold.cshtml" />
+    <Content Include="Views\Administrator\UpdateStudentInformation.cshtml" />
+    <Content Include="Views\Administrator\UpdateStudentInformationSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewStudentInformation.cshtml" />
+    <Content Include="Views\Administrator\UpdateStudentInformationPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />

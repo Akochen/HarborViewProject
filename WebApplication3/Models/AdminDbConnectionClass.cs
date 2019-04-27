@@ -735,6 +735,7 @@ namespace WebApplication3.Models
                         coursesTaken.Add(reader.GetInt32(0).ToString(), reader.GetString(1));
                     }
                 }
+<<<<<<< HEAD
 
                 //Get prereqs for major reqs
                 SqlCommand cmd = new SqlCommand(getPrereqsString, connection);
@@ -747,6 +748,12 @@ namespace WebApplication3.Models
                 //get list of major electives
                 SqlCommand command3 = new SqlCommand(getMajorElectivesString, connection);
                 using (var reader = command3.ExecuteReader())
+=======
+                String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+                String insertString = "DELETE FROM hold WHERE student_id = " + studentID + " AND hold_type_id = " + holdTypeID;
+                String result = "";
+                using (SqlConnection connection = new SqlConnection(cString))
+>>>>>>> 9797b08... Updated Student Information Works
                 {
                     while (reader.Read())
                     {
@@ -865,8 +872,48 @@ namespace WebApplication3.Models
                 }
             }
 
+<<<<<<< HEAD
             return new DegreeAuditData(majorReqs, majorElectives, outOfMajorReqs);
         }
+=======
+        public static String UpdateStudentInformation(StudentInfo s, String studentID)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "UPDATE user_info SET street_name = '" + s.streetName + "', city = '" + s.city + "', [state] = '" + s.state + "', zip = " + s.zip + " WHERE user_id = " + studentID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            return "";
+        }
+
+        public static List<StudentInfo> ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        {
+            List<StudentInfo> info = new List<StudentInfo>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String insertString = "SELECT street_name, city, [state], zip FROM [dbo].[user_info] WHERE [user_id] = " + userID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(insertString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        info.Add(new StudentInfo(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3).ToString()));
+                    }
+                }
+                connection.Close();
+
+                return info;
+            }
+        }
+
+>>>>>>> 9797b08... Updated Student Information Works
     }
 
 }

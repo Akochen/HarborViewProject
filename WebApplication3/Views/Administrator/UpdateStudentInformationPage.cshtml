@@ -1,0 +1,60 @@
+﻿@using WebApplication3.HelperClasses;
+@model StudentInfo
+@{
+    ViewBag.Title = "Update Information";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/searchTable.css" />
+@{
+    Layout = null;
+}
+<form method="post">
+    <table class="searchTable" id="lines">
+        <tr>
+            <th>Enter new Street Name:</th>
+        </tr>
+        <tr>
+            <td>
+                <input required type="text" name="street_box" placeholder="Street Name" />
+            </td>
+        </tr>
+        <tr>
+            <th>Enter new City:</th>
+        </tr>
+        <tr>
+            <td>
+                <input required type="text" name="city_box" placeholder="City Name" />
+            </td>
+        </tr>
+        <tr>
+            <th>Enter new State:</th>
+        </tr>
+        <tr>
+            <td>
+                <input required type="text" name="state_box" placeholder="State Name" />
+            </td>
+        </tr>
+        <tr>
+            <th>Enter new Zip Code:</th>
+        </tr>
+        <tr>
+            <td>
+                <input required type="number" name="zip_box" placeholder="Zip Code" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input required type="submit" value="GO" />
+            </td>
+        </tr>
+
+    </table>
+</form>
+@{
+    if (IsPost)
+    {
+        @Html.Action("UpdateStudentInformation", "Administrator", new { streetName = Request.Form["street_box"], city = Request.Form["city_box"], state = Request.Form["state_box"], zip = Request.Form["zip_box"], studentID = Session["userIDforUpdate"] });
+        Response.Redirect(Url.Action("UpdateStudentInformationSelector", "Administrator"));
+    }
+}

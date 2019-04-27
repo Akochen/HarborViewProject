@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -119,11 +119,21 @@ namespace WebApplication3.Controllers
             return View((object)WebApplication3.Models.AdminDbConnectionClass.removeHold(holdType, studentID, year, semester));
         }
 
+<<<<<<< HEAD
         public ActionResult DegreeAuditStudentSelector()
+=======
+        public ActionResult ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        {
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(streetName, city, state, zip, userID));
+        }
+
+        public ActionResult UpdateStudentInformationSelector()
+>>>>>>> 9797b08... Updated Student Information Works
         {
             return View();
         }
 
+<<<<<<< HEAD
         public ActionResult ViewDegreeAuditSelector(String studentID)
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.createDegreeAuditSelector(studentID));
@@ -134,5 +144,19 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.degreeAudit(studentID, majorID));
         }
+=======
+        public String UpdateStudentInformation(string streetName, string city, string state, string zip, string studentID)
+        {
+            StudentInfo s = new StudentInfo(streetName, city, state, zip);
+            return WebApplication3.Models.AdminDbConnectionClass.UpdateStudentInformation(s, studentID);
+        }
+
+        public ActionResult UpdateStudentInformationPage(string streetName, string city, string state, string zip)
+        {
+            StudentInfo s = new StudentInfo(streetName, city, state, zip);
+            return View(s);
+        }
+
+>>>>>>> 9797b08... Updated Student Information Works
     }
 }
