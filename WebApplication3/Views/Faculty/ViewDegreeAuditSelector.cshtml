@@ -2,7 +2,7 @@
 @model List<Major>
 @{
     ViewBag.Title = "Degree Audit";
-    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    Layout = "~/Views/Shared/_LayoutFaculty.cshtml";
 }
 <link rel="stylesheet" href="~/Content/searchTable.css" />
 <table class="searchTable">
@@ -24,6 +24,6 @@
 @{
     if (IsPost)
     {
-        @Html.Action("ViewDegreeAudit", "Student", new { majorID = Request.Form["majorSelector"], studentID = Session["UserID"] });
+        @Html.Action("ViewDegreeAudit", "Faculty", new { majorID = Request.Form["majorSelector"], studentID = TempData["studentID"] });
     }
 }

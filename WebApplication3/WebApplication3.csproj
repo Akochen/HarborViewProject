@@ -251,6 +251,12 @@
     <Content Include="Views\Administrator\UpdateStudentGradeGradeSelector.cshtml" />
     <Content Include="Views\Administrator\AddCourse.cshtml" />
     <Content Include="Views\Student\ViewDegreeAudit.cshtml" />
+    <Content Include="Views\Faculty\ViewDegreeAuditSelector.cshtml" />
+    <Content Include="Views\Faculty\ViewDegreeAudit.cshtml" />
+    <Content Include="Views\Faculty\DegreeAuditStudentSelector.cshtml" />
+    <Content Include="Views\Administrator\DegreeAuditStudentSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewDegreeAuditSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewDegreeAudit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

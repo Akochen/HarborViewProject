@@ -766,6 +766,8 @@ namespace WebApplication3.Models
             return studentsMajors;
         }
 
+
+
         public static DegreeAuditData degreeAudit(String studentID, String majorID)
         {
             //SQL Statements for major reqs

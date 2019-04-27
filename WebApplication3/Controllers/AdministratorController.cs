@@ -118,5 +118,21 @@ namespace WebApplication3.Controllers
         {
             return View((object)WebApplication3.Models.AdminDbConnectionClass.removeHold(holdType, studentID, year, semester));
         }
+
+        public ActionResult DegreeAuditStudentSelector()
+        {
+            return View();
+        }
+
+        public ActionResult ViewDegreeAuditSelector(String studentID)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.createDegreeAuditSelector(studentID));
+        }
+
+        [HttpPost]
+        public ActionResult ViewDegreeAudit(String studentID, String majorID)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.degreeAudit(studentID, majorID));
+        }
     }
 }
