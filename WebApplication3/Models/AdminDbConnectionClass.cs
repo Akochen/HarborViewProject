@@ -330,7 +330,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        departments.Add(new Department(reader.GetString(0),reader.GetInt32(1).ToString()));
+                        departments.Add(new Department(reader.GetString(0), reader.GetInt32(1).ToString()));
                     }
                     connection.Close();
                 }
@@ -340,7 +340,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        courses.Add(new Course(reader.GetString(0),reader.GetInt32(1).ToString()));
+                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString()));
                     }
                     connection.Close();
                 }
@@ -411,17 +411,19 @@ namespace WebApplication3.Models
                     }
                 }
                 //check elective validation
-                if (acForm.isElective.Equals("Yes")) {
-                    acForm.isElective ="1";
+                if (acForm.isElective.Equals("Yes"))
+                {
+                    acForm.isElective = "1";
                 }
                 else acForm.isElective = "0";
 
 
                 //check graduate course validation
-                if (acForm.isGrad.Equals("Yes")) {
-                    acForm.isGrad ="1";
+                if (acForm.isGrad.Equals("Yes"))
+                {
+                    acForm.isGrad = "1";
                 }
-                else acForm.isGrad ="0";
+                else acForm.isGrad = "0";
 
                 //var isMajorReq = Int32.Parse(acForm.isMajorReq);
                 //var isMinorReq = Int32.Parse(acForm.isMinorReq);
@@ -503,11 +505,11 @@ namespace WebApplication3.Models
                         {
                             command.ExecuteNonQuery();
                             String pr1Msg = "You have successfully added a prereq";
-                            returnMessage = returnMessage + "\\n" +pr1Msg;
+                            returnMessage = returnMessage + "\\n" + pr1Msg;
                         }
                         catch
                         {
-                            returnMessage = returnMessage + "\\n"+"ERROR: The Prereq Failed to Insert Correctly";
+                            returnMessage = returnMessage + "\\n" + "ERROR: The Prereq Failed to Insert Correctly";
                         }
                         connection.Close();
                     }
@@ -529,7 +531,7 @@ namespace WebApplication3.Models
                         }
                         catch
                         {
-                            returnMessage = returnMessage + "\\n"+"ERROR: The Prereq Failed to Insert Correctly";
+                            returnMessage = returnMessage + "\\n" + "ERROR: The Prereq Failed to Insert Correctly";
                         }
                         connection.Close();
                     }
@@ -552,7 +554,7 @@ namespace WebApplication3.Models
                         }
                         catch
                         {
-                            returnMessage = returnMessage +"\\n"+ "ERROR: The Course Req Failed to Insert Correctly";
+                            returnMessage = returnMessage + "\\n" + "ERROR: The Course Req Failed to Insert Correctly";
                         }
                         connection.Close();
                     }
@@ -574,7 +576,7 @@ namespace WebApplication3.Models
                         }
                         catch
                         {
-                            returnMessage = returnMessage + "\\n"+"ERROR: The Course Req Failed to Insert Correctly";
+                            returnMessage = returnMessage + "\\n" + "ERROR: The Course Req Failed to Insert Correctly";
                         }
                         connection.Close();
                     }
@@ -647,6 +649,130 @@ namespace WebApplication3.Models
                 return result;
             }
 
+        }
+        public static List<Major> editMajorSelectorHelper()
+        {
+            List<Major> majors = new List<Major>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT major_id, [major_name] FROM [HarborViewUniversity].[dbo].[major]";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        majors.Add(new Major(reader.GetInt32(0).ToString(), reader.GetString(1)));
+                    }
+                }
+                connection.Close();
+            }
+
+            return majors;
+        }
+
+        public static List<Course> editMajor(String major)
+        {
+            List<Course> courses = new List<Course>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = @" SELECT c.course_name, c.course_id FROM course c
+                                    INNER JOIN department d ON d.department_id = c.department_id
+                                    INNER JOIN major m ON m.department_id = d.department_id
+                                    WHERE m.major_id = 1";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+
+            return courses;
+        }
+
+        public static String editMajorResults(String courseID, String courseAttr)
+        {
+            List<Course> courses = new List<Course>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = @" SELECT c.course_name, c.course_id FROM course c
+                                    INNER JOIN department d ON d.department_id = c.department_id
+                                    INNER JOIN major m ON m.department_id = d.department_id
+                                    WHERE m.major_id = 1";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+
+            return null;
+        }
+
+        public static AddSectionForm addSectionForm()
+        {
+            String roomAndBuilding = @"SELECT b.building_id,b.building_full_name,r.room_id,room_number FROM building b INNER JOIN room r ON r.building_id = b.building_id";
+            String courseString = "select course_name,course_id from course order by course_name";
+            String buildingString = "SELECT DISTINCT building_id,building_full_name FROM building";
+            List<Location> buildings = new List<Location>();
+            List<Location> locations = new List<Location>();
+            List<Course> courses = new List<Course>();
+            AddSectionForm helper = new AddSectionForm(buildings, locations, courses);
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand c1 = new SqlCommand(roomAndBuilding, connection);
+                connection.Open();
+                using (var reader = c1.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        locations.Add(new Location(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetInt32(2).ToString(), reader.GetInt32(3).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand c2 = new SqlCommand(courseString, connection);
+                connection.Open();
+                using (var reader = c2.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand c3 = new SqlCommand(buildingString, connection);
+                connection.Open();
+                using (var reader = c3.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        buildings.Add(new Location(reader.GetInt32(0).ToString(), reader.GetString(1)));
+                    }
+                }
+                connection.Close();
+            }
+
+            return helper;
         }
 
         public static List<Major> createDegreeAuditSelector(String studentID)
@@ -737,7 +863,6 @@ namespace WebApplication3.Models
                         coursesTaken.Add(reader.GetInt32(0).ToString(), reader.GetString(1));
                     }
                 }
-<<<<<<< HEAD
 
                 //Get prereqs for major reqs
                 SqlCommand cmd = new SqlCommand(getPrereqsString, connection);
@@ -750,12 +875,6 @@ namespace WebApplication3.Models
                 //get list of major electives
                 SqlCommand command3 = new SqlCommand(getMajorElectivesString, connection);
                 using (var reader = command3.ExecuteReader())
-=======
-                String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-                String insertString = "DELETE FROM hold WHERE student_id = " + studentID + " AND hold_type_id = " + holdTypeID;
-                String result = "";
-                using (SqlConnection connection = new SqlConnection(cString))
->>>>>>> 9797b08... Updated Student Information Works
                 {
                     while (reader.Read())
                     {
@@ -874,48 +993,8 @@ namespace WebApplication3.Models
                 }
             }
 
-<<<<<<< HEAD
             return new DegreeAuditData(majorReqs, majorElectives, outOfMajorReqs);
         }
-=======
-        public static String UpdateStudentInformation(StudentInfo s, String studentID)
-        {
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "UPDATE user_info SET street_name = '" + s.streetName + "', city = '" + s.city + "', [state] = '" + s.state + "', zip = " + s.zip + " WHERE user_id = " + studentID;
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-
-            return "";
-        }
-
-        public static List<StudentInfo> ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
-        {
-            List<StudentInfo> info = new List<StudentInfo>();
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String insertString = "SELECT street_name, city, [state], zip FROM [dbo].[user_info] WHERE [user_id] = " + userID;
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand command = new SqlCommand(insertString, connection);
-                connection.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        info.Add(new StudentInfo(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3).ToString()));
-                    }
-                }
-                connection.Close();
-
-                return info;
-            }
-        }
-
->>>>>>> 9797b08... Updated Student Information Works
     }
 
 }
