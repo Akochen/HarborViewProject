@@ -11,13 +11,15 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
+
     .barContainer {
         border: solid black 1px;
         width: 100%;
         height: 35px;
         position: relative;
     }
-    .resultsTable tr td{
+
+    .resultsTable tr td {
         border-bottom: solid black 1px;
     }
 </style>
@@ -203,3 +205,4 @@
     oomBar.style.width = (((@outOfMajorCredits) / 40) * 100) + "%";
     oomText.innerHTML = "Out of Major Requirements: @outOfMajorCredits / 40 Credits Taken";
 </script>
+

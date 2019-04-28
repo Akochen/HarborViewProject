@@ -766,6 +766,8 @@ namespace WebApplication3.Models
             return studentsMajors;
         }
 
+
+
         public static DegreeAuditData degreeAudit(String studentID, String majorID)
         {
             //SQL Statements for major reqs
@@ -789,6 +791,8 @@ namespace WebApplication3.Models
                                             inner join department d on d.department_id = c.department_id
                                             INNER join major m on m.department_id = d.department_id
                                             where sh.student_id = 1";
+            //SQL to get out of major classes taken
+            String getOutOfMajorClassesTaken = "SELECT [course_id], [course_number], [course_name], [prereqs], [course_credits], [grade] FROM out_of_major_reqs_view WHERE student_id = " + studentID + " AND  course_id not in(select course_id from major_requirements where major_id = " + majorID + ")";
             //SQL to get classes currently being taken
             String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = 1";
             //SQL to get prereqs for major courses
@@ -805,6 +809,8 @@ namespace WebApplication3.Models
             List<string> inProgress = new List<string>();
             //Lists for major electives
             List<DegreeAuditElectives> majorElectives = new List<DegreeAuditElectives>();
+            //List of out of major classes taken
+            List<DegreeAuditOutOfMajorReqs> outOfMajorReqs = new List<DegreeAuditOutOfMajorReqs>();
             //Create connect
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -838,7 +844,7 @@ namespace WebApplication3.Models
                 da.Dispose();
 
                 //Major Electives
-                //get list of major requirements
+                //get list of major electives
                 SqlCommand command3 = new SqlCommand(getMajorElectivesString, connection);
                 using (var reader = command3.ExecuteReader())
                 {
@@ -847,7 +853,7 @@ namespace WebApplication3.Models
                         majorElectives.Add(new DegreeAuditElectives(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetByte(3)));
                     }
                 }
-
+                //Get classes currently being taken
                 SqlCommand command4 = new SqlCommand(getClassesInProgressString, connection);
                 using (var reader = command4.ExecuteReader())
                 {
@@ -857,10 +863,29 @@ namespace WebApplication3.Models
                     }
                 }
 
+                //Out of Major Requirements
+                SqlCommand command5 = new SqlCommand(getOutOfMajorClassesTaken, connection);
+                using (var reader = command5.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        try
+                        {
+                            outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4), reader.GetString(5)));
+                        }
+                        catch
+                        {
+                            outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4), ""));
+                        }
+                    }
+                }
+
                 connection.Close();
             }
+            //Major reqs data processing
             foreach(var mr in majorReqs)
             {
+                //if taken course is passed, mark as complete
                 if (coursesTaken.Contains(mr.courseID))
                 {
                     if (GradeList.isPassing((string)coursesTaken[mr.courseID]))
@@ -868,7 +893,7 @@ namespace WebApplication3.Models
                         mr.courseStatus = "&#x2611";
                     }
                 }
-
+                //if course is in progress, mark as in progress
                 if (inProgress.Contains(mr.courseID))
                 {
                     mr.courseStatus = "&#x2610";
@@ -889,23 +914,31 @@ namespace WebApplication3.Models
                     }
                 }
             }
-            
+            //major electives data processing
             foreach(var el in majorElectives)
             {
+                //if taken course is passed, mark as complete
                 if (coursesTaken.Contains(el.courseID))
                 {
                     if (GradeList.isPassing((string)coursesTaken[el.courseID]))
                     {
                         el.courseStatus = "&#x2611";
+                        el.grade = (string)coursesTaken[el.courseID];
                     }
                 }
 
+                //if course is in progress, mark as in progreess
+                if (inProgress.Contains(el.courseID))
+                {
+                    el.courseStatus = "&#x2610";
+                }
+
+                //sort and add prereqs
                 foreach (DataRow dr in prereqTable.Select("course_id = '" + el.courseID + "'"))
                 {
                     if (coursesTaken.Contains(dr[1] + ""))
                     {
                         el.prereqsTaken += " " + dr[2] + ",";
-                        el.grade = (string)coursesTaken[el.courseID];
                     }
                     else
                     {
@@ -913,8 +946,26 @@ namespace WebApplication3.Models
                     }
                 }
             }
+
+            //Out of Major Requirements data processing
+            foreach(var oom in outOfMajorReqs)
+            {
+                if (oom.grade.Equals(""))
+                {
+                    oom.courseStatus = "&#x2610";
+                } else
+                {
+                    if (GradeList.isPassing(oom.grade))
+                    {
+                        oom.courseStatus = "&#x2611";
+                    } else
+                    {
+                        oom.courseStatus = "&#x2612";
+                    }
+                }
+            }
             
-            return new DegreeAuditData(majorReqs, majorElectives);
+            return new DegreeAuditData(majorReqs, majorElectives, outOfMajorReqs);
         }
 
         

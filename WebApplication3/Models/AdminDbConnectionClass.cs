@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -467,7 +469,7 @@ namespace WebApplication3.Models
                         returnMessage = "ERROR: The Course Failed to Insert Correctly";
                     }
                     connection.Close();
-                }        
+                }
                 var pr1 = acForm.pr1;
                 var pr2 = acForm.pr2;
                 var cr1 = acForm.cr1;
@@ -586,190 +588,334 @@ namespace WebApplication3.Models
             return returnMessage;
 
         }
-            public static List<Hold> viewHolds(String userID)
+        public static List<Hold> viewHolds(String userID)
+        {
+            List<Hold> holds = new List<Hold>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "SELECT  [hold_type_name] ,[semester] ,[year] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + userID;
+            using (SqlConnection connection = new SqlConnection(cString))
             {
-                List<Hold> holds = new List<Hold>();
-                String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-                String queryString = "SELECT  [hold_type_name] ,[semester] ,[year] FROM [HarborViewUniversity].[dbo].[holds_view] WHERE [user_id] = " + userID;
-                using (SqlConnection connection = new SqlConnection(cString))
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
                 {
-                    SqlCommand command = new SqlCommand(queryString, connection);
-                    connection.Open();
-                    using (var reader = command.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            holds.Add(new Hold(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
-                        }
+                        holds.Add(new Hold(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
                     }
-                    connection.Close();
                 }
-
-                return holds;
+                connection.Close();
             }
 
-            public static String removeHold(String holdType, String studentID, String year, String semester)
+            return holds;
+        }
+
+        public static String removeHold(String holdType, String studentID, String year, String semester)
+        {
+            List<Hold> holds = new List<Hold>();
+            int holdTypeID = 0;
+            if (holdType.Equals("Academic"))
             {
-                List<Hold> holds = new List<Hold>();
-                int holdTypeID = 0;
-                if (holdType.Equals("Academic"))
+                holdTypeID = 1;
+            }
+            else if (holdType.Equals("Financial"))
+            {
+                holdTypeID = 3;
+            }
+            else if (holdType.Equals("Administrative"))
+            {
+                holdTypeID = 2;
+            }
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String insertString = "DELETE FROM hold WHERE student_id = " + studentID + "AND hold_type_id = " + holdTypeID;
+            String result = "";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(insertString, connection);
+                connection.Open();
+                try
                 {
-                    holdTypeID = 1;
+                    command.ExecuteNonQuery();
+                    result = "Success message";
                 }
-                else if (holdType.Equals("Financial"))
+                catch
                 {
-                    holdTypeID = 3;
+                    result = "ERROR: Could not remove hold";
                 }
-                else if (holdType.Equals("Administrative"))
+                connection.Close();
+
+                return result;
+            }
+
+        }
+
+        public static List<Major> createDegreeAuditSelector(String studentID)
+        {
+            String getStudentInfoString = "select * FROM [HarborViewUniversity].[dbo].[student_info] WHERE user_id = " + studentID;
+            String getMajorString = "SELECT m.major_id,major_name FROM student_major_list sml INNER JOIN major m ON m.major_id = sml.major_id WHERE student_id = " + studentID;
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            List<Major> studentsMajors = new List<Major>();
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getMajorString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
                 {
-                    holdTypeID = 2;
+                    while (reader.Read())
+                    {
+                        studentsMajors.Add(new Major(reader.GetString(1), reader.GetInt32(0).ToString()));
+                    }
                 }
+            }
+            return studentsMajors;
+        }
+
+        public static DegreeAuditData degreeAudit(String studentID, String majorID)
+        {
+            //SQL Statements for major reqs
+            String getMajorInfoString = @"SELECT c.course_id,CONCAT(d.department_short_name,c.course_num)AS course_number,c.course_name,c.course_credits
+                                            FROM major_requirements mr
+                                            INNER JOIN course c ON c.course_id = mr.course_id
+                                            INNER JOIN major m ON m.major_id = mr.major_id
+                                            INNER JOIN department d ON d.department_id = m.department_id
+                                            WHERE m.major_id = " + majorID;
+            //SQL Statements for electives
+            String getMajorElectivesString = @"SELECT c.course_id, CONCAT(d.department_short_name, c.course_num) AS 'course_num' ,c.course_name, c.course_credits
+                                                FROM [HarborViewUniversity].[dbo].[major_elective] m
+                                                JOIN course c ON c.course_id = m.course_id
+                                                JOIN department d ON c.department_id = d.department_id
+                                                WHERE m.major_id = " + majorID;
+            //SQL to get classes already taken
+            String getClassesTakenString = @"SELECT DISTINCT s.course_id,sh.grade
+                                            FROM student_semester_history sh
+                                            INNER JOIN section s ON s.section_id = sh.section_id
+                                            INNER JOIN course c ON c.course_id = s.course_id
+                                            inner join department d on d.department_id = c.department_id
+                                            INNER join major m on m.department_id = d.department_id
+                                            where sh.student_id = 1";
+            //SQL to get out of major classes taken
+            String getOutOfMajorClassesTaken = "SELECT [course_id], [course_number], [course_name], [prereqs], [course_credits], [grade] FROM out_of_major_reqs_view WHERE student_id = " + studentID + " AND  course_id not in(select course_id from major_requirements where major_id = " + majorID + ")";
+            //SQL to get classes currently being taken
+            String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = 1";
+            //SQL to get prereqs for major courses
+            String getPrereqsString = "SELECT [course_id] ,[prereq_course_id] ,[prereq_course_name] FROM [HarborViewUniversity].[dbo].[prereq_view] WHERE [major_id] = " + majorID;
+            //Connection String
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            //List of major reqs
+            List<DegreeAuditMajorReqs> majorReqs = new List<DegreeAuditMajorReqs>();
+            //List of courses taken
+            Hashtable coursesTaken = new Hashtable();
+            //Prerequisites for courses
+            DataTable prereqTable = new DataTable();
+            //List of courses currently being taken
+            List<string> inProgress = new List<string>();
+            //Lists for major electives
+            List<DegreeAuditElectives> majorElectives = new List<DegreeAuditElectives>();
+            //List of out of major classes taken
+            List<DegreeAuditOutOfMajorReqs> outOfMajorReqs = new List<DegreeAuditOutOfMajorReqs>();
+            //Create connect
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                //Major Requirements
+                //Get list of major requirements
+                SqlCommand command = new SqlCommand(getMajorInfoString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        majorReqs.Add(new DegreeAuditMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetByte(3)));
+                    }
+                }
+
+                //Get classes taken by student
+                SqlCommand command2 = new SqlCommand(getClassesTakenString, connection);
+                using (var reader = command2.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        coursesTaken.Add(reader.GetInt32(0).ToString(), reader.GetString(1));
+                    }
+                }
+<<<<<<< HEAD
+
+                //Get prereqs for major reqs
+                SqlCommand cmd = new SqlCommand(getPrereqsString, connection);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                // this will query your database and return the result to your datatable
+                da.Fill(prereqTable);
+                da.Dispose();
+
+                //Major Electives
+                //get list of major electives
+                SqlCommand command3 = new SqlCommand(getMajorElectivesString, connection);
+                using (var reader = command3.ExecuteReader())
+=======
                 String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-                String insertString = "DELETE FROM hold WHERE student_id = " + studentID + "AND hold_type_id = " + holdTypeID;
+                String insertString = "DELETE FROM hold WHERE student_id = " + studentID + " AND hold_type_id = " + holdTypeID;
                 String result = "";
                 using (SqlConnection connection = new SqlConnection(cString))
+>>>>>>> 9797b08... Updated Student Information Works
                 {
-                    SqlCommand command = new SqlCommand(insertString, connection);
-                    connection.Open();
-                    try
+                    while (reader.Read())
                     {
-                        command.ExecuteNonQuery();
-                        result = "Success message";
+                        majorElectives.Add(new DegreeAuditElectives(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetByte(3)));
                     }
-                    catch
+                }
+                //Get classes currently being taken
+                SqlCommand command4 = new SqlCommand(getClassesInProgressString, connection);
+                using (var reader = command4.ExecuteReader())
+                {
+                    while (reader.Read())
                     {
-                        result = "ERROR: Could not remove hold";
+                        inProgress.Add(reader.GetInt32(0).ToString());
                     }
-                    connection.Close();
-
-                    return result;
                 }
 
+                //Out of Major Requirements
+                SqlCommand command5 = new SqlCommand(getOutOfMajorClassesTaken, connection);
+                using (var reader = command5.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        try
+                        {
+                            outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4), reader.GetString(5)));
+                        }
+                        catch
+                        {
+                            outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4), ""));
+                        }
+                    }
+                }
+
+                connection.Close();
             }
-        public static List<Major> editMajorSelectorHelper()
+            //Major reqs data processing
+            foreach (var mr in majorReqs)
+            {
+                //if taken course is passed, mark as complete
+                if (coursesTaken.Contains(mr.courseID))
+                {
+                    if (GradeList.isPassing((string)coursesTaken[mr.courseID]))
+                    {
+                        mr.courseStatus = "&#x2611";
+                    }
+                }
+                //if course is in progress, mark as in progress
+                if (inProgress.Contains(mr.courseID))
+                {
+                    mr.courseStatus = "&#x2610";
+                }
+                //sort prereqs by taken or not taken
+                foreach (DataRow dr in prereqTable.Select("course_id = '" + mr.courseID + "'"))
+                {
+                    if (coursesTaken.Contains(dr[1] + ""))
+                    {
+                        mr.prereqsTaken += " " + dr[2] + ",";
+                        mr.grade = (string)coursesTaken[mr.courseID];
+                    }
+                    else
+                    {
+                        mr.prereqsToTake += " " + dr[2] + ",";
+                    }
+                }
+            }
+            //major electives data processing
+            foreach (var el in majorElectives)
+            {
+                //if taken course is passed, mark as complete
+                if (coursesTaken.Contains(el.courseID))
+                {
+                    if (GradeList.isPassing((string)coursesTaken[el.courseID]))
+                    {
+                        el.courseStatus = "&#x2611";
+                        el.grade = (string)coursesTaken[el.courseID];
+                    }
+                }
+
+                //if course is in progress, mark as in progreess
+                if (inProgress.Contains(el.courseID))
+                {
+                    el.courseStatus = "&#x2610";
+                }
+
+                //sort and add prereqs
+                foreach (DataRow dr in prereqTable.Select("course_id = '" + el.courseID + "'"))
+                {
+                    if (coursesTaken.Contains(dr[1] + ""))
+                    {
+                        el.prereqsTaken += " " + dr[2] + ",";
+                    }
+                    else
+                    {
+                        el.prereqsToTake += " " + dr[2] + ",";
+                    }
+                }
+            }
+
+            //Out of Major Requirements data processing
+            foreach (var oom in outOfMajorReqs)
+            {
+                if (oom.grade.Equals(""))
+                {
+                    oom.courseStatus = "&#x2610";
+                }
+                else
+                {
+                    if (GradeList.isPassing(oom.grade))
+                    {
+                        oom.courseStatus = "&#x2611";
+                    }
+                    else
+                    {
+                        oom.courseStatus = "&#x2612";
+                    }
+                }
+            }
+
+<<<<<<< HEAD
+            return new DegreeAuditData(majorReqs, majorElectives, outOfMajorReqs);
+        }
+=======
+        public static String UpdateStudentInformation(StudentInfo s, String studentID)
         {
-            List<Major> majors = new List<Major>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "SELECT major_id, [major_name] FROM [HarborViewUniversity].[dbo].[major]";
+            String queryString = "UPDATE user_info SET street_name = '" + s.streetName + "', city = '" + s.city + "', [state] = '" + s.state + "', zip = " + s.zip + " WHERE user_id = " + studentID;
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            return "";
+        }
+
+        public static List<StudentInfo> ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        {
+            List<StudentInfo> info = new List<StudentInfo>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String insertString = "SELECT street_name, city, [state], zip FROM [dbo].[user_info] WHERE [user_id] = " + userID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(insertString, connection);
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        majors.Add(new Major(reader.GetInt32(0).ToString(), reader.GetString(1)));
+                        info.Add(new StudentInfo(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3).ToString()));
                     }
                 }
                 connection.Close();
-            }
 
-            return majors;
+                return info;
+            }
         }
 
-        public static List<Course> editMajor(String major)
-        {
-            List<Course> courses = new List<Course>();
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = @" SELECT c.course_name, c.course_id FROM course c
-                                    INNER JOIN department d ON d.department_id = c.department_id
-                                    INNER JOIN major m ON m.department_id = d.department_id
-                                    WHERE m.major_id = 1";
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString()));
-                    }
-                }
-                connection.Close();
-            }
-
-            return courses;
-        }
-
-        public static String editMajorResults(String courseID, String courseAttr)
-        {
-            List<Course> courses = new List<Course>();
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = @" SELECT c.course_name, c.course_id FROM course c
-                                    INNER JOIN department d ON d.department_id = c.department_id
-                                    INNER JOIN major m ON m.department_id = d.department_id
-                                    WHERE m.major_id = 1";
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString()));
-                    }
-                }
-                connection.Close();
-            }
-
-            return null;
-        }
-
-        public static AddSectionForm addSectionForm()
-        {
-            String roomAndBuilding = @"SELECT b.building_id,b.building_full_name,r.room_id,room_number FROM building b INNER JOIN room r ON r.building_id = b.building_id";
-            String courseString = "select course_name,course_id from course order by course_name";
-            String buildingString = "SELECT DISTINCT building_id,building_full_name FROM building";
-            List<Location> buildings = new List<Location>();
-            List<Location> locations = new List<Location>();
-            List<Course> courses = new List<Course>();
-            AddSectionForm helper = new AddSectionForm(buildings,locations, courses);
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand c1 = new SqlCommand(roomAndBuilding, connection);
-                connection.Open();
-                using (var reader = c1.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        locations.Add(new Location(reader.GetInt32(0).ToString(),reader.GetString(1),reader.GetInt32(2).ToString(),reader.GetInt32(3).ToString()));
-                    }
-                }
-                connection.Close();
-            }
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand c2 = new SqlCommand(courseString, connection);
-                connection.Open();
-                using (var reader = c2.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        courses.Add(new Course(reader.GetString(0),reader.GetInt32(1).ToString()));
-                    }
-                }
-                connection.Close();
-            }
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand c3 = new SqlCommand(buildingString, connection);
-                connection.Open();
-                using (var reader = c3.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        buildings.Add(new Location(reader.GetInt32(0).ToString(), reader.GetString(1)));
-                    }
-                }
-                connection.Close();
-            }
-
-            return helper;
-        }
+>>>>>>> 9797b08... Updated Student Information Works
     }
-    
+
 }

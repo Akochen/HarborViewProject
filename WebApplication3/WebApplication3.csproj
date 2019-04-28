@@ -24,7 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +43,19 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +68,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -82,9 +98,6 @@
     <Reference Include="Microsoft.Web.Infrastructure">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -111,41 +124,18 @@
     <Content Include="Content\ViewSchedule.css" />
     <Content Include="Forms\WebForm1.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Administrator\ViewFacultySchedule.cshtml" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1-vsdoc.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Scripts\umd\popper-utils.min.js" />
-    <Content Include="Scripts\umd\popper-utils.js" />
-    <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Views\Administrator\ViewFacultyScheduleSelector.cshtml" />
     <Content Include="Views\Administrator\ViewStudentHold.cshtml" />
     <Content Include="Views\Administrator\ViewStudentHoldSelector.cshtml" />
     <Content Include="Views\Administrator\removeHold.cshtml" />
+    <Content Include="Views\Administrator\UpdateStudentInformation.cshtml" />
+    <Content Include="Views\Administrator\UpdateStudentInformationSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewStudentInformation.cshtml" />
+    <Content Include="Views\Administrator\UpdateStudentInformationPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -171,6 +161,7 @@
     <Compile Include="HelperClasses\Advisee.cs" />
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
+    <Compile Include="HelperClasses\DegreeAuditOutOfMajorReqs.cs" />
     <Compile Include="HelperClasses\Course.cs" />
     <Compile Include="HelperClasses\DegreeAuditData.cs" />
     <Compile Include="HelperClasses\DegreeAuditElectives.cs" />
@@ -266,6 +257,12 @@
     <Content Include="Views\Administrator\UpdateStudentGradeGradeSelector.cshtml" />
     <Content Include="Views\Administrator\AddCourse.cshtml" />
     <Content Include="Views\Student\ViewDegreeAudit.cshtml" />
+    <Content Include="Views\Faculty\ViewDegreeAuditSelector.cshtml" />
+    <Content Include="Views\Faculty\ViewDegreeAudit.cshtml" />
+    <Content Include="Views\Faculty\DegreeAuditStudentSelector.cshtml" />
+    <Content Include="Views\Administrator\DegreeAuditStudentSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewDegreeAuditSelector.cshtml" />
+    <Content Include="Views\Administrator\ViewDegreeAudit.cshtml" />
     <Content Include="Views\Administrator\AddSectionForm.cshtml" />
     <Content Include="Views\Administrator\EditMajorSelector.cshtml" />
     <Content Include="Views\Administrator\EditMajor.cshtml" />
@@ -276,30 +273,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <None Include="Scripts\jquery-3.3.1.min.map" />
-    <None Include="Scripts\umd\popper.min.js.map" />
-    <None Include="Scripts\umd\popper.js.map" />
-    <None Include="Scripts\umd\popper-utils.min.js.map" />
-    <None Include="Scripts\umd\popper-utils.js.map" />
-    <None Include="Scripts\README.md" />
-    <None Include="Scripts\popper.min.js.map" />
-    <None Include="Scripts\popper.js.map" />
-    <None Include="Scripts\popper-utils.min.js.map" />
-    <None Include="Scripts\popper-utils.js.map" />
-    <None Include="Scripts\esm\popper.min.js.map" />
-    <None Include="Scripts\esm\popper.js.map" />
-    <None Include="Scripts\esm\popper-utils.min.js.map" />
-    <None Include="Scripts\esm\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

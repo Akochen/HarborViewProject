@@ -1,0 +1,31 @@
+﻿@model List<WebApplication3.HelperClasses.StudentInfo>
+    <link rel="stylesheet" href="~/Content/TableTemplate.css" />
+    @{
+        Layout = null;
+    }
+
+    <head>
+    </head>
+    <body>
+
+        <link rel="stylesheet" href="~/Content/hold.css" />
+        <table class="holds">
+            <tr class="tableheader">
+                <th>Street</th>
+                <th>City</th>
+                <th>State</th>
+                <th>zip</th>
+                <th></th>
+            </tr>
+            @foreach (var v in Model)
+            {
+            <tr>
+                <td>@v.streetName</td>
+                <td>@v.city</td>
+                <td>@v.state</td>
+                <td>@v.zip</td>
+                <td>@Html.ActionLink("Update Information", "UpdateStudentInformationPage", "Administrator", new { studentID = TempData["studentID"], streetName = v.streetName, city = v.city, state = v.state, zip = v.zip }, null)</td>
+            </tr>
+            }
+        </table>
+    </body>

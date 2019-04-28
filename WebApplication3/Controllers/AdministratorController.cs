@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -123,21 +123,44 @@ namespace WebApplication3.Controllers
             return View((object)WebApplication3.Models.AdminDbConnectionClass.removeHold(holdType, studentID, year, semester));
         }
 
-        public ActionResult EditMajorSelector()
+<<<<<<< HEAD
+        public ActionResult DegreeAuditStudentSelector()
+=======
+        public ActionResult ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
         {
-            return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(streetName, city, state, zip, userID));
         }
 
-        public ActionResult EditMajor(String major)
+        public ActionResult UpdateStudentInformationSelector()
+>>>>>>> 9797b08... Updated Student Information Works
         {
-            return View(Models.AdminDbConnectionClass.editMajor(major));
+            return View();
         }
 
-        public ActionResult EditMajorResult(String courseID, String courseAttr)
+<<<<<<< HEAD
+        public ActionResult ViewDegreeAuditSelector(String studentID)
         {
-            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID,courseAttr) + "\"); </script>";
-            return View((object)result);
+            return View(WebApplication3.Models.AdminDbConnectionClass.createDegreeAuditSelector(studentID));
         }
 
+        [HttpPost]
+        public ActionResult ViewDegreeAudit(String studentID, String majorID)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.degreeAudit(studentID, majorID));
+        }
+=======
+        public String UpdateStudentInformation(string streetName, string city, string state, string zip, string studentID)
+        {
+            StudentInfo s = new StudentInfo(streetName, city, state, zip);
+            return WebApplication3.Models.AdminDbConnectionClass.UpdateStudentInformation(s, studentID);
+        }
+
+        public ActionResult UpdateStudentInformationPage(string streetName, string city, string state, string zip)
+        {
+            StudentInfo s = new StudentInfo(streetName, city, state, zip);
+            return View(s);
+        }
+
+>>>>>>> 9797b08... Updated Student Information Works
     }
 }

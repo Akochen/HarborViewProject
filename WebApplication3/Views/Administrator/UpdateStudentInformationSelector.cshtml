@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "ViewStudentHoldSelector";
+    ViewBag.Title = "Update Information";
     Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
 
@@ -18,9 +18,8 @@
     @{
         if (IsPost)
         {
-            TempData["studentID"] = Request["id_box"];
-            @Html.Action("ViewStudentHold", "Administrator", new { studentID = Request["id_box"] });
-    }
+            Session["userIDforUpdate"] = Request["id_box"];
+            @Html.Action("ViewStudentInformation", "Administrator", new { userID = Request["id_box"] });
+        }
     }
 </form>
-
