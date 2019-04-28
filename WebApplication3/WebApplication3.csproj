@@ -257,6 +257,9 @@
     <Content Include="Views\Administrator\DegreeAuditStudentSelector.cshtml" />
     <Content Include="Views\Administrator\ViewDegreeAuditSelector.cshtml" />
     <Content Include="Views\Administrator\ViewDegreeAudit.cshtml" />
+    <Content Include="Views\Administrator\EditCatalogSelector.cshtml" />
+    <Content Include="Views\Administrator\EditCatalogDisplayDetails.cshtml" />
+    <Content Include="Views\Administrator\EditCatalogPrereqSelector.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

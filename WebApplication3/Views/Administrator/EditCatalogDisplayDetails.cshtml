@@ -1,0 +1,27 @@
+﻿@model WebApplication3.HelperClasses.CatalogCourse
+@{
+    Layout = null;
+}
+<link href="~/Content/searchTable.css" rel="stylesheet"/>
+<link rel="stylesheet" href="~/Content/TableTemplate.css" />
+<form method="post">
+    <table class="searchTable">
+        <tr>
+            <td>
+                <label>@Model.fullName</label>
+            </td>
+            <td>@Html.Action("EditCatalogPrereqSelector", "Administrator")</td>
+        </tr>
+    </table>
+</form>
+
+<table class="resultsTable">
+    <tr></tr>
+    @foreach (var v in Model.prereqsList)
+    {
+        <tr>
+            <td>@v.prereqName</td>
+            <td>Remove Link Goes Here</td>
+        </tr>
+    }
+</table>

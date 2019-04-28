@@ -1,0 +1,14 @@
+﻿@using WebApplication3.HelperClasses
+@model List<CatalogCourse>
+@{
+    Layout = null;
+}
+
+<select name="prereqSelect">
+    <option value="">---Prerequisite---</option>
+    @foreach (var v in Model)
+    {
+        <option value="@v.id">@v.fullName</option>
+    }
+</select>
+<input type="submit" value="GO" />

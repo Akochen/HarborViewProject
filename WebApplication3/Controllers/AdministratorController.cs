@@ -134,5 +134,20 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.degreeAudit(studentID, majorID));
         }
+
+        public ActionResult EditCatalogSelector()
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.CreateEditCatalogSelector());
+        }
+
+        public ActionResult EditCatalogDisplayDetails(String courseID)
+        {
+            return View(Models.AdminDbConnectionClass.EditCatalogDisplayCourseDetails(courseID));
+        }
+
+        public ActionResult EditCatalogPrereqSelector()
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.CreateEditCatalogSelector());
+        }
     }
 }

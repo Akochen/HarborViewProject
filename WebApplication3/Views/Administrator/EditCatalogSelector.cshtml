@@ -1,0 +1,27 @@
+﻿@model List<WebApplication3.HelperClasses.CatalogCourse>
+@{
+    ViewBag.Title = "Edit Catalog";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
+}
+<link rel="stylesheet" href="~/Content/searchTable.css" />
+
+<table>
+    <tr>
+        <td>
+            <form method="post">
+                <select name="courseSelect" required>
+                    <option value="">---Course---</option>
+                    @foreach(var v in Model)
+                    {
+                        <option value="@v.id">@v.fullName</option>
+                    }
+                </select>
+                <input type="submit" value="GO" />
+            </form>
+        </td>
+    </tr>
+</table>
+@if (IsPost)
+{
+    @Html.Action("EditCatalogDisplayDetails", "Administrator", new { courseID = Request.Form["courseSelect"]})
+}

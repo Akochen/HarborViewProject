@@ -22,6 +22,7 @@ namespace WebApplication3.HelperClasses
         public Course(string courseName)
         {
             this.courseName = courseName;
+
         }
     }
 }

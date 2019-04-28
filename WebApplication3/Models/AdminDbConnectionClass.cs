@@ -867,6 +867,67 @@ namespace WebApplication3.Models
 
             return new DegreeAuditData(majorReqs, majorElectives, outOfMajorReqs);
         }
+
+        public static List<CatalogCourse> CreateEditCatalogSelector()
+        {
+            List<CatalogCourse> allCourses = new List<CatalogCourse>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string getCoursesString = "SELECT course.course_id, course.course_name FROM course";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getCoursesString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        allCourses.Add(new CatalogCourse(reader.GetInt32(0).ToString(), reader.GetString(1)));
+                    }
+                }
+                connection.Close();
+            }
+            return allCourses;
+        }
+
+        public static CatalogCourse EditCatalogDisplayCourseDetails(string courseID)
+        {
+            List<Course> prereqList = new List<Course>();
+            CatalogCourse courseDetails = new CatalogCourse("", "", "", prereqList);
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string getCourseString = "SELECT course_id, course_name, course_description FROM course WHERE course_id = " + courseID;
+            string getPrereqsString = @"SELECT c.course_name, c2.course_id AS 'prereq_id', c2.course_name as 'Prereq Name'
+                                        FROM prereq
+                                        left outer join course c on prereq.course_id = c.course_id
+                                        left outer join course c2 on prereq.pre_req_course_id = c2.course_id
+                                        WHERE c.course_id = " + courseID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                //Get list of prereqs for course
+                SqlCommand command = new SqlCommand(getPrereqsString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        prereqList.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString(), reader.GetString(2)));
+                    }
+                }
+                //Get Course details to pass forward
+                SqlCommand command2 = new SqlCommand(getCourseString, connection);
+                using (var reader = command2.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            courseDetails = new CatalogCourse(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), prereqList);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+            return courseDetails;
+        }
     }
 
 }
