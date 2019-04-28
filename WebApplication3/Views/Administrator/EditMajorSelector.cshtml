@@ -1,0 +1,45 @@
+﻿@using WebApplication3.HelperClasses;
+@model List<Major>
+
+@{
+    ViewBag.Title = "EditMajorSelector";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/Background.css" />
+
+<form name="editCourse" method="post">
+    <div>
+        <table>
+            <tr>
+                <td><strong>Major:</strong> </td>
+                <td>
+                    <select id="majorSelector" name="majorSelector" required>
+                        <option value="">---Select---</option>
+                        @foreach (var m in Model)
+                        {
+                            <option value="@m.majorID">@m.name</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <input type="submit" id="submit" value="Submit" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+@{
+    if (IsPost)
+    {
+        String majorID = Request.Form["majorSelector"];
+        //Major major = new Major(majorID);
+        @Html.Action("EditMajor","Administrator",new {majorID });
+       
+    }
+}
+
+
+
+

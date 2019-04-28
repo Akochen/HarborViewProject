@@ -17,12 +17,14 @@
                     <div class="dropdown-content">
                         @Html.ActionLink("Add Course", "AddCourseOptions", "Administrator")
                         @Html.ActionLink("Update Course", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("Edit Major Requirements", "EditMajorSelector", "Administrator")
+                        @Html.ActionLink("Edit Minor Requirements", "EditMinorSelector", "Administrator")
                     </div>
                 </li>
                 <li class="dropdown">
                     <a href="javascript:void(0)">Master Schedule</a>
                     <div class="dropdown-content">
-                        @Html.ActionLink("Add Section", "SearchSection", "Administrator")
+                        @Html.ActionLink("Add Section", "AddSectionForm", "Administrator")
                         @Html.ActionLink("Update Section", "RegisterForClassesSelector", "Administrator")
                         @Html.ActionLink("Search All Sections", "SearchMasterScheduleSelector", "Administrator")
                     </div>

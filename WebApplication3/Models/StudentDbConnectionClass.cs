@@ -873,7 +873,9 @@ namespace WebApplication3.Models
                 {
                     mr.courseStatus = "&#x2610";
                 }
-
+                //foreach buildingid
+                //listofroomsforbuildingx.add( datarow dr prereqTable.Select(where buildingid = currentbuilingid))
+                
                 foreach(DataRow dr in prereqTable.Select("course_id = '" + mr.courseID + "'"))
                 {
                     if (coursesTaken.Contains(dr[1]+""))

@@ -1,0 +1,33 @@
+﻿@using WebApplication3.HelperClasses;
+@model List<Course>
+
+@{
+    Layout = null;
+}
+
+@{ 
+<link rel="stylesheet" href="~/Content/TableTemplate.css" />
+<div>
+    <table>
+        <tr>
+            <td>
+                <select id="courseSelector" name="courseSelector" required>
+                    <option value="">---Select---</option>
+                    @foreach (var c in Model)
+                    {
+                        <option value="@c.id">@c.courseName</option>
+                    }
+                </select>
+            </td>
+            <td>
+                <select id="elective" name="electiveSelector" required>
+                    <option value="">---Select---</option>
+                    <option value="Required">Required</option>
+                    <option value="Elective">Elective</option>
+                </select>
+            </td>
+            <td>@Html.ActionLink("Submit", "EditMajorResult", "Administrator", new { courseID = Request["courseSelector"], courseAttr = Request["electiveSelector"] }, null)</td>
+        </tr>
+    </table>
+</div>
+    }

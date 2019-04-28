@@ -10,7 +10,7 @@ namespace WebApplication3.HelperClasses
         public String name { get; set; }
         public String requirements { get; set; }
         public String degreeLevel { get; set; }
-        public String majorID;
+        public String majorID { get; set; }
 
         public Major(String name, String requirements, String degreeLevel)
         {
@@ -19,11 +19,12 @@ namespace WebApplication3.HelperClasses
             this.degreeLevel = degreeLevel;
         }
 
-        public Major(string name, string majorID)
+        public Major(String majorID, String name)
         {
             this.name = name;
             this.majorID = majorID;
         }
+
         public Major(string name)
         {
             this.name = name;
