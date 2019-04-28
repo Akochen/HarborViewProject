@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -15,6 +15,10 @@ namespace WebApplication3.Controllers
         public ActionResult AdminHome()
         {
             return View();
+        }
+        public ActionResult AddSectionForm()
+        {
+            return View(Models.AdminDbConnectionClass.addSectionForm());
         }
         //[HttpPost]
         public ActionResult AddCourseOptions()
@@ -41,7 +45,7 @@ namespace WebApplication3.Controllers
         {
             return PartialView(WebApplication3.Models.AdminDbConnectionClass.searchSections(searchYear, searchSemester, instructor, days, time, courseID, courseName, department));
         }
-        
+
         public ActionResult ViewStudentScheduleSelector()
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.createViewStudentScheduleHelper());
@@ -117,6 +121,22 @@ namespace WebApplication3.Controllers
         public ActionResult removeHold(String holdType, String studentID, String year, String semester)
         {
             return View((object)WebApplication3.Models.AdminDbConnectionClass.removeHold(holdType, studentID, year, semester));
+        }
+
+        public ActionResult EditMajorSelector()
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
+        }
+
+        public ActionResult EditMajor(String major)
+        {
+            return View(Models.AdminDbConnectionClass.editMajor(major));
+        }
+
+        public ActionResult EditMajorResult(String courseID, String courseAttr)
+        {
+            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr) + "\"); </script>";
+            return View((object)result);
         }
 
         public ActionResult DegreeAuditStudentSelector()

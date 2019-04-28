@@ -11,7 +11,7 @@
 
 <form name="addCourse" method="post">
     <div>
-        <table class="dataTable" id="lines">
+        <table>
             <tr>
                 <td><strong>Department:</strong> </td>
                 <td>
@@ -19,7 +19,7 @@
                         <option value="">---Select---</option>
                         @foreach (var dept in Model.departments)
                         {
-                            <option value="@dept">@dept.departmentFullName</option>
+                            <option value="@dept.departmentID">@dept.departmentFullName</option>
                         }
                     </select>
                 </td>
@@ -93,7 +93,7 @@
             </tr>
         </table>
     </div>
-    <div>
+    @*<div>
         <table>
             <tr>
                 <td><strong>Major:</strong> </td>
@@ -122,7 +122,7 @@
                         <option value="">---Optional---</option>
                         @foreach (var minor in Model.minors)
                         {
-                            <option value="@minor">@minor.name</option>
+                            <option value="@minor.name">@minor.name</option>
                         }
                     </select>
                 </td>
@@ -136,7 +136,7 @@
                 </td>
             </tr>
         </table>
-    </div>
+    </div>*@
 </form>
 
     @{

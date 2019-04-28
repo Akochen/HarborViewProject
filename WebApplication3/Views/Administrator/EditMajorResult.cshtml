@@ -1,0 +1,14 @@
+﻿@model String
+@using WebApplication3.HelperClasses
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/Content/Background.css" />
+@{
+    if (!IsPost)
+    {
+        @Html.Raw(Model)
+    }
+    @Html.Action("EditMajorSelector", "Administrator");
+}

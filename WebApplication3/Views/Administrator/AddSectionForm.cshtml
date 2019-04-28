@@ -1,0 +1,136 @@
+﻿@using WebApplication3.HelperClasses;
+@model AddSectionForm
+
+@{
+    ViewBag.Title = "AddSectionForm";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/Background.css" />
+
+<form name="addCourse" method="post">
+    <div>
+        <table class="dataTable" id="lines">
+
+            <tr>
+                <td><strong>Course Name:</strong> </td>
+                <td>
+                    <select id="courseSelector" name="courseSelector" required>
+                        <option value="">---Select---</option>
+                        @foreach (var c in Model.courses)
+                        {
+                            <option value="@c.id">@c.courseName</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Building:</strong> </td>
+                <td>
+                    <select id="buildingSelector" name="buildingSelector" onchange="showSelected()" required>
+                        <option value="">---Select---</option>
+                        @foreach (var v in Model.buildings)
+                        {
+                            <option value="@v.buildingId">@v.buildingName</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Room Number:</strong> </td>
+                <td>
+                    @foreach (var b in Model.buildings)
+                    {
+                        <select id="@b.buildingId" name="@b.buildingId" required>
+                            <option value="">---Select---</option>
+
+                            @foreach (var r in Model.locations)
+                            {
+
+                                if (b.buildingId == r.buildingId)
+                                {
+                                    <option value="@r.roomId">@r.roomName</option>
+                                }
+                            }
+                        </select>
+
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table class="dataTable" id="lines">
+            <tr>
+                <td><strong>Semester:</strong> </td>
+                <td> <input type="text" name="semester" value=@WebApplication3.HelperClasses.SemesterDataHelper.getNextSemesterSeason() /></td>
+            </tr>
+            <tr>
+                <td><strong>Year:</strong> </td>
+                <td> <input type="text" name="semester" value=@WebApplication3.HelperClasses.SemesterDataHelper.getNextSemesterYear() /></td>
+            </tr>
+            <tr>
+
+            <tr>
+                <td><strong>Type of Course:</strong> </td>
+                <td>
+                    <select id="typeSelector" name="typeSelector" required>
+                        <option value="">---Select---</option>
+                        <option value="">Lecture</option>
+                        <option value="">Online</option>
+                        <option value="">Hybrid</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Student Capacity:</strong> </td>
+                <td>
+                    <select id="capacitySelector" name="capacitySelector" required>
+                        <option value="">---Select---</option>
+                        <option value="">10</option>
+                        <option value="">15</option>
+                        <option value="">20</option>
+                        <option value="">25</option>
+                        <option value="">30</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+</form>
+
+<script>
+    hideAll();
+    showSelected();
+    function showSelected() {
+        var building = document.getElementById("buildingSelector");
+        var room = document.getElementById("roomSelector");
+        hideAll();
+        console.log(building.value);
+        document.getElementById(building.value).style.display = "initial";
+    }
+
+    function hideAll() {
+        @foreach (var b in Model.buildings)
+        {
+            @Html.Raw("document.getElementById(\"" + b.buildingId + "\").style.display = \"none\"; \n")
+        }
+    }
+</script>
+
+@*@{
+    if (IsPost)
+    {
+
+        AddSectionForm addsectionFormDetails = new AddSectionForm(department, courseNumber,
+            courseName, credits, isElective, isGrad, description,
+            pr1, pr2, cr1, cr2);
+
+        @Html.Action("AddSection", "Administrator", new { form = addsectionFormDetails });
+
+    }
+}*@
+

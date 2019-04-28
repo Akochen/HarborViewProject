@@ -17,12 +17,14 @@
                     <div class="dropdown-content">
                         @Html.ActionLink("Add Course", "AddCourseOptions", "Administrator")
                         @Html.ActionLink("Update Course", "EditCatalogSelector", "Administrator")
+                        @Html.ActionLink("Edit Major Requirements", "EditMajorSelector", "Administrator")
+                        @Html.ActionLink("Edit Minor Requirements", "EditMinorSelector", "Administrator")
                     </div>
                 </li>
                 <li class="dropdown">
                     <a href="javascript:void(0)">Master Schedule</a>
                     <div class="dropdown-content">
-                        @Html.ActionLink("Add Section", "SearchSection", "Administrator")
+                        @Html.ActionLink("Add Section", "AddSectionForm", "Administrator")
                         @Html.ActionLink("Update Section", "RegisterForClassesSelector", "Administrator")
                         @Html.ActionLink("Search All Sections", "SearchMasterScheduleSelector", "Administrator")
                     </div>
@@ -39,7 +41,7 @@
                     <div class="dropdown-content">
                         @Html.ActionLink("Update Hold", "ViewStudentHoldSelector", "Administrator")
                         @Html.ActionLink("Update Grade", "UpdateStudentGradeStudentSelector", "Administrator")
-                        @Html.ActionLink("Update Information", "RegisterForClassesSelector", "Administrator")
+                        @Html.ActionLink("Update Information", "UpdateStudentInformationSelector", "Administrator")
                         @Html.ActionLink("View Transcript", "ViewTranscriptSelector", "Administrator")
                         @Html.ActionLink("View Student Degree Audit", "DegreeAuditStudentSelector", "Administrator")
                         @Html.ActionLink("View Schedule By ID", "ViewStudentScheduleSelector", "Administrator")
