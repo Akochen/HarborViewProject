@@ -1017,7 +1017,7 @@ namespace WebApplication3.Models
             return allCourses;
         }
 
-        public static CatalogCourse EditCatalogDisplayCourseDetails(string courseID)
+        public static CatalogCourse editCatalogDisplayCourseDetails(string courseID)
         {
             List<Course> prereqList = new List<Course>();
             CatalogCourse courseDetails = new CatalogCourse("", "", "", prereqList);
@@ -1055,6 +1055,29 @@ namespace WebApplication3.Models
                 connection.Close();
             }
             return courseDetails;
+        }
+
+        public static String editCatalogRemovePrereq(String courseID, String prereqID)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string result;
+            string getCoursesString = "DELETE FROM[dbo].[prereq] WHERE course_id = " + courseID + " AND pre_req_course_id = " + prereqID + "";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getCoursesString, connection);
+                connection.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    result = "Removal of prerequisite successful.";
+                }
+                catch
+                {
+                    result = "Error: Unable to remove prerequisite.";
+                }
+                connection.Close();
+            }
+            return result;
         }
     }
 

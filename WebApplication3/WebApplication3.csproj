@@ -270,6 +270,7 @@
     <Content Include="Views\Administrator\EditMajorSelector.cshtml" />
     <Content Include="Views\Administrator\EditMajor.cshtml" />
     <Content Include="Views\Administrator\EditMajorResult.cshtml" />
+    <Content Include="Views\Administrator\EditCatalogRemovePrereq.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

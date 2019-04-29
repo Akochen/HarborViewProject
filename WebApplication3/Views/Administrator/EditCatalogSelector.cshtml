@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" href="~/Content/searchTable.css" />
 
-<table>
+<table class="searchTable">
     <tr>
         <td>
             <form method="post">
@@ -23,5 +23,5 @@
 </table>
 @if (IsPost)
 {
-    @Html.Action("EditCatalogDisplayDetails", "Administrator", new { courseID = Request.Form["courseSelect"]})
+    Response.Redirect(Url.Action("EditCatalogDisplayDetails", "Administrator", new { courseID = Request.Form["courseSelect"] }));
 }
