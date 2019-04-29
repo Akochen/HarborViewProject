@@ -2,13 +2,11 @@
 @model List<CatalogCourse>
 @{
     Layout = null;
-}
-
-<select name="prereqSelect">
-    <option value="">---Prerequisite---</option>
-    @foreach (var v in Model)
+    List<SelectListItem> courseList = new List<SelectListItem>();
+    foreach (var v in Model)
     {
-        <option value="@v.id">@v.fullName</option>
+        courseList.Add(new SelectListItem { Value = v.id, Text = v.fullName });
     }
-</select>
+}
+@Html.DropDownList("prereqID", courseList, null, null)
 <input type="submit" value="Add" />

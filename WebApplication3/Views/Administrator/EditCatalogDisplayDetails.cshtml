@@ -5,17 +5,21 @@
 }
 <link href="~/Content/searchTable.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/Content/TableTemplate.css" />
-<form method="post">
-    <table class="searchTable">
-        <tr>
-            <td>Select a Prerequisite to add for @Model.fullName:</td>
+<table class="searchTable">
+    <tr>
+        <td>Select a Prerequisite to add for @Model.fullName:</td>
 
-        </tr>
-        <tr>
-            <td>@Html.Action("EditCatalogPrereqSelector", "Administrator")</td>
-        </tr>
-    </table>
-</form>
+    </tr>
+    <tr>
+        <td>
+            @using (Html.BeginForm("EditCatalogAddPrereq", "Administrator", FormMethod.Post))
+            {
+                @Html.Action("EditCatalogPrereqSelector", "Administrator")
+                @Html.Hidden("courseID", Model.id);
+            }
+            </td>
+    </tr>
+</table>
 @if (Model.prereqsList.Count > 0)
 {
     <table class="resultsTable">

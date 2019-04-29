@@ -175,5 +175,11 @@ namespace WebApplication3.Controllers
             TempData["msg"] = WebApplication3.Models.AdminDbConnectionClass.editCatalogRemovePrereq(courseID, prereqID);
             return RedirectToAction("EditCatalogDisplayDetails", new { courseID = courseID });
         }
+
+        public ActionResult EditCatalogAddPrereq(string courseID, string prereqID)
+        {
+            TempData["msg"] = WebApplication3.Models.AdminDbConnectionClass.editCatalogAddPrereq(courseID, prereqID);
+            return RedirectToAction("EditCatalogDisplayDetails", new { courseID = courseID });
+        }
     }
 }

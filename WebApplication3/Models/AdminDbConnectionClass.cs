@@ -1000,7 +1000,7 @@ namespace WebApplication3.Models
         {
             List<CatalogCourse> allCourses = new List<CatalogCourse>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            string getCoursesString = "SELECT course.course_id, course.course_name FROM course";
+            string getCoursesString = "SELECT course.course_id, course.course_name FROM course ORDER BY course.course_name";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(getCoursesString, connection);
@@ -1074,6 +1074,29 @@ namespace WebApplication3.Models
                 catch
                 {
                     result = "Error: Unable to remove prerequisite.";
+                }
+                connection.Close();
+            }
+            return result;
+        }
+
+        public static String editCatalogAddPrereq(String courseID, String prereqID)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string result;
+            string getCoursesString = "INSERT INTO [dbo].[prereq] ([course_id] ,[pre_req_course_id])  VALUES (" + courseID + ", " + prereqID + ")";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getCoursesString, connection);
+                connection.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    result = "Prerequisite added.";
+                }
+                catch
+                {
+                    result = "Error: Unable to add prerequisite.";
                 }
                 connection.Close();
             }
