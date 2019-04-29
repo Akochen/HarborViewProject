@@ -1,27 +1,41 @@
 ﻿@model WebApplication3.HelperClasses.CatalogCourse
 @{
-    Layout = null;
+    ViewBag.Title = "Edit Catalog";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
-<link href="~/Content/searchTable.css" rel="stylesheet"/>
+<link href="~/Content/searchTable.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/Content/TableTemplate.css" />
 <form method="post">
     <table class="searchTable">
         <tr>
-            <td>
-                <label>@Model.fullName</label>
-            </td>
+            <td>Select a Prerequisite to add for @Model.fullName:</td>
+
+        </tr>
+        <tr>
             <td>@Html.Action("EditCatalogPrereqSelector", "Administrator")</td>
         </tr>
     </table>
 </form>
-
-<table class="resultsTable">
-    <tr></tr>
-    @foreach (var v in Model.prereqsList)
-    {
-        <tr>
-            <td>@v.prereqName</td>
-            <td>Remove Link Goes Here</td>
+@if (Model.prereqsList.Count > 0)
+{
+    <table class="resultsTable">
+        <tr class="tableheader">
+            <th colspan="2"> Current Prerequisites</th>
         </tr>
-    }
-</table>
+        @foreach (var v in Model.prereqsList)
+        {
+            using (Html.BeginForm("EditCatalogRemovePrereq", "Administrator", FormMethod.Post))
+            {
+                <tr>
+                    <td>@v.prereqName</td>
+                    <td>
+                        @Html.Hidden("prereqID", v.prereq)
+                        @Html.Hidden("courseID", Model.id)
+                        <input type="submit" value="Remove" />
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+}
+<div>@TempData["msg"]</div>

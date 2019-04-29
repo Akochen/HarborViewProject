@@ -128,9 +128,9 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
         }
 
-        public ActionResult EditMajor(String major)
+        public ActionResult EditMajor(String majorID)
         {
-            return View(Models.AdminDbConnectionClass.editMajor(major));
+            return View(Models.AdminDbConnectionClass.editMajor(majorID));
         }
 
         public ActionResult EditMajorResult(String courseID, String courseAttr)
@@ -160,14 +160,20 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.AdminDbConnectionClass.CreateEditCatalogSelector());
         }
 
-        public ActionResult EditCatalogDisplayDetails(String courseID)
+        public ActionResult EditCatalogDisplayDetails(string courseID)
         {
-            return View(Models.AdminDbConnectionClass.EditCatalogDisplayCourseDetails(courseID));
+            return View(Models.AdminDbConnectionClass.editCatalogDisplayCourseDetails(courseID));
         }
 
         public ActionResult EditCatalogPrereqSelector()
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.CreateEditCatalogSelector());
+        }
+
+        public ActionResult EditCatalogRemovePrereq(string courseID, string prereqID)
+        {
+            TempData["msg"] = WebApplication3.Models.AdminDbConnectionClass.editCatalogRemovePrereq(courseID, prereqID);
+            return RedirectToAction("EditCatalogDisplayDetails", new { courseID = courseID });
         }
     }
 }
