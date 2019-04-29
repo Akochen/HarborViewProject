@@ -35,7 +35,7 @@
     {
         String majorID = Request.Form["majorSelector"];
         //Major major = new Major(majorID);
-        @Html.Action("EditMajor","Administrator",new {majorID });
+        @Html.Action("EditMajor","Administrator",new {majorID = majorID});
        
     }
 }

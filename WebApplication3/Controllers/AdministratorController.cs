@@ -128,9 +128,9 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
         }
 
-        public ActionResult EditMajor(String major)
+        public ActionResult EditMajor(String majorID)
         {
-            return View(Models.AdminDbConnectionClass.editMajor(major));
+            return View(Models.AdminDbConnectionClass.editMajor(majorID));
         }
 
         public ActionResult EditMajorResult(String courseID, String courseAttr)
