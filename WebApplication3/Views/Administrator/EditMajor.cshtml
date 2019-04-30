@@ -7,29 +7,7 @@
 }
 
 <link rel="stylesheet" href="~/Content/Background.css" />
-@*<div>
-    @using (Html.BeginForm("EditMajor", "Administrator", FormMethod.Post, new { courseID = Request.Form["courseSelector"] }))
-    {
-        <table>
-            <tr>
-                <td><strong>Major:</strong> </td>
-                <td>
-                    <select id="courseSelector" name="courseSelector" required>
-                        <option value="">---Select---</option>
-                        @foreach (var c in Model)
-                        {
-                            <option value="@c.id">@c.courseName</option>
-                        }
-                    </select>
-                </td>
-                <td>
-                    @Html.Hidden("courseID", Request.Form["courseSelector"])
-                    <input type="submit" id="submit" value="Submit" />
-                </td>
-            </tr>
-        </table>
-    }
-</div>*@
+
 
 <form name="editCourse2" method="post">
     <div>
@@ -51,8 +29,8 @@
                 <td>
                     <select id="courseAtrSelector" name="courseAtrSelector" required>
                         <option value="default">---Select---</option>
-                        <option value="Required">Required</option>
-                        <option value="Elective">Elective</option>
+                        <option value="">Required</option>
+                        <option value="">Elective</option>
                     </select>
                 </td>
             </tr>
@@ -69,9 +47,7 @@
 @{
     if (IsPost)
     {
-        String majorID = Request.Form["majorSelector"];
-        //Major major = new Major(majorID);
-        Response.Redirect(Url.Action("EditMajorResult", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["courseAtrSelector"] }));
+        Response.Redirect(Url.Action("EditMajorResults", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["courseAtrSelector"] }));
     }
 }
 

@@ -128,22 +128,16 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
         }
 
-        public ActionResult EditMajorOption()
-        {
-            return View(Models.AdminDbConnectionClass.editMajorSelectorHelper());
-        }
-
-
         public ActionResult EditMajor(String majorID)
         {
             return View(Models.AdminDbConnectionClass.editMajor(majorID));
         }
 
-        public ActionResult EditMajorResult(String courseID, String courseAttr)
+        public ActionResult EditMajorResult(String courseID, String courseAttr,String majorID,String majorName)
         {
 
            //return RedirectToAction("EditMajor", new { courseID = courseID });
-            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr) + "\"); </script>";
+            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr,majorID,majorName) + "\"); </script>";
             return View((object)result);
         }
 
