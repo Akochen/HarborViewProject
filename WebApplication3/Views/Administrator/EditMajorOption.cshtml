@@ -1,15 +1,17 @@
 ﻿@using WebApplication3.HelperClasses;
 @model List<Major>
-
 @{
-    ViewBag.Title = "EditMajorSelector";
+    ViewBag.Title = "EditMajorOption";
     Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
 
-<link rel="stylesheet" href="~/Content/Background.css" />
+<link href="~/Content/searchTable.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/TableTemplate.css" />
 
-<form name="editCourse" method="post">
-    <div>
+
+<div>
+    @using (Html.BeginForm("EditMajor", "Administrator", FormMethod.Post))
+    {
         <table>
             <tr>
                 <td><strong>Major:</strong> </td>
@@ -23,23 +25,11 @@
                     </select>
                 </td>
                 <td>
+                    @Html.Hidden("majorID", Request.Form["majorSelector"])
                     <input type="submit" id="submit" value="Submit" />
                 </td>
             </tr>
         </table>
-    </div>
-</form>
-
-@{
-    if (IsPost)
-    {
-        String majorID = Request.Form["majorSelector"];
-        //Major major = new Major(majorID);
-        Response.Redirect(Url.Action("EditMajor", "Administrator", new { majorID = Request.Form["majorSelector"] }));
     }
-}
-
-
-
-
+ </div>
 

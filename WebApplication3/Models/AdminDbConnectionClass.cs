@@ -679,7 +679,7 @@ namespace WebApplication3.Models
             String queryString = @" SELECT c.course_name, c.course_id FROM course c
                                     INNER JOIN department d ON d.department_id = c.department_id
                                     INNER JOIN major m ON m.department_id = d.department_id
-                                    WHERE m.major_id = 1";
+                                    WHERE m.major_id = " + major;
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
