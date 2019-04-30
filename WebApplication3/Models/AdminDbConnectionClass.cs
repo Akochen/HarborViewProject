@@ -1037,7 +1037,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        prereqList.Add(new Course(reader.GetString(0), reader.GetString(2), reader.GetInt32(1).ToString()));
+                        prereqList.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString(), reader.GetString(2)));
                     }
                 }
                 //Get Course details to pass forward

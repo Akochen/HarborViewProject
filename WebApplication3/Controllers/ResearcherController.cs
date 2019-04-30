@@ -13,5 +13,25 @@ namespace WebApplication3.Controllers
         {
             return View();
         }
+        //Display average grade for all courses (on home)
+        public ActionResult DisplayGradeByCourse()
+        {
+            return PartialView();
+        }
+
+        public ActionResult DisplayGradeByCourseSelect()
+        {
+            return PartialView();
+        }
+        //Display average grade by course
+
+        //Display average grade by professor
+
+        //Display average grade by year
+
+        //Display average grade by semster :^)
+
+
+
     }
 }

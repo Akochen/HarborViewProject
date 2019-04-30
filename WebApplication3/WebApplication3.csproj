@@ -187,6 +187,7 @@
     <Compile Include="HelperClasses\Minor.cs" />
     <Compile Include="Models\AdminDbConnectionClass.cs" />
     <Compile Include="Models\FacultyDbConnectionClass.cs" />
+    <Compile Include="Models\ResearcherDbConnectionClass.cs" />
     <Compile Include="Models\UserDbConnectionClass.cs" />
     <Compile Include="Models\StudentDbConnectionClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -271,6 +272,7 @@
     <Content Include="Views\Administrator\EditMajor.cshtml" />
     <Content Include="Views\Administrator\EditMajorResult.cshtml" />
     <Content Include="Views\Administrator\EditCatalogRemovePrereq.cshtml" />
+    <Content Include="Views\Researcher\DisplayGradeByCourse.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
