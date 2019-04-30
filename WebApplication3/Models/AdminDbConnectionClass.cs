@@ -700,26 +700,27 @@ namespace WebApplication3.Models
         public static String editMajorResults(String courseID, String courseAttr)
         {
             List<Course> courses = new List<Course>();
-            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = @" SELECT c.course_name, c.course_id FROM course c
-                                    INNER JOIN department d ON d.department_id = c.department_id
-                                    INNER JOIN major m ON m.department_id = d.department_id
-                                    WHERE m.major_id = 1";
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString()));
-                    }
-                }
-                connection.Close();
-            }
-
-            return null;
+            //String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            //String queryString = @" SELECT c.course_name, c.course_id FROM course c
+            //                        INNER JOIN department d ON d.department_id = c.department_id
+            //                        INNER JOIN major m ON m.department_id = d.department_id
+            //                        WHERE m.major_id = 1";
+            //using (SqlConnection connection = new SqlConnection(cString))
+            //{
+            //    SqlCommand command = new SqlCommand(getCoursesString, connection);
+            //    connection.Open();
+            //    try
+            //    {
+            //        command.ExecuteNonQuery();
+            //        result = "Removal of prerequisite successful.";
+            //    }
+            //    catch
+            //    {
+            //        result = "Error: Unable to remove prerequisite.";
+            //    }
+            //    connection.Close();
+            //}
+            return "";
         }
 
         public static AddSectionForm addSectionForm()

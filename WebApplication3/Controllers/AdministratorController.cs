@@ -122,17 +122,17 @@ namespace WebApplication3.Controllers
         {
             return View((object)WebApplication3.Models.AdminDbConnectionClass.removeHold(holdType, studentID, year, semester));
         }
-
+    
         public ActionResult EditMajorSelector()
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
         }
-
+        [HttpPost]
         public ActionResult EditMajor(String majorID)
         {
             return View(Models.AdminDbConnectionClass.editMajor(majorID));
         }
-
+        
         public ActionResult EditMajorResult(String courseID, String courseAttr)
         {
             String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr) + "\"); </script>";
@@ -149,7 +149,7 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.AdminDbConnectionClass.createDegreeAuditSelector(studentID));
         }
 
-        [HttpPost]
+
         public ActionResult ViewDegreeAudit(String studentID, String majorID)
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.degreeAudit(studentID, majorID));

@@ -6,7 +6,8 @@
 }
 
 <link rel="stylesheet" href="~/Content/TableTemplate.css" />
-<form>
+@using (Html.BeginForm("EditMajorSelector", "Administrator", FormMethod.Post))
+{
     <div>
         <table>
             <tr>
@@ -26,8 +27,16 @@
                         <option value="Elective">Elective</option>
                     </select>
                 </td>
-                <td>@Html.ActionLink("Submit", "EditMajorResult", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["electiveSelector"] }, null)</td>
+                <td>
+                    <input type="submit" id="submit" value="Submit" />
+                </td>
             </tr>
         </table>
     </div>
-</form>
+}@*@{ 
+if (IsPost)
+{
+            @Html.Action("EditMajorResult", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["electiveSelector"] })
+
+        }
+}*@
