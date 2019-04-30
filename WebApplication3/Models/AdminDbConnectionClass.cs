@@ -1102,6 +1102,29 @@ namespace WebApplication3.Models
             }
             return result;
         }
+
+        public static String editCatalogEditDescriptions(String courseID, String description)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string result;
+            string getCoursesString = "UPDATE [dbo].[course] SET [course_description] = '" + description + "' WHERE [course_id] = " + courseID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getCoursesString, connection);
+                connection.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    result = "Description updated.";
+                }
+                catch
+                {
+                    result = "Error: Unable to change description.";
+                }
+                connection.Close();
+            }
+            return result;
+        }
     }
 
 }
