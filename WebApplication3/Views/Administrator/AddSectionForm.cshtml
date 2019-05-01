@@ -4,10 +4,68 @@
 @{
     ViewBag.Title = "AddSectionForm";
     Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
+    //List all selectable courses
+    List<SelectListItem> courseList = new List<SelectListItem>();
+    courseList.Add(new SelectListItem { Value = "", Text = "---Course---" });
+    foreach (var v in Model.courses)
+    {
+        courseList.Add(new SelectListItem { Value = v.id, Text = v.courseName});
+    }
+    //List all buildings
+    List<SelectListItem> buildingList = new List<SelectListItem>();
+    buildingList.Add(new SelectListItem { Value = "", Text = "---Building---" });
+    foreach (var v in Model.buildings)
+    {
+        buildingList.Add(new SelectListItem { Value = v.buildingId, Text = v. buildingName});
+    }
 }
 
 <link rel="stylesheet" href="~/Content/Background.css" />
+@using (@Html.BeginForm("AddSectionP2", "Administrator", FormMethod.Post)) {
+<table class="dataTable" id="lines">
 
+    <tr>
+        <td><strong>Course Name:</strong> </td>
+        <td>
+            @Html.DropDownList("courseID", courseList, null, new { required = "required"})
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Building:</strong> </td>
+        <td>
+            @Html.DropDownList("buildingID", buildingList, null, new { onchange = "showSelected()", required = "required", @id = "buildingSelector" })
+            @*<select id="buildingSelector" name="buildingSelector" >
+            <option value="">---Select---</option>
+            @foreach (var v in Model.buildings)
+            {
+                <option value="@v.buildingId">@v.buildingName</option>
+            }
+        </select>*@
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Room Number:</strong> </td>
+        <td>
+            @foreach (var b in Model.buildings)
+            {
+                <select id="@b.buildingId" name="@b.buildingId" required>
+                    <option value="">---Select---</option>
+
+                    @foreach (var r in Model.locations)
+                    {
+
+                        if (b.buildingId == r.buildingId)
+                        {
+                            <option value="@r.roomId">@r.roomName</option>
+                        }
+                    }
+                </select>
+
+            }
+        </td>
+    </tr>
+</table>
+}
 <form name="addCourse" method="post">
     <div>
         <table class="dataTable" id="lines">
@@ -107,7 +165,6 @@
     showSelected();
     function showSelected() {
         var building = document.getElementById("buildingSelector");
-        var room = document.getElementById("roomSelector");
         hideAll();
         console.log(building.value);
         document.getElementById(building.value).style.display = "initial";

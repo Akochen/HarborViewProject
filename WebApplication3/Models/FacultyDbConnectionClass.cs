@@ -413,7 +413,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        studentsMajors.Add(new Major(reader.GetString(1), reader.GetInt32(0).ToString()));
+                        studentsMajors.Add(new Major(reader.GetInt32(0).ToString(), reader.GetString(1)));
                     }
                 }
             }
@@ -550,7 +550,9 @@ namespace WebApplication3.Models
                 {
                     mr.courseStatus = "&#x2610";
                 }
-                //sort prereqs by taken or not taken
+                //foreach buildingid
+                //listofroomsforbuildingx.add( datarow dr prereqTable.Select(where buildingid = currentbuilingid))
+
                 foreach (DataRow dr in prereqTable.Select("course_id = '" + mr.courseID + "'"))
                 {
                     if (coursesTaken.Contains(dr[1] + ""))
@@ -562,6 +564,10 @@ namespace WebApplication3.Models
                     {
                         mr.prereqsToTake += " " + dr[2] + ",";
                     }
+                }
+                if (coursesTaken.Contains(mr.courseID + ""))
+                {
+                    mr.grade = (string)coursesTaken[mr.courseID];
                 }
             }
             //major electives data processing
@@ -594,6 +600,11 @@ namespace WebApplication3.Models
                     {
                         el.prereqsToTake += " " + dr[2] + ",";
                     }
+                }
+
+                if (coursesTaken.Contains(el.courseID))
+                {
+                    el.grade = (string)coursesTaken[el.courseID];
                 }
             }
 
