@@ -1,8 +1,21 @@
-﻿
+﻿@using WebApplication3.HelperClasses
+@model List<CatalogCourse>
 @{
     ViewBag.Title = "ResearcherHome";
     Layout = "~/Views/Shared/_LayoutResearcher.cshtml";
 }
 
-<h2>ResearcherHome</h2>
+<table style="width:100%;">
+    <tr>
+        <td style="width:50%;" valign="top" align="center">
+            <table>
+                <tr>
+                    <td>
+                        @Html.Action("DisplayGradeByCourse","Researcher")
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
