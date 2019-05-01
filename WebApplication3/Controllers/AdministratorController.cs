@@ -209,5 +209,10 @@ namespace WebApplication3.Controllers
             TempData["msg"] = WebApplication3.Models.AdminDbConnectionClass.editCatalogEditDescriptions(courseID, description);
             return RedirectToAction("EditCatalogDisplayDetails", new { courseID = courseID });
         }
+
+        public PartialViewResult AddSectionShowProfessor()
+        {
+            return PartialView();
+        }
     }
 }
