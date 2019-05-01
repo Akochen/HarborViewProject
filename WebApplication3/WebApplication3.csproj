@@ -271,6 +271,7 @@
     <Content Include="Views\Administrator\EditMajor.cshtml" />
     <Content Include="Views\Administrator\EditMajorResult.cshtml" />
     <Content Include="Views\Administrator\EditCatalogRemovePrereq.cshtml" />
+    <Content Include="Views\Administrator\AddSectionShowProfessor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
