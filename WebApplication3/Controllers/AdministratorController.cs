@@ -122,7 +122,27 @@ namespace WebApplication3.Controllers
         {
             return View((object)WebApplication3.Models.AdminDbConnectionClass.removeHold(holdType, studentID, year, semester));
         }
-    
+
+        public ActionResult UpdateStudentInformationSelector()
+        {
+            return View();
+        }
+        public String UpdateStudentInformation(string streetName, string city, string state, string zip, string studentID)
+        {
+            StudentInfo s = new StudentInfo(streetName, city, state, zip);
+            return WebApplication3.Models.AdminDbConnectionClass.UpdateStudentInformation(s, studentID);
+        }
+
+        public ActionResult UpdateStudentInformationPage(string streetName, string city, string state, string zip)
+        {
+            StudentInfo s = new StudentInfo(streetName, city, state, zip);
+            return View(s);
+        }
+        public ActionResult ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        {
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(streetName, city, state, zip, userID));
+        }
+
         public ActionResult EditMajorSelector()
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
