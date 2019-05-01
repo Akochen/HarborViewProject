@@ -5,37 +5,61 @@
 }
 <link href="~/Content/searchTable.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/Content/TableTemplate.css" />
-<form method="post">
-    <table class="searchTable">
-        <tr>
-            <td>Select a Prerequisite to add for @Model.fullName:</td>
-
-        </tr>
-        <tr>
-            <td>@Html.Action("EditCatalogPrereqSelector", "Administrator")</td>
-        </tr>
-    </table>
-</form>
-@if (Model.prereqsList.Count > 0)
-{
-    <table class="resultsTable">
-        <tr class="tableheader">
-            <th colspan="2"> Current Prerequisites</th>
-        </tr>
-        @foreach (var v in Model.prereqsList)
-        {
-            using (Html.BeginForm("EditCatalogRemovePrereq", "Administrator", FormMethod.Post))
-            {
+<table>
+    <tr>
+        <td>
+            <table class="searchTable">
                 <tr>
-                    <td>@v.prereqName</td>
+                    <td>Select a Prerequisite to add for @Model.fullName:</td>
+
+                </tr>
+                <tr>
                     <td>
-                        @Html.Hidden("prereqID", v.prereq)
-                        @Html.Hidden("courseID", Model.id)
-                        <input type="submit" value="Remove" />
+                        @using (Html.BeginForm("EditCatalogAddPrereq", "Administrator", FormMethod.Post))
+                        {
+                            @Html.Action("EditCatalogPrereqSelector", "Administrator")
+                            @Html.Hidden("courseID", Model.id);
+                        }
                     </td>
                 </tr>
+                <tr>
+                    <td align="center">
+                        @if (Model.prereqsList.Count > 0)
+                        {
+                            <table class="resultsTable">
+                                <tr class="tableheader">
+                                    <th colspan="2"> Current Prerequisites</th>
+                                </tr>
+                                @foreach (var v in Model.prereqsList)
+                                {
+                                    using (Html.BeginForm("EditCatalogRemovePrereq", "Administrator", FormMethod.Post))
+                                    {
+                                        <tr>
+                                            <td>@v.prereqName</td>
+                                            <td>
+                                                @Html.Hidden("prereqID", v.prereq)
+                                                @Html.Hidden("courseID", Model.id)
+                                                <input type="submit" value="Remove" />
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top">
+            <strong>Description:</strong>
+            @using (Html.BeginForm("EditCatalogEditDescription", "Administrator", FormMethod.Post))
+            {
+                @Html.TextArea("description", new { @value = Model.description, @cols = 50, @rows = 4 });
+                @Html.Hidden("courseID", Model.id);
+                <br />
+                <input style="margin-left:90%;" type="submit" value="Edit" />
             }
-        }
-    </table>
-}
+        </td>
+    </tr>
+</table>
 <div>@TempData["msg"]</div>

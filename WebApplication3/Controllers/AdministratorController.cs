@@ -132,10 +132,12 @@ namespace WebApplication3.Controllers
         {
             return View(Models.AdminDbConnectionClass.editMajor(majorID));
         }
-        
-        public ActionResult EditMajorResult(String courseID, String courseAttr)
+
+        public ActionResult EditMajorResult(String courseID, String courseAttr,String majorID,String majorName)
         {
-            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr) + "\"); </script>";
+
+           //return RedirectToAction("EditMajor", new { courseID = courseID });
+            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr,majorID,majorName) + "\"); </script>";
             return View((object)result);
         }
 
@@ -173,6 +175,18 @@ namespace WebApplication3.Controllers
         public ActionResult EditCatalogRemovePrereq(string courseID, string prereqID)
         {
             TempData["msg"] = WebApplication3.Models.AdminDbConnectionClass.editCatalogRemovePrereq(courseID, prereqID);
+            return RedirectToAction("EditCatalogDisplayDetails", new { courseID = courseID });
+        }
+
+        public ActionResult EditCatalogAddPrereq(string courseID, string prereqID)
+        {
+            TempData["msg"] = WebApplication3.Models.AdminDbConnectionClass.editCatalogAddPrereq(courseID, prereqID);
+            return RedirectToAction("EditCatalogDisplayDetails", new { courseID = courseID });
+        }
+
+        public ActionResult EditCatalogEditDescription(string courseID, string description)
+        {
+            TempData["msg"] = WebApplication3.Models.AdminDbConnectionClass.editCatalogEditDescriptions(courseID, description);
             return RedirectToAction("EditCatalogDisplayDetails", new { courseID = courseID });
         }
     }

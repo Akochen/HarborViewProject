@@ -676,10 +676,10 @@ namespace WebApplication3.Models
         {
             List<Course> courses = new List<Course>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = @" SELECT c.course_name, c.course_id FROM course c
+            String queryString = @" SELECT c.course_name, c.course_id,m.major_id FROM course c
                                     INNER JOIN department d ON d.department_id = c.department_id
                                     INNER JOIN major m ON m.department_id = d.department_id
-                                    WHERE m.major_id = 1";
+                                    WHERE m.major_id = " + major;
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -688,7 +688,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString()));
+                        courses.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString(), reader.GetInt32(2)));
                     }
                 }
                 connection.Close();
@@ -697,7 +697,7 @@ namespace WebApplication3.Models
             return courses;
         }
 
-        public static String editMajorResults(String courseID, String courseAttr)
+        public static String editMajorResults(String courseID, String courseAttr,String majorID,String majorName)
         {
             List<Course> courses = new List<Course>();
             //String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
@@ -1001,7 +1001,7 @@ namespace WebApplication3.Models
         {
             List<CatalogCourse> allCourses = new List<CatalogCourse>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            string getCoursesString = "SELECT course.course_id, course.course_name FROM course";
+            string getCoursesString = "SELECT course.course_id, course.course_name FROM course ORDER BY course.course_name";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(getCoursesString, connection);
@@ -1038,7 +1038,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        prereqList.Add(new Course(reader.GetString(0), reader.GetInt32(1).ToString(), reader.GetString(2)));
+                        prereqList.Add(new Course(reader.GetString(0), reader.GetString(2), reader.GetInt32(1).ToString()));
                     }
                 }
                 //Get Course details to pass forward
@@ -1075,6 +1075,52 @@ namespace WebApplication3.Models
                 catch
                 {
                     result = "Error: Unable to remove prerequisite.";
+                }
+                connection.Close();
+            }
+            return result;
+        }
+
+        public static String editCatalogAddPrereq(String courseID, String prereqID)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string result;
+            string getCoursesString = "INSERT INTO [dbo].[prereq] ([course_id] ,[pre_req_course_id])  VALUES (" + courseID + ", " + prereqID + ")";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getCoursesString, connection);
+                connection.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    result = "Prerequisite added.";
+                }
+                catch
+                {
+                    result = "Error: Unable to add prerequisite.";
+                }
+                connection.Close();
+            }
+            return result;
+        }
+
+        public static String editCatalogEditDescriptions(String courseID, String description)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string result;
+            string getCoursesString = "UPDATE [dbo].[course] SET [course_description] = '" + description + "' WHERE [course_id] = " + courseID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getCoursesString, connection);
+                connection.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    result = "Description updated.";
+                }
+                catch
+                {
+                    result = "Error: Unable to change description.";
                 }
                 connection.Close();
             }

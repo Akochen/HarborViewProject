@@ -2,15 +2,18 @@
 @model List<Course>
 
 @{
-    Layout = null;
+    ViewBag.Title = "EditMajorSelector";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
 
-<link rel="stylesheet" href="~/Content/TableTemplate.css" />
-@using (Html.BeginForm("EditMajorSelector", "Administrator", FormMethod.Post))
-{
+<link rel="stylesheet" href="~/Content/Background.css" />
+
+
+<form name="editCourse2" method="post">
     <div>
         <table>
             <tr>
+                <td><strong>Courses:</strong> </td>
                 <td>
                     <select id="courseSelector" name="courseSelector" required>
                         <option value="">---Select---</option>
@@ -20,23 +23,31 @@
                         }
                     </select>
                 </td>
+            </tr>
+            <tr>
+                <td><strong>Course Type:</strong> </td>
                 <td>
-                    <select id="elective" name="electiveSelector" required>
-                        <option value="">---Select---</option>
-                        <option value="Required">Required</option>
-                        <option value="Elective">Elective</option>
+                    <select id="courseAtrSelector" name="courseAtrSelector" required>
+                        <option value="default">---Select---</option>
+                        <option value="">Required</option>
+                        <option value="">Elective</option>
                     </select>
                 </td>
+            </tr>
+            <tr>
                 <td>
-                    <input type="submit" id="submit" value="Submit" />
+                    <input type="submit" id="submit" value="Update" />
                 </td>
             </tr>
+           
         </table>
     </div>
-}@*@{ 
-if (IsPost)
-{
-            @Html.Action("EditMajorResult", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["electiveSelector"] })
+</form>
 
-        }
-}*@
+@{
+    if (IsPost)
+    {
+        Response.Redirect(Url.Action("EditMajorResults", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["courseAtrSelector"] }));
+    }
+}
+

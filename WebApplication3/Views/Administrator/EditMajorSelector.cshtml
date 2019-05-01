@@ -35,10 +35,10 @@
     {
         String majorID = Request.Form["majorSelector"];
         //Major major = new Major(majorID);
-        @Html.Action("EditMajor","Administrator",new {majorID = majorID});
-       
+        Response.Redirect(Url.Action("EditMajor", "Administrator", new { majorID = Request.Form["majorSelector"] }));
     }
 }
+
 
 
 

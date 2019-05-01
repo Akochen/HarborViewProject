@@ -161,8 +161,8 @@
     <Compile Include="HelperClasses\Advisee.cs" />
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
-    <Compile Include="HelperClasses\DegreeAuditOutOfMajorReqs.cs" />
     <Compile Include="HelperClasses\Course.cs" />
+    <Compile Include="HelperClasses\DegreeAuditOutOfMajorReqs.cs" />
     <Compile Include="HelperClasses\DegreeAuditData.cs" />
     <Compile Include="HelperClasses\DegreeAuditElectives.cs" />
     <Compile Include="HelperClasses\DegreeAuditMajorReqs.cs" />
