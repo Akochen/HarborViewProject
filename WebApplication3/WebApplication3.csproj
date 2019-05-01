@@ -60,7 +60,6 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -68,9 +67,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -78,6 +74,21 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -161,13 +172,14 @@
     <Compile Include="HelperClasses\Advisee.cs" />
     <Compile Include="HelperClasses\Catalog.cs" />
     <Compile Include="HelperClasses\Advisor.cs" />
-    <Compile Include="HelperClasses\DegreeAuditOutOfMajorReqs.cs" />
     <Compile Include="HelperClasses\Course.cs" />
+    <Compile Include="HelperClasses\DegreeAuditOutOfMajorReqs.cs" />
     <Compile Include="HelperClasses\DegreeAuditData.cs" />
     <Compile Include="HelperClasses\DegreeAuditElectives.cs" />
     <Compile Include="HelperClasses\DegreeAuditMajorReqs.cs" />
     <Compile Include="HelperClasses\Department.cs" />
     <Compile Include="HelperClasses\DepartmentEnum.cs" />
+    <Compile Include="HelperClasses\EditMajor.cs" />
     <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\FacultySemester.cs" />
     <Compile Include="HelperClasses\GradeList.cs" />
@@ -187,6 +199,7 @@
     <Compile Include="HelperClasses\Minor.cs" />
     <Compile Include="Models\AdminDbConnectionClass.cs" />
     <Compile Include="Models\FacultyDbConnectionClass.cs" />
+    <Compile Include="Models\ResearcherDbConnectionClass.cs" />
     <Compile Include="Models\UserDbConnectionClass.cs" />
     <Compile Include="Models\StudentDbConnectionClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -271,6 +284,7 @@
     <Content Include="Views\Administrator\EditMajor.cshtml" />
     <Content Include="Views\Administrator\EditMajorResult.cshtml" />
     <Content Include="Views\Administrator\EditCatalogRemovePrereq.cshtml" />
+    <Content Include="Views\Researcher\DisplayGradeByCourse.cshtml" />
     <Content Include="Views\Administrator\AddSectionShowProfessor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

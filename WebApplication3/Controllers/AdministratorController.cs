@@ -123,19 +123,41 @@ namespace WebApplication3.Controllers
             return View((object)WebApplication3.Models.AdminDbConnectionClass.removeHold(holdType, studentID, year, semester));
         }
 
+        public ActionResult UpdateStudentInformationSelector()
+        {
+            return View();
+        }
+        public String UpdateStudentInformation(string streetName, string city, string state, string zip, string studentID)
+        {
+            StudentInfo s = new StudentInfo(streetName, city, state, zip);
+            return WebApplication3.Models.AdminDbConnectionClass.UpdateStudentInformation(s, studentID);
+        }
+
+        public ActionResult UpdateStudentInformationPage(string streetName, string city, string state, string zip)
+        {
+            StudentInfo s = new StudentInfo(streetName, city, state, zip);
+            return View(s);
+        }
+        public ActionResult ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        {
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(streetName, city, state, zip, userID));
+        }
+
         public ActionResult EditMajorSelector()
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
         }
-
+    
         public ActionResult EditMajor(String majorID)
         {
             return View(Models.AdminDbConnectionClass.editMajor(majorID));
         }
 
-        public ActionResult EditMajorResult(String courseID, String courseAttr)
+        public ActionResult EditMajorResult(String courseID, String courseAttr,String majorID)
         {
-            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr) + "\"); </script>";
+
+           //return RedirectToAction("EditMajor", new { courseID = courseID });
+            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr,majorID) + "\"); </script>";
             return View((object)result);
         }
 
@@ -149,7 +171,7 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.AdminDbConnectionClass.createDegreeAuditSelector(studentID));
         }
 
-        [HttpPost]
+
         public ActionResult ViewDegreeAudit(String studentID, String majorID)
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.degreeAudit(studentID, majorID));
