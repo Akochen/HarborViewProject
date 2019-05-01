@@ -595,6 +595,43 @@ namespace WebApplication3.Models
             }
 
         }
+
+        public static String UpdateStudentInformation(StudentInfo s, String studentID)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String queryString = "UPDATE user_info SET street_name = '" + s.streetName + "', city = '" + s.city + "', [state] = '" + s.state + "', zip = " + s.zip + " WHERE user_id = " + studentID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            return "";
+        }
+
+        public static List<StudentInfo> ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        {
+            List<StudentInfo> info = new List<StudentInfo>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String insertString = "SELECT street_name, city, [state], zip FROM [dbo].[user_info] WHERE [user_id] = " + userID;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(insertString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        info.Add(new StudentInfo(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3).ToString()));
+                    }
+                }
+                connection.Close();
+
+                return info;
+            }
+        }
         public static List<Major> editMajorSelectorHelper()
         {
             List<Major> majors = new List<Major>();
