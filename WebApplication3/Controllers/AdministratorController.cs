@@ -127,17 +127,17 @@ namespace WebApplication3.Controllers
         {
             return View(WebApplication3.Models.AdminDbConnectionClass.editMajorSelectorHelper());
         }
-        [HttpPost]
+    
         public ActionResult EditMajor(String majorID)
         {
             return View(Models.AdminDbConnectionClass.editMajor(majorID));
         }
 
-        public ActionResult EditMajorResult(String courseID, String courseAttr,String majorID,String majorName)
+        public ActionResult EditMajorResult(String courseID, String courseAttr,String majorID)
         {
 
            //return RedirectToAction("EditMajor", new { courseID = courseID });
-            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr,majorID,majorName) + "\"); </script>";
+            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr,majorID) + "\"); </script>";
             return View((object)result);
         }
 

@@ -315,12 +315,8 @@ namespace WebApplication3.Models
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String deptString = "SELECT [department_full_name],department_id FROM [HarborViewUniversity].[dbo].[department] order by department_full_name";
             String courseString = "select course_name, course_id from course order by course_name";
-            //String majorString = "SELECT [major_name] FROM [HarborViewUniversity].[dbo].[major]";
-            //String minorString = "SELECT [minor_name] FROM [HarborViewUniversity].[dbo].[minor]";
             List<Department> departments = new List<Department>();
             List<Course> courses = new List<Course>();
-            //List<Major> majors = new List<Major>();
-            //List<Minor> minors = new List<Minor>();
             AddCourse helper = new AddCourse(departments, courses);
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -344,26 +340,6 @@ namespace WebApplication3.Models
                     }
                     connection.Close();
                 }
-                //SqlCommand c2 = new SqlCommand(majorString, connection);
-                //connection.Open();
-                //using (var reader = c2.ExecuteReader())
-                //{
-                //    while (reader.Read())
-                //    {
-                //        majors.Add(new Major(reader.GetString(0)));
-                //    }
-                //    connection.Close();
-                //}
-                //SqlCommand c3 = new SqlCommand(minorString, connection);
-                //connection.Open();
-                //using (var reader = c3.ExecuteReader())
-                //{
-                //    while (reader.Read())
-                //    {
-                //        minors.Add(new Minor(reader.GetString(0)));
-                //    }
-                //    connection.Close();
-                //}
             }
             return helper;
         }
@@ -374,18 +350,9 @@ namespace WebApplication3.Models
 
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String getCourseNumbersString = @"SELECT c.course_num FROM course c INNER JOIN department d ON d.department_id = c.department_id WHERE d.department_id = " + acForm.department;
-            //String getDeptId = " SELECT department_id FROM department WHERE department_full_name = " + acForm.department;
-            //String getPr1Id = "select course_id from course where course_name = "+acForm.pr1+" AND department_id = "+ getDeptId;
-            //String getPr2Id = "select course_id from course where course_name = " + acForm.pr2 + " AND department_id = " + getDeptId;
-            //String getCr1Id = "select course_id from course where course_name = " + acForm.cr1 + " AND department_id = " + getDeptId;
-            //String getCr2Id = "select course_id from course where course_name = " + acForm.cr2 + " AND department_id = " + getDeptId;
             List<String> currentCourseNumbers;
             String returnMessage = "Message FAIL";
             String newCourseID = "";
-            //String getMajorId = "SELECT major_id FROM major WHERE major_name = " + acForm.major;
-            //String getMinorId = "SELECT minor_id FROM minor WHERE minor_name = " + acForm.minor;
-            //String majorReqTableInsert = "";
-            //String minorReqTableInsert = "";
             try
             {  //check course number
                 using (SqlConnection connection = new SqlConnection(cString))
@@ -425,26 +392,6 @@ namespace WebApplication3.Models
                 }
                 else acForm.isGrad = "0";
 
-                //var isMajorReq = Int32.Parse(acForm.isMajorReq);
-                //var isMinorReq = Int32.Parse(acForm.isMinorReq);
-                ////major req
-                //if (acForm.isMajorReq.Equals("Yes")) {
-                //    acForm.isMajorReq = "1";
-                //}
-                ////minor req 
-                //if (acForm.isMinorReq.Equals("Yes")) {
-                //    acForm.isMinorReq = "1";
-                //}
-                //  }
-
-
-                //(<department_id, int,>
-                // ,<course_num, int,>
-                // ,<course_name, varchar(50),>
-                // ,<course_description, varchar(max),>
-                // ,<course_credits, tinyint,>
-                // ,<is_elective, bit,>
-                // ,<is_graduate_course, bit,>)
                 var department = Int32.Parse(acForm.department);
                 var courseNumber = Int32.Parse(acForm.courseNumber);
                 var courseName = acForm.courseName;
@@ -452,8 +399,6 @@ namespace WebApplication3.Models
                 var credits = Int32.Parse(acForm.credits);
                 var isElective = Int32.Parse(acForm.isElective);
                 var isGrad = Int32.Parse(acForm.isGrad);
-                //var major = Int32.Parse(getMajorId);
-                //var minor = Int32.Parse(getMinorId);
 
                 String courseTableInsertString = @"INSERT INTO [dbo].[course]([department_id],[course_num],[course_name],[course_description],[course_credits],[is_elective],[is_graduate_course])
                                                     VALUES(" + department + "," + courseNumber + ",'" + acForm.courseName + "','" + acForm.description + "','" + credits + "','" + isElective + "'," + isGrad + ")";
@@ -672,9 +617,10 @@ namespace WebApplication3.Models
             return majors;
         }
 
-        public static List<Course> editMajor(String major)
+        public static EditMajor editMajor(String major)
         {
             List<Course> courses = new List<Course>();
+            EditMajor helper = new EditMajor(courses,major);
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String queryString = @" SELECT c.course_name, c.course_id,m.major_id FROM course c
                                     INNER JOIN department d ON d.department_id = c.department_id
@@ -694,33 +640,97 @@ namespace WebApplication3.Models
                 connection.Close();
             }
 
-            return courses;
+            return helper;
         }
 
-        public static String editMajorResults(String courseID, String courseAttr,String majorID,String majorName)
+        public static String editMajorResults(String courseID, String courseAttr,String majorID)
         {
+            String resultString = "ERROR";
             List<Course> courses = new List<Course>();
-            //String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            //String queryString = @" SELECT c.course_name, c.course_id FROM course c
-            //                        INNER JOIN department d ON d.department_id = c.department_id
-            //                        INNER JOIN major m ON m.department_id = d.department_id
-            //                        WHERE m.major_id = 1";
-            //using (SqlConnection connection = new SqlConnection(cString))
-            //{
-            //    SqlCommand command = new SqlCommand(getCoursesString, connection);
-            //    connection.Open();
-            //    try
-            //    {
-            //        command.ExecuteNonQuery();
-            //        result = "Removal of prerequisite successful.";
-            //    }
-            //    catch
-            //    {
-            //        result = "Error: Unable to remove prerequisite.";
-            //    }
-            //    connection.Close();
-            //}
-            return "";
+            List<EditMajor> majorhelper = new List<EditMajor>();
+            List<EditMajor> electivehelper = new List<EditMajor>();
+            String majReqString = "SELECT* FROM major_requirements";
+            String electiveString = "SELECT* FROM major_elective";
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand c1 = new SqlCommand(majReqString, connection);
+                connection.Open();
+                using (var reader = c1.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        majorhelper.Add(new EditMajor(reader.GetInt32(0).ToString(), reader.GetInt32(1).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand c2 = new SqlCommand(electiveString, connection);
+                connection.Open();
+                using (var reader = c2.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        electivehelper.Add(new EditMajor(reader.GetInt32(0).ToString(), reader.GetInt32(1).ToString()));
+                    }
+                }
+                connection.Close();
+            }
+            if (courseAttr.Equals("Required"))
+            {
+                foreach(var v in majorhelper)
+                {
+                    if(v.major==majorID && v.courseID == courseID)
+                    {
+                        return "This course is already in the Major Requirements list";
+                    }
+                }
+                string insertMajorReq = "INSERT INTO major_requirements(major_id,course_id) VALUES (" + majorID + ", " + courseID + ")";
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    SqlCommand command = new SqlCommand(insertMajorReq, connection);
+                    connection.Open();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        resultString = "This course has been added to the major requirements list.";
+                    }
+                    catch
+                    {
+                        resultString = "There is an error when trying to insert";
+                    }
+                    connection.Close();
+                }
+            }
+            if (courseAttr.Equals("Elective"))
+            {
+                foreach (var v in electivehelper)
+                {
+                    if (v.major == majorID && v.courseID == courseID)
+                    {
+                        return "This course is already in the Major Elective list";
+                    }
+                }
+                string insertElective = "INSERT INTO major_elective(major_id,course_id) VALUES (" + majorID + ", " + courseID + ")";
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    SqlCommand command = new SqlCommand(insertElective, connection);
+                    connection.Open();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        resultString = "This course has been added to the major requirements list.";
+                    }
+                    catch
+                    {
+                        resultString = "There is an error when trying to insert";
+                    }
+                    connection.Close();
+                }
+            }
+            return resultString;
         }
 
         public static AddSectionForm addSectionForm()

@@ -168,6 +168,7 @@
     <Compile Include="HelperClasses\DegreeAuditMajorReqs.cs" />
     <Compile Include="HelperClasses\Department.cs" />
     <Compile Include="HelperClasses\DepartmentEnum.cs" />
+    <Compile Include="HelperClasses\EditMajor.cs" />
     <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\FacultySemester.cs" />
     <Compile Include="HelperClasses\GradeList.cs" />
