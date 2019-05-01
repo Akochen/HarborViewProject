@@ -1,5 +1,5 @@
 ﻿@using WebApplication3.HelperClasses;
-@model List<Course>
+@model EditMajor
 
 @{
     ViewBag.Title = "EditMajorSelector";
@@ -17,7 +17,7 @@
                 <td>
                     <select id="courseSelector" name="courseSelector" required>
                         <option value="">---Select---</option>
-                        @foreach (var c in Model)
+                        @foreach (var c in Model.courses)
                         {
                             <option value="@c.id">@c.courseName</option>
                         }
@@ -29,8 +29,8 @@
                 <td>
                     <select id="courseAtrSelector" name="courseAtrSelector" required>
                         <option value="default">---Select---</option>
-                        <option value="">Required</option>
-                        <option value="">Elective</option>
+                        <option value="Required">Required</option>
+                        <option value="Elective">Elective</option>
                     </select>
                 </td>
             </tr>
@@ -47,7 +47,7 @@
 @{
     if (IsPost)
     {
-        Response.Redirect(Url.Action("EditMajorResults", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["courseAtrSelector"] }));
+        Response.Redirect(Url.Action("EditMajorResult", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["courseAtrSelector"], majorID = Model.major }));
     }
 }
 
