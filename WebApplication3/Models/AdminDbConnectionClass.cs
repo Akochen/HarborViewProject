@@ -775,10 +775,11 @@ namespace WebApplication3.Models
             String roomAndBuilding = @"SELECT b.building_id,b.building_full_name,r.room_id,room_number FROM building b INNER JOIN room r ON r.building_id = b.building_id";
             String courseString = "select course_name,course_id from course order by course_name";
             String buildingString = "SELECT DISTINCT building_id,building_full_name FROM building";
+            String timeString = "SELECT DISTINCT FORMAT(CAST([start_time] AS datetime), 'h:mm tt') AS start_time, CAST([end_time] AS datetime) AS order_time FROM [HarborViewUniversity].[dbo].[time_slot] ORDER BY order_time";
             List<Location> buildings = new List<Location>();
             List<Location> locations = new List<Location>();
             List<Course> courses = new List<Course>();
-            AddSectionForm helper = new AddSectionForm(buildings, locations, courses);
+            List<String> startTimes = new List<String>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -819,8 +820,44 @@ namespace WebApplication3.Models
                 }
                 connection.Close();
             }
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand c4 = new SqlCommand(timeString, connection);
+                connection.Open();
+                using (var reader = c4.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        startTimes.Add(reader.GetString(0));
+                    }
+                }
+                connection.Close();
+            }
 
-            return helper;
+            return new AddSectionForm(buildings, locations, courses, startTimes);
+        }
+
+        public static String addSection(String courseID, String roomID, String buildingID, String semester, String year, String type, String capacity)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string result;
+            string insertSectionString = "INSERT INTO [dbo].[section] ([time_slot_id],[faculty_id],[course_id],[room_id],[building_id],[semster],[year],[type],[capactiy],[seats_taken])VALUES(NULL,NULL," + courseID + "," + roomID + "," + buildingID + ",'" + semester + "','" + year + "','" + type + "','" + capacity + "',0)";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(insertSectionString, connection);
+                connection.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    result = "Section inserted.";
+                }
+                catch
+                {
+                    result = "Error: Unable to insert section.";
+                }
+                connection.Close();
+            }
+            return result;
         }
 
         public static List<Major> createDegreeAuditSelector(String studentID)
@@ -843,6 +880,7 @@ namespace WebApplication3.Models
             }
             return studentsMajors;
         }
+
 
         public static DegreeAuditData degreeAudit(String studentID, String majorID)
         {

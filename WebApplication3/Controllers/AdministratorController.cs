@@ -20,6 +20,13 @@ namespace WebApplication3.Controllers
         {
             return View(Models.AdminDbConnectionClass.addSectionForm());
         }
+
+        public ActionResult AddSection(String courseId, String buildingId, String roomId, String semester, String year, String type, String capacity)
+        {
+            String msg = WebApplication3.Models.AdminDbConnectionClass.addSection(courseId, roomId, buildingId, semester, year, type, capacity);
+            return RedirectToAction("AdminHome");
+        }
+
         //[HttpPost]
         public ActionResult AddCourseOptions()
         {
@@ -208,11 +215,6 @@ namespace WebApplication3.Controllers
         {
             TempData["msg"] = WebApplication3.Models.AdminDbConnectionClass.editCatalogEditDescriptions(courseID, description);
             return RedirectToAction("EditCatalogDisplayDetails", new { courseID = courseID });
-        }
-
-        public PartialViewResult AddSectionShowProfessor()
-        {
-            return PartialView();
         }
     }
 }

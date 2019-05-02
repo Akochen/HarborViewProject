@@ -185,6 +185,7 @@
     <Compile Include="HelperClasses\GradeList.cs" />
     <Compile Include="HelperClasses\Location.cs" />
     <Compile Include="HelperClasses\NullException.cs" />
+    <Compile Include="HelperClasses\Professor.cs" />
     <Compile Include="HelperClasses\SemesterDataHelper.cs" />
     <Compile Include="HelperClasses\StudentEnrollment.cs" />
     <Compile Include="HelperClasses\StudentInfo.cs" />
@@ -285,7 +286,6 @@
     <Content Include="Views\Administrator\EditMajorResult.cshtml" />
     <Content Include="Views\Administrator\EditCatalogRemovePrereq.cshtml" />
     <Content Include="Views\Researcher\DisplayGradeByCourse.cshtml" />
-    <Content Include="Views\Administrator\AddSectionShowProfessor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
