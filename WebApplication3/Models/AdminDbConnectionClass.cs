@@ -313,7 +313,7 @@ namespace WebApplication3.Models
         public static AddCourse addCourseHelper2()
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String deptString = "SELECT [department_full_name],department_id FROM [HarborViewUniversity].[dbo].[department] order by department_full_name WHERE department_id != 11";
+            String deptString = "SELECT [department_full_name],department_id FROM [HarborViewUniversity].[dbo].[department] WHERE department_id != 11 order by department_full_name";
             String courseString = "select course_name, course_id from course order by course_name";
             List<Department> departments = new List<Department>();
             List<Course> courses = new List<Course>();
