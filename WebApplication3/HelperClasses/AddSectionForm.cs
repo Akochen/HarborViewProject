@@ -11,13 +11,16 @@ namespace WebApplication3.HelperClasses
         public List<Location> locations { set; get; }
         public List<Course> courses { set; get; }
         public List<String> startTimes;
+        public List<String> semsters;
+        public List<String> years;
 
-        public AddSectionForm(List<Location> buildings, List<Location> locations, List<Course> courses, List<string> startTimes)
+        public AddSectionForm(List<Location> buildings, List<Location> locations, List<Course> courses, List<string> semsters, List<string> years)
         {
             this.buildings = buildings;
             this.locations = locations;
             this.courses = courses;
-            this.startTimes = startTimes;
+            this.semsters = semsters;
+            this.years = years;
         }
     }
 }

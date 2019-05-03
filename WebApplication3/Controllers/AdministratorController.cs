@@ -24,7 +24,12 @@ namespace WebApplication3.Controllers
         public ActionResult AddSection(String courseId, String buildingId, String roomId, String semester, String year, String type, String capacity)
         {
             String msg = WebApplication3.Models.AdminDbConnectionClass.addSection(courseId, roomId, buildingId, semester, year, type, capacity);
-            return RedirectToAction("AdminHome");
+            return RedirectToAction("UpdateSection");
+        }
+
+        public ActionResult UpdateSection(String courseId)
+        {
+            return View();
         }
 
         //[HttpPost]

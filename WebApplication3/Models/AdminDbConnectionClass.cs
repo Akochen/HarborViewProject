@@ -16,7 +16,7 @@ namespace WebApplication3.Models
         {
             List<Department> departments = new List<Department>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "select department_id,department_full_name from department";
+            String queryString = "select department_id,department_full_name from department WHERE department_id != 11";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -313,7 +313,7 @@ namespace WebApplication3.Models
         public static AddCourse addCourseHelper2()
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String deptString = "SELECT [department_full_name],department_id FROM [HarborViewUniversity].[dbo].[department] order by department_full_name";
+            String deptString = "SELECT [department_full_name],department_id FROM [HarborViewUniversity].[dbo].[department] order by department_full_name WHERE department_id != 11";
             String courseString = "select course_name, course_id from course order by course_name";
             List<Department> departments = new List<Department>();
             List<Course> courses = new List<Course>();
@@ -780,6 +780,16 @@ namespace WebApplication3.Models
             List<Location> locations = new List<Location>();
             List<Course> courses = new List<Course>();
             List<String> startTimes = new List<String>();
+            List<String> semesters = new List<string>();
+            List<String> years = new List<string>();
+            //Grab semester and year selector data
+            semesters.Add("Spring");
+            semesters.Add("Fall");
+            years.Add(SemesterDataHelper.getNextSemesterYear());
+            if (SemesterDataHelper.canRegisterForCurrentSemester())
+            {
+                years.Add(SemesterDataHelper.getSemesterYear());
+            }
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -820,44 +830,52 @@ namespace WebApplication3.Models
                 }
                 connection.Close();
             }
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand c4 = new SqlCommand(timeString, connection);
-                connection.Open();
-                using (var reader = c4.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        startTimes.Add(reader.GetString(0));
-                    }
-                }
-                connection.Close();
-            }
+            //using (SqlConnection connection = new SqlConnection(cString))
+            //{
+            //    SqlCommand c4 = new SqlCommand(timeString, connection);
+            //    connection.Open();
+            //    using (var reader = c4.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            startTimes.Add(reader.GetString(0));
+            //        }
+            //    }
+            //    connection.Close();
+            //}
 
-            return new AddSectionForm(buildings, locations, courses, startTimes);
+            return new AddSectionForm(buildings, locations, courses, semesters, years);
         }
 
         public static String addSection(String courseID, String roomID, String buildingID, String semester, String year, String type, String capacity)
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            string result;
-            string insertSectionString = "INSERT INTO [dbo].[section] ([time_slot_id],[faculty_id],[course_id],[room_id],[building_id],[semster],[year],[type],[capactiy],[seats_taken])VALUES(NULL,NULL," + courseID + "," + roomID + "," + buildingID + ",'" + semester + "','" + year + "','" + type + "','" + capacity + "',0)";
+            string result ="";
+            //TBA professor = 537
+            //TBA time slot = 20
+            string insertSectionString = "INSERT INTO [dbo].[section] ([time_slot_id],[faculty_id],[course_id],[room_id],[building_id],[semster],[year],[type],[capactiy],[seats_taken])VALUES(20,537," + courseID + "," + roomID + "," + buildingID + ",'" + semester + "','" + year + "','" + type + "','" + capacity + "',0)";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(insertSectionString, connection);
                 connection.Open();
-                try
-                {
-                    command.ExecuteNonQuery();
-                    result = "Section inserted.";
-                }
-                catch
-                {
-                    result = "Error: Unable to insert section.";
-                }
+                command.ExecuteNonQuery();
+                //try
+                //{
+                //    command.ExecuteNonQuery();
+                //    result = "Section inserted.";
+                //}
+                //catch
+                //{
+                //    result = "Error: Unable to insert section.";
+                //}
                 connection.Close();
             }
             return result;
+        }
+
+        public static string updateSection(string courseId)
+        {
+            return null;
         }
 
         public static List<Major> createDegreeAuditSelector(String studentID)
