@@ -32,6 +32,11 @@ namespace WebApplication3.Controllers
             return View();
         }
 
+        public ActionResult UpdateSectionForm()
+        {
+            return null;
+        }
+
         //[HttpPost]
         public ActionResult AddCourseOptions()
         {

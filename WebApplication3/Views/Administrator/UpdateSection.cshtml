@@ -1,0 +1,49 @@
+﻿@using WebApplication3.HelperClasses;
+@model  Section
+@{
+    ViewBag.Title = "UpdateSection";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
+}
+@{
+    List<SelectListItem> timesList = new List<SelectListItem>();
+    timesList.Add(new SelectListItem { Value = "", Text = "Start Time" });
+    foreach (var v in Model.startTimes)
+    {
+        timesList.Add(new SelectListItem { Value = v, Text = v });
+    }
+}
+<strong>
+    Course Name: @Model.courseName
+    Building: @Model.building
+    Room Number: @Model.room
+    Semester: @Model.semester
+    Year: @Model.year
+    Type of Course: @Model.type
+    Student Capacity:@Model.seatCapacity
+</strong>
+@Html.BeginForm("UpdateSectionSubmit", "Administrator"){
+<table>
+    <tr>
+        <td><strong>Days:</strong> </td>
+        <td>
+            @Html.DropDownList("d1", days1, new { required = "required", @id = "d1", onchange = "d1Change()" })
+            @Html.DropDownList("d2", days2, new { @id = "d2", style = "display:none;", onchange = "d2Change()" })
+            @Html.DropDownList("d3", days3, new { @id = "d3", style = "display:none;" })
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Start Time:</strong></td>
+        <td>
+            @Html.DropDownList("time", timesList, new { required = "required", @id = "startTime" })
+            @Html.Hidden("end")
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Credits:</strong></td>
+        <td>
+            @Html.DropDownList("credits", credits, new { required = "required", @id = "credits" })
+        </td>
+    </tr>
+</table>
+}
+
