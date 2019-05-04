@@ -4,23 +4,30 @@
     ViewBag.Title = "Degree Audit";
     Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
-<link rel="stylesheet" href="~/Content/searchTable.css" />
-<table class="searchTable">
-    <tr>
-        <td>
-            <form method="post">
-                <select name="majorSelector">
-                    @foreach (var v in Model)
-                    {
-                        <option value="@v.majorID">@v.name</option>
-                    }
-                </select>
-                <input type="submit" value="GO" />
-            </form>
-        </td>
-    </tr>
-</table>
+@if (Model.Count > 0)
+{
+    <link rel="stylesheet" href="~/Content/searchTable.css" />
+    <table class="searchTable">
+        <tr>
+            <td>
+                <form method="post">
+                    <select name="majorSelector">
+                        @foreach (var v in Model)
+                        {
+                            <option value="@v.majorID">@v.name</option>
+                        }
+                    </select>
+                    <input type="submit" value="GO" />
+                </form>
+            </td>
+        </tr>
+    </table>
 
+}
+else
+{
+    <strong>Student does not exist.</strong>
+}
 @{
     if (IsPost)
     {

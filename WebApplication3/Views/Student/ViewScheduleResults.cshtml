@@ -1,49 +1,56 @@
 ﻿@model List<WebApplication3.HelperClasses.Enrollment>
-@{ 
+@{
     Layout = null;
 }
-<div>
-    <link rel="stylesheet" href="~/Content/TableTemplate.css" />
-    <table class="resultsTable">
-        <tr class="tableheader">
-            <th>
-                Course ID
-            </th>
-            <th>
-                Course Name
-            </th>
-            <th>
-                Instructor
-            </th>
-            <th>
-                Days
-            </th>
-            <th>
-                Time
-            </th>
-            <th>
-                Type
-            </th>
-            <th>
-                Building
-            </th>
-            <th>
-                Room
-            </th>
-        </tr>
-        @foreach (var v in Model)
-        {
-        <tr>
-            <td>@v.courseID</td>
-            <td>@v.name</td>
-            <td>@v.instructor</td>
-            <td>@v.days</td>
-            <td>@v.startTime-@v.endTime</td>
-            <td>@v.type</td>
-            <td>@v.building</td>
-            <td>@v.room</td>
-        </tr>
-        }
-    </table>
-</div>
 
+@if (Model.Count > 0)
+{
+    <div>
+        <link rel="stylesheet" href="~/Content/TableTemplate.css" />
+        <table class="resultsTable">
+            <tr class="tableheader">
+                <th>
+                    Course ID
+                </th>
+                <th>
+                    Course Name
+                </th>
+                <th>
+                    Instructor
+                </th>
+                <th>
+                    Days
+                </th>
+                <th>
+                    Time
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Building
+                </th>
+                <th>
+                    Room
+                </th>
+            </tr>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td>@v.courseID</td>
+                    <td>@v.name</td>
+                    <td>@v.instructor</td>
+                    <td>@v.days</td>
+                    <td>@v.startTime-@v.endTime</td>
+                    <td>@v.type</td>
+                    <td>@v.building</td>
+                    <td>@v.room</td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <strong>You are not registered for any classes for this semester.</strong>
+}

@@ -4,25 +4,32 @@
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 
-<head>
-</head>
-<body>
+@if (Model.Count > 0)
+{
+    <body>
 
-    <link rel="stylesheet" href="~/Content/hold.css" />
-    <table class="holds">
-        <tr class="tableheader">
-            <th>Type</th>
-            <th>Semester</th>
-            <th>Year</th>
-        </tr>
-        @foreach (var v in Model)
-        {
-            <tr>
-                <td>@v.holdType </td>
-                <td>@v.semester</td>
-                <td>@v.year</td>
+        <link rel="stylesheet" href="~/Content/hold.css" />
+        <table class="holds">
+            <tr class="tableheader">
+                <th>Type</th>
+                <th>Semester</th>
+                <th>Year</th>
             </tr>
-        }
-    </table>
-</body>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td>@v.holdType </td>
+                    <td>@v.semester</td>
+                    <td>@v.year</td>
+                </tr>
+            }
+        </table>
+    </body>
+}
+else
+{
+    <strong>
+        You do not have any holds.
+    </strong>
+}
 
