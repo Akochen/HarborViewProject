@@ -44,37 +44,6 @@
     {
         capacity.Add(new SelectListItem { Value = i.ToString(), Text = i + "" });
     }
-    //Create list of selectable days - first day
-    List<SelectListItem> days1 = new List<SelectListItem>();
-    days1.Add(new SelectListItem { Value = "", Text = "Day1", Selected = true });
-    days1.Add(new SelectListItem { Value = "M", Text = "M" });
-    days1.Add(new SelectListItem { Value = "T", Text = "T" });
-    days1.Add(new SelectListItem { Value = "W", Text = "W" });
-    days1.Add(new SelectListItem { Value = "R", Text = "R" });
-    days1.Add(new SelectListItem { Value = "F", Text = "F" });
-    //Create list of selectable days - second day
-    List<SelectListItem> days2 = new List<SelectListItem>();
-    days2.Add(new SelectListItem { Value = "", Text = "Day2", Selected = true });
-    days2.Add(new SelectListItem { Value = "M", Text = "M" });
-    days2.Add(new SelectListItem { Value = "T", Text = "T" });
-    days2.Add(new SelectListItem { Value = "W", Text = "W" });
-    days2.Add(new SelectListItem { Value = "R", Text = "R" });
-    days2.Add(new SelectListItem { Value = "F", Text = "F" });
-    //Create list of selectable days - second day
-    List<SelectListItem> days3 = new List<SelectListItem>();
-    days3.Add(new SelectListItem { Value = "", Text = "Day3", Selected = true });
-    days3.Add(new SelectListItem { Value = "M", Text = "M" });
-    days3.Add(new SelectListItem { Value = "T", Text = "T" });
-    days3.Add(new SelectListItem { Value = "W", Text = "W" });
-    days3.Add(new SelectListItem { Value = "R", Text = "R" });
-    days3.Add(new SelectListItem { Value = "F", Text = "F" });
-    //List all selectable courses
-    @*List<SelectListItem> timesList = new List<SelectListItem>();
-    courseList.Add(new SelectListItem { Value = "", Text = "Start Time" });
-    foreach (var v in Model.startTimes)
-    {
-        timesList.Add(new SelectListItem { Value = v, Text = v });
-    }*@
     //Create list of credits
     List<SelectListItem> credits = new List<SelectListItem>();
     credits.Add(new SelectListItem { Value = "1", Text = "1" });
@@ -148,27 +117,6 @@
                 <input type="submit" value="Add" onclick="return validateForm()" />
             </td>
         </tr>
-        @*<tr>
-            <td><strong>Days:</strong> </td>
-            <td>
-                @Html.DropDownList("d1", days1, new { required = "required", @id = "d1", onchange = "d1Change()" })
-                @Html.DropDownList("d2", days2, new { @id = "d2", style = "display:none;", onchange = "d2Change()" })
-                @Html.DropDownList("d3", days3, new { @id = "d3", style = "display:none;" })
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Start Time:</strong></td>
-            <td>
-                @Html.DropDownList("time", timesList, new { required = "required", @id = "startTime" })
-                @Html.Hidden("end")
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Credits:</strong></td>
-            <td>
-                @Html.DropDownList("credits", credits, new { required = "required", @id = "credits" })
-            </td>
-        </tr>*@
     </table>
 </form>
 <script>
@@ -188,65 +136,6 @@
             @Html.Raw("document.getElementById(\"" + b.buildingId + "\").style.display = \"none\"; \n")
         }
     }
-    ////Show neccesary days
-    //var d1 = document.getElementById("d1");
-    //var d2 = document.getElementById("d2");
-    //var d3 = document.getElementById("d3");
-    //function d1Change() {
-    //    d2.style.display = "none";
-    //    d3.style.display = "none";
-    //    if (d1.value != "") {
-    //        d2.style.display = "initial";
-    //        d2Change();
-    //    } else {
-    //        d2.selectedIndex = "0";
-    //        d3.selectedIndex = "0";
-    //    }
-    //}
-
-    //function d2Change() {
-    //    d3.style.display = "none";
-    //    if (d2.value != "") {
-    //        d3.style.display = "initial";
-    //    } else {
-    //        d3.selectedIndex = "0";
-    //    }
-    //}
-
-    //function validateForm() {
-    //    var credits = document.getElementById("credits");
-    //    if (credits.value == "1") {
-    //        if (d2.value == "") {
-    //            if (d3.value == "") {
-    //                return true;
-    //            }
-    //            return false;
-    //        }
-    //        alert("A one credit class can only be one day per week.");
-    //        return false;
-    //    } else if (credits.value == "2") {
-    //        if (d3.value == "") {
-    //            return true;
-    //        }
-    //        alert("A two credit class can only run up to two days per week.");
-    //        return false;
-    //    } else if (credits.value = "3") {
-    //        if (d2.value != "") {
-    //            return true;
-    //        }
-    //        alert("A three credit courser must run at least twice a week.")
-    //        return false;
-    //    } else if (credits.value == 4) {
-    //        if (d2.value != "") {
-    //            return true;
-    //        }
-    //        alert("A four credit course must run at least twice a week.")
-    //        return false;
-    //    } else {
-    //        alert("Error 418: Section too short and stout!")
-    //        return false;
-    //    }
-    //}
 </script>
 
 @{

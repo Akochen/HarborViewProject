@@ -4,46 +4,114 @@
     ViewBag.Title = "UpdateSection";
     Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
-@{
-    List<SelectListItem> timesList = new List<SelectListItem>();
-    timesList.Add(new SelectListItem { Value = "", Text = "Start Time" });
-    foreach (var v in Model.startTimes)
-    {
-        timesList.Add(new SelectListItem { Value = v, Text = v });
-    }
-}
-<strong>
-    Course Name: @Model.courseName
-    Building: @Model.building
-    Room Number: @Model.room
-    Semester: @Model.semester
-    Year: @Model.year
-    Type of Course: @Model.type
-    Student Capacity:@Model.seatCapacity
-</strong>
-@Html.BeginForm("UpdateSectionSubmit", "Administrator"){
-<table>
-    <tr>
-        <td><strong>Days:</strong> </td>
-        <td>
-            @Html.DropDownList("d1", days1, new { required = "required", @id = "d1", onchange = "d1Change()" })
-            @Html.DropDownList("d2", days2, new { @id = "d2", style = "display:none;", onchange = "d2Change()" })
-            @Html.DropDownList("d3", days3, new { @id = "d3", style = "display:none;" })
-        </td>
-    </tr>
-    <tr>
-        <td><strong>Start Time:</strong></td>
-        <td>
-            @Html.DropDownList("time", timesList, new { required = "required", @id = "startTime" })
-            @Html.Hidden("end")
-        </td>
-    </tr>
-    <tr>
-        <td><strong>Credits:</strong></td>
-        <td>
-            @Html.DropDownList("credits", credits, new { required = "required", @id = "credits" })
-        </td>
-    </tr>
-</table>
+<strong>Course Name: </strong>@Model.courseName <br />
+<strong>Building: </strong>@Model.building <br />
+<strong>Room Number: </strong>@Model.room <br />
+<strong>Semester: </strong>@Model.semester <br />
+<strong>Year: </strong>@Model.year <br />
+<strong>Type of Course: </strong>@Model.type <br />
+<strong>Student Capacity: </strong>@Model.seatCapacity <br />
+<strong>Credits: </strong>@Model.credits <br />
+@using (@Html.BeginForm("UpdateSectionSubmit", "Administrator", FormMethod.Post))
+{
+    @Html.Action("UpdateSectionForm", "Administrator", new { courseId = Model.courseID })
+    @Html.Hidden("credits", Model.credits)
+    @Html.Hidden("courseName", Model.courseName)
+    @Html.Hidden("building", Model.building)
+    @Html.Hidden("room", Model.room)
+    @Html.Hidden("semester", Model.semester)
+    @Html.Hidden("year", Model.year)
+    @Html.Hidden("type", Model.type)
+    @Html.Hidden("seatCapacity", Model.seatCapacity)
+    @Html.Hidden("end", null, new { @id = "dayCount" })
+    <input type="submit" value="Submit" onclick="return validateForm()" />
 }
 
+@*string credits, string courseName, string building, string room, string semester, string year, string type, string seatCapacity, string professor, string d1, string d2, string d3, string time*@
+<script>
+
+    //Show neccesary days
+    var d1 = document.getElementById("d1");
+    var d2 = document.getElementById("d2");
+    var d3 = document.getElementById("d3");
+    d1Change();
+    d2Change();
+    function d1Change() {
+        d2.style.display = "none";
+        d3.style.display = "none";
+        if (d1.value != "") {
+            d2.style.display = "initial";
+            d2Change();
+        } else {
+            d2.selectedIndex = "0";
+            d3.selectedIndex = "0";
+        }
+    }
+
+    function d2Change() {
+        d3.style.display = "none";
+        if (d2.value != "") {
+            d3.style.display = "initial";
+        } else {
+            d3.selectedIndex = "0";
+        }
+    }
+
+    function validateForm() {
+        var credits = document.getElementById("credits");
+        var end = document.getElementById("dayCount");
+        var dayCount = 1;
+        //calculate endTime
+        if (d2.value != "") {
+            dayCount++;
+        }
+        if (d3.value != "") {
+            dayCount++;
+        }
+        end.value = (credits.value / dayCount) + "";
+        console.log(end.value + " ");
+
+        if (d1.value == d2.value || d1.value == d3.value) {
+            alert("Two days cannot be the same.");
+            return false;
+        }
+        if (d2.value != "") {
+            if (d3.val == d2.value) {
+                alert("Two days cannot be the same.");
+                return false;
+            }
+        }
+
+        if (credits.value == "1") {
+            if (d2.value == "") {
+                if (d3.value == "") {
+                    return true;
+                }
+                return false;
+            }
+            alert("A one credit class can only be one day per week.");
+            return false;
+        } else if (credits.value == "2") {
+            if (d3.value == "") {
+                return true;
+            }
+            alert("A two credit class can only run up to two days per week.");
+            return false;
+        } else if (credits.value == "3") {
+            if (d2.value != "") {
+                return true;
+            }
+            alert("A three credit course must run at least twice a week.")
+            return false;
+        } else if (credits.value == "4") {
+            if (d2.value != "") {
+                return true;
+            }
+            alert("A four credit course must run at least twice a week.")
+            return false;
+        } else {
+            alert("Error 418: Section is too short and stout!")
+            return false;
+        }
+    }
+</script>

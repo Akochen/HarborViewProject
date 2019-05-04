@@ -24,19 +24,23 @@ namespace WebApplication3.Controllers
         public ActionResult AddSection(String courseId, String buildingId, String roomId, String semester, String year, String type, String capacity)
         {
             String msg = WebApplication3.Models.AdminDbConnectionClass.addSection(courseId, roomId, buildingId, semester, year, type, capacity);
-            return RedirectToAction("UpdateSection");
+            return RedirectToAction("AdminHome");
         }
 
-        public ActionResult UpdateSection(String courseId)
+        public ActionResult UpdateSection(String sectionId)
         {
-            return View();
+            return View(WebApplication3.Models.AdminDbConnectionClass.updateSection(sectionId));
         }
 
-        public ActionResult UpdateSectionForm()
+        public ActionResult UpdateSectionForm(String courseId)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.createUpdateSectionForm(courseId));
+        }
+        
+        public ActionResult UpdateSectionSubmit(string credits, string courseName, string building, string room, string semester, string year, string type, string seatCapacity, string professor, string d1, string d2, string d3, string time)
         {
             return null;
         }
-
         //[HttpPost]
         public ActionResult AddCourseOptions()
         {

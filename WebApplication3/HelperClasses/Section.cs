@@ -25,6 +25,7 @@ namespace WebApplication3.HelperClasses
         public String day2;
         public String day3;
         public String grade;
+        public string credits;
 
         public Section(int sectionID, string courseID, string courseName, string professorName, string days, string startTime, string endTime, string semester, string year, string building, int room, string type, int seatCapacity, int seatRemaining)
         {
@@ -142,6 +143,20 @@ namespace WebApplication3.HelperClasses
             this.building = building;
             this.room = room;
             this.grade = grade;
+        }
+
+        public Section(int sectionID, string courseName, string semester, string year, string building, int room, string type, int seatCapacity, string courseId, string credits)
+        {
+            this.sectionID = sectionID;
+            this.courseName = courseName;
+            this.semester = semester;
+            this.year = year;
+            this.building = building;
+            this.room = room;
+            this.type = type;
+            this.seatCapacity = seatCapacity;
+            this.courseID = courseId;
+            this.credits = credits;
         }
     }
 }
