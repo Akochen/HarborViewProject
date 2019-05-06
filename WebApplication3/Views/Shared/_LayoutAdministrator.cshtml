@@ -26,7 +26,6 @@
                     <a href="javascript:void(0)">Master Schedule</a>
                     <div class="dropdown-content">
                         @Html.ActionLink("Add Section", "AddSectionForm", "Administrator")
-                        @Html.ActionLink("Update Section", "RegisterForClassesSelector", "Administrator")
                         @Html.ActionLink("Search All Sections", "SearchMasterScheduleSelector", "Administrator")
                     </div>
                 </li>
@@ -54,7 +53,13 @@
             </ul>
         </header>
     </div>
-
+    <script type="text/javascript">
+    @if(TempData["result"] != null)
+    {
+        @Html.Raw("alert(\"" + TempData["result"] +"\");")
+        TempData["result"] = null;
+    }
+    </script>
     <div>
         @RenderBody()
         <hr />

@@ -24,6 +24,7 @@ namespace WebApplication3.Controllers
         public ActionResult AddSection(String courseId, String buildingId, String roomId, String semester, String year, String type, String capacity)
         {
             String msg = WebApplication3.Models.AdminDbConnectionClass.addSection(courseId, roomId, buildingId, semester, year, type, capacity);
+            TempData["result"] = "Section successfully added!";
             return RedirectToAction("AdminHome");
         }
 
@@ -37,9 +38,43 @@ namespace WebApplication3.Controllers
             return View(WebApplication3.Models.AdminDbConnectionClass.createUpdateSectionForm(courseId));
         }
         
-        public ActionResult UpdateSectionSubmit(string credits, string courseName, string building, string room, string semester, string year, string type, string seatCapacity, string professor, string d1, string d2, string d3, string time)
+        public ActionResult UpdateSectionSubmit(string credits, string courseName, string building, string room, string semester, string year, string type, string seatCapacity, string professor, string d1, string d2, string d3, string time, string sectionId)
         {
-            return null;
+            int check = WebApplication3.Models.AdminDbConnectionClass.updateSectionCheck(credits, courseName, building, room, semester, year, type, seatCapacity, professor, d1, d2, d3, time, sectionId);
+            if (check == 0)
+            {
+                //success
+                TempData["result"] = "Section successfuly updated.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else if (check == 1)
+            {
+                //room in use
+                TempData["result"] = "Error: Room is in use at that time.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else if (check == 2)
+            {
+                //period does not exist (success)
+                TempData["result"] = "Section successfuly updated.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else if (check == 3)
+            {
+                //professor has class at that time
+                TempData["result"] = "Error: " + professor +" has class at that time.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else if(check == 4)
+            {
+                TempData["result"] = "Something went wrong with time selection. Please try again in a bit.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else
+            {
+                TempData["result"] = "Something went wrong. Please check your connection and then call technical support.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
         }
         //[HttpPost]
         public ActionResult AddCourseOptions()
@@ -126,6 +161,7 @@ namespace WebApplication3.Controllers
         public String UpdateGrade(string courseID, string name, string sectionID, string grade, string studentID)
         {
             StudentEnrollment s = new StudentEnrollment(courseID, name, sectionID, grade, studentID);
+            TempData["result"] = s;
             return WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
         }
 
