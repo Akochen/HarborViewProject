@@ -29,7 +29,7 @@ namespace WebApplication3.Controllers
         public ActionResult LogOut()
         {
             Session.RemoveAll();
-            return Index();
+            return RedirectToAction("Index");
         }
 
        

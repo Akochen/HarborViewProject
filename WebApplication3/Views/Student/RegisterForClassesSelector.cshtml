@@ -48,8 +48,8 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <select id="semesterSelector" name="semesterSelector">
-                        <option value="startselection">---Semester---</option>
+                    <select id="semesterSelector" name="semesterSelector" required >
+                        <option value="">---Semester---</option>
                         @foreach (var v in Model.semesters)
                         {
                             <option value="@v">@v</option>

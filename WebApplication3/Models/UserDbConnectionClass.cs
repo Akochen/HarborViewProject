@@ -122,7 +122,7 @@ namespace WebApplication3.Models
                     return "Error: Please check your internet connection!";
                 } else if (output == 0)
                 {
-                    return "Error: The E-Mail you have entered is incorrect!";
+                    return "Error: The information you have entered is incorrect!";
                 } else if(output == 1)
                 {
                     changePassword(email, password);

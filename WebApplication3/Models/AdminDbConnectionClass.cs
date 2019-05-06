@@ -1108,15 +1108,9 @@ namespace WebApplication3.Models
                                                 JOIN department d ON c.department_id = d.department_id
                                                 WHERE m.major_id = " + majorID;
             //SQL to get classes already taken
-            String getClassesTakenString = @"SELECT DISTINCT s.course_id,sh.grade
-                                            FROM student_semester_history sh
-                                            INNER JOIN section s ON s.section_id = sh.section_id
-                                            INNER JOIN course c ON c.course_id = s.course_id
-                                            inner join department d on d.department_id = c.department_id
-                                            INNER join major m on m.department_id = d.department_id
-                                            where sh.student_id = 1";
+            String getClassesTakenString = "SELECT DISTINCT s.course_id,sh.grade FROM student_semester_history sh INNER JOIN section s ON s.section_id = sh.section_id INNER JOIN course c ON c.course_id = s.course_id inner join department d on d.department_id = c.department_id INNER join major m on m.department_id = d.department_id where sh.student_id = 1";
             //SQL to get out of major classes taken
-            String getOutOfMajorClassesTaken = "SELECT [course_id], [course_number], [course_name], [prereqs], [course_credits], [grade] FROM out_of_major_reqs_view WHERE student_id = " + studentID + " AND  course_id not in(select course_id from major_requirements where major_id = " + majorID + ")";
+            String getOutOfMajorClassesTaken = "SELECT [course_id], [course_number], [course_name], [prereqs], [course_credits], [grade] FROM out_of_major_reqs_view WHERE student_id = " + studentID + "AND course_id NOT IN(select course_id from major_requirements where major_id = " + majorID + ") AND course_id NOT IN(select course_id from major_elective where major_id = " + majorID + ")";
             //SQL to get classes currently being taken
             String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = 1";
             //SQL to get prereqs for major courses
@@ -1193,14 +1187,23 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        try
-                        {
-                            outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4), reader.GetString(5)));
-                        }
-                        catch
-                        {
-                            outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4), ""));
-                        }
+                        //[course_id], [course_number], [course_name], [prereqs], [course_credits], [grade]
+                        string courseId;
+                        string courseNumber;
+                        string courseName;
+                        string prereqs;
+                        int courseCredits;
+                        string grade;
+
+                        try { courseId = reader.GetInt32(0).ToString(); } catch { courseId = ""; }
+                        try { courseNumber = reader.GetString(1); } catch { courseNumber = ""; }
+                        try { courseName = reader.GetString(2); } catch { courseName = ""; }
+                        try { prereqs = reader.GetString(3); } catch { prereqs = ""; }
+                        try { courseCredits = reader.GetByte(4); } catch { courseCredits = 0; }
+                        try { grade = reader.GetString(5); } catch { grade = ""; }
+
+                        outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(courseId, courseNumber, courseName, prereqs, courseCredits, grade));
+
                     }
                 }
 
