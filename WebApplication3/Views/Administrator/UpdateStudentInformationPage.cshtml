@@ -40,7 +40,7 @@
         </tr>
         <tr>
             <td>
-                <input required type="number" name="zip_box" placeholder="Zip Code" />
+                <input required type="number" name="zip_box" placeholder="Zip Code" maxlength="5" pattern="[0-9]" />
             </td>
         </tr>
         <tr>
@@ -54,7 +54,6 @@
 @{
     if (IsPost)
     {
-        @Html.Action("UpdateStudentInformation", "Administrator", new { streetName = Request.Form["street_box"], city = Request.Form["city_box"], state = Request.Form["state_box"], zip = Request.Form["zip_box"], studentID = Session["userIDforUpdate"] });
-        Response.Redirect(Url.Action("UpdateStudentInformationSelector", "Administrator"));
+        Response.Redirect(Url.Action("UpdateStudentInformation", "Administrator", new { streetName = Request.Form["street_box"], city = Request.Form["city_box"], state = Request.Form["state_box"], zip = Request.Form["zip_box"], studentID = Session["userIDforUpdate"] }));
     }
 }

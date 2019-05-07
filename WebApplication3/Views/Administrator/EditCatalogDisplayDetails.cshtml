@@ -63,3 +63,16 @@
     </tr>
 </table>
 <div>@TempData["msg"]</div>
+<script>
+    function checkAddedPrereq() {
+        console.log(document.getElementById('prereqID').value)
+        if (document.getElementById('prereqID').value == @Model.id) {
+            alert("You can't add a class as its own prerequisite.")
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+</script>

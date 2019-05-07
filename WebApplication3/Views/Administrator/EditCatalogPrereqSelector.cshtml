@@ -8,5 +8,5 @@
         courseList.Add(new SelectListItem { Value = v.id, Text = v.fullName });
     }
 }
-@Html.DropDownList("prereqID", courseList, null, null)
-<input type="submit" value="Add" />
+@Html.DropDownList("prereqID", courseList, null, new { @id = "prereqID"})
+<input type="submit" value="Add" onclick="return checkAddedPrereq()" />

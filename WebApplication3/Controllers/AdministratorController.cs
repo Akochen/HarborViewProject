@@ -158,11 +158,11 @@ namespace WebApplication3.Controllers
             return View(s);
         }
 
-        public String UpdateGrade(string courseID, string name, string sectionID, string grade, string studentID)
+        public ActionResult UpdateGrade(string courseID, string name, string sectionID, string grade, string studentID)
         {
             StudentEnrollment s = new StudentEnrollment(courseID, name, sectionID, grade, studentID);
-            TempData["result"] = s;
-            return WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
+            TempData["result"] = WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
+            return RedirectToAction("AdminHome");
         }
 
         public ActionResult ViewStudentHoldSelector()
@@ -184,10 +184,11 @@ namespace WebApplication3.Controllers
         {
             return View();
         }
-        public String UpdateStudentInformation(string streetName, string city, string state, string zip, string studentID)
+        public ActionResult UpdateStudentInformation(string streetName, string city, string state, string zip, string studentID)
         {
             StudentInfo s = new StudentInfo(streetName, city, state, zip);
-            return WebApplication3.Models.AdminDbConnectionClass.UpdateStudentInformation(s, studentID);
+            TempData["result"] = WebApplication3.Models.AdminDbConnectionClass.UpdateStudentInformation(s, studentID);
+            return RedirectToAction("AdminHome");
         }
 
         public ActionResult UpdateStudentInformationPage(string streetName, string city, string state, string zip)

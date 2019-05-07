@@ -19,7 +19,7 @@
         if (IsPost)
         {
             Session["userIDforUpdate"] = Request["id_box"];
-            @Html.Action("ViewStudentInformation", "Administrator", new { userID = Request["id_box"] });
+            Response.Redirect(Url.Action("ViewStudentInformation", "Administrator", new { userID = Request["id_box"] }));
         }
     }
 </form>
