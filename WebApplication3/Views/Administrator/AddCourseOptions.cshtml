@@ -93,50 +93,6 @@
             </tr>
         </table>
     </div>
-    @*<div>
-        <table>
-            <tr>
-                <td><strong>Major:</strong> </td>
-                <td>
-                    <select id="majorSelector" name="majorSelector" required>
-                        <option value="">---Optional---</option>
-                        @foreach (var major in Model.majors)
-                        {
-                            <option value="@major">@major.name</option>
-                        }
-                    </select>
-                </td>
-                <td><strong> Is this course a major requirement:</strong> </td>
-                <td>
-                    <select id="majorReq" name="majorReq" required>
-                        <option value="select">---Select---</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Minor:</strong> </td>
-                <td>
-                    <select id="minorSelector" name="minorSelector">
-                        <option value="">---Optional---</option>
-                        @foreach (var minor in Model.minors)
-                        {
-                            <option value="@minor.name">@minor.name</option>
-                        }
-                    </select>
-                </td>
-                <td><strong> Is this course a minor requirement:</strong> </td>
-                <td>
-                    <select id="minReq" name="minReq" required>
-                        <option value="select">---Select---</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-    </div>*@
 </form>
 
     @{
