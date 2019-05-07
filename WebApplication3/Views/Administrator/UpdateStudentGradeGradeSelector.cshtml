@@ -33,9 +33,7 @@
 @{
     if (IsPost)
     {
-        @Html.Raw(Session["UserID"] + " TEST " + Request.Form["gradeSelector"])
-        @Html.Action("UpdateGrade", "Administrator", new { courseID = Model.courseID, name = Model.courseName, sectionID = Model.sectionID, grade = Request.Form["gradeSelector"], studentID = Model.studentID });
-        Response.Redirect(Url.Action("AdminHome", "Administrator"));
+        Response.Redirect(Url.Action("UpdateGrade", "Administrator", new { courseID = Model.courseID, name = Model.courseName, sectionID = Model.sectionID, grade = Request.Form["gradeSelector"], studentID = Model.studentID }));
     }
 }
 

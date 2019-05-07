@@ -24,9 +24,58 @@ namespace WebApplication3.Controllers
         public ActionResult AddSection(String courseId, String buildingId, String roomId, String semester, String year, String type, String capacity)
         {
             String msg = WebApplication3.Models.AdminDbConnectionClass.addSection(courseId, roomId, buildingId, semester, year, type, capacity);
+            TempData["result"] = "Section successfully added!";
             return RedirectToAction("AdminHome");
         }
 
+        public ActionResult UpdateSection(String sectionId)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.updateSection(sectionId));
+        }
+
+        public ActionResult UpdateSectionForm(String courseId)
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.createUpdateSectionForm(courseId));
+        }
+        
+        public ActionResult UpdateSectionSubmit(string credits, string courseName, string building, string room, string semester, string year, string type, string seatCapacity, string professor, string d1, string d2, string d3, string time, string sectionId)
+        {
+            int check = WebApplication3.Models.AdminDbConnectionClass.updateSectionCheck(credits, courseName, building, room, semester, year, type, seatCapacity, professor, d1, d2, d3, time, sectionId);
+            if (check == 0)
+            {
+                //success
+                TempData["result"] = "Section successfuly updated.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else if (check == 1)
+            {
+                //room in use
+                TempData["result"] = "Error: Room is in use at that time.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else if (check == 2)
+            {
+                //period does not exist (success)
+                TempData["result"] = "Section successfuly updated.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else if (check == 3)
+            {
+                //professor has class at that time
+                TempData["result"] = "Error: " + professor +" has class at that time.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else if(check == 4)
+            {
+                TempData["result"] = "Something went wrong with time selection. Please try again in a bit.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+            else
+            {
+                TempData["result"] = "Something went wrong. Please check your connection and then call technical support.";
+                return RedirectToAction("SearchMasterScheduleSelector");
+            }
+        }
         //[HttpPost]
         public ActionResult AddCourseOptions()
         {
@@ -109,10 +158,11 @@ namespace WebApplication3.Controllers
             return View(s);
         }
 
-        public String UpdateGrade(string courseID, string name, string sectionID, string grade, string studentID)
+        public ActionResult UpdateGrade(string courseID, string name, string sectionID, string grade, string studentID)
         {
             StudentEnrollment s = new StudentEnrollment(courseID, name, sectionID, grade, studentID);
-            return WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
+            TempData["result"] = WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
+            return RedirectToAction("AdminHome");
         }
 
         public ActionResult ViewStudentHoldSelector()
@@ -134,10 +184,11 @@ namespace WebApplication3.Controllers
         {
             return View();
         }
-        public String UpdateStudentInformation(string streetName, string city, string state, string zip, string studentID)
+        public ActionResult UpdateStudentInformation(string streetName, string city, string state, string zip, string studentID)
         {
             StudentInfo s = new StudentInfo(streetName, city, state, zip);
-            return WebApplication3.Models.AdminDbConnectionClass.UpdateStudentInformation(s, studentID);
+            TempData["result"] = WebApplication3.Models.AdminDbConnectionClass.UpdateStudentInformation(s, studentID);
+            return RedirectToAction("AdminHome");
         }
 
         public ActionResult UpdateStudentInformationPage(string streetName, string city, string state, string zip)
@@ -145,9 +196,9 @@ namespace WebApplication3.Controllers
             StudentInfo s = new StudentInfo(streetName, city, state, zip);
             return View(s);
         }
-        public ActionResult ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        public ActionResult ViewStudentInformation(String userID)
         {
-            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(streetName, city, state, zip, userID));
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(userID));
         }
 
         public ActionResult EditMajorSelector()

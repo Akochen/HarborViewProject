@@ -1,7 +1,7 @@
 ﻿@using WebApplication3.HelperClasses;
 @model StudentTranscriptHelper
 
-@{ 
+@{
     Layout = null;
 }
 
@@ -10,71 +10,76 @@
 <link rel="stylesheet" href="~/Content/TranscriptTable.css" />
 <head>
 </head>
-<body>
+@if (Model.sections.Count > 0)
+{
+    <body>
 
-    <div>
-        <table class="dataTable" id="lines">
-            <tr>
-                <td>
-                    <table class="innerDataTable">
-                        <tr>
-                            <td><strong>ID Number:</strong> @Model.studentInfo.studentID</td>
-                            <td><strong>Name:</strong> @Model.studentInfo.firstName @Model.studentInfo.lastName</td>
-                            <td><strong>Email:</strong> @Model.studentInfo.email</td>
-                        </tr>
-                        <tr>
-                            <td><strong>DOB:</strong> @Model.studentInfo.dob</td>
-                            <td><strong>Phone #:</strong> @Model.studentInfo.phoneNumber</td>
-                            <td><strong>Major:</strong> @Model.studentInfo.major</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><strong>Address:</strong> @Model.studentInfo.street @Model.studentInfo.city, @Model.studentInfo.state @Model.studentInfo.zip</td>
-                            <td><strong>Minor:</strong> @Model.studentInfo.minor</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </div>
+        <div>
+            <table class="dataTable" id="lines">
+                <tr>
+                    <td>
+                        <table class="innerDataTable">
+                            <tr>
+                                <td><strong>ID Number:</strong> @Model.studentInfo.studentID</td>
+                                <td><strong>Name:</strong> @Model.studentInfo.firstName @Model.studentInfo.lastName</td>
+                                <td><strong>Email:</strong> @Model.studentInfo.email</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DOB:</strong> @Model.studentInfo.dob</td>
+                                <td><strong>Phone #:</strong> @Model.studentInfo.phoneNumber</td>
+                                <td><strong>Major:</strong> @Model.studentInfo.major</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Address:</strong> @Model.studentInfo.street @Model.studentInfo.city, @Model.studentInfo.state @Model.studentInfo.zip</td>
+                                <td><strong>Minor:</strong> @Model.studentInfo.minor</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
 
-    <hr style="width: 95%; margin-left:auto; margin-right:auto;" />
-    <div>
-        @{
-            String currentSemster = "";
-            int rows = 0;
-            foreach (var sectionInfo in Model.sections)
-            {
-                if (!currentSemster.Equals(sectionInfo.semester) && rows > 0)
+        <hr style="width: 95%; margin-left:auto; margin-right:auto;" />
+        <div>
+            @{
+                String currentSemster = "";
+                int rows = 0;
+                foreach (var sectionInfo in Model.sections)
+                {
+                    if (!currentSemster.Equals(sectionInfo.semester) && rows > 0)
+                    {
+                        String tableEnd = "</table>";
+                        @Html.Raw(tableEnd)
+                    }
+                    if (!currentSemster.Equals(sectionInfo.semester))
+                    {
+                        String tableStart = "<table class=\"transcriptTable\" id=\"lines\"> <tr class=\"tableheader\"><th>Section ID:</th><th>Course ID:</th><th>Course Name:</th><th>Professor</th><th>Semester</th><th>Year</th><th>Type</th><th>Grade</th></tr>";
+                        @Html.Raw(tableStart)
+                    }
+                    <tr>
+                        <td>@sectionInfo.sectionID</td>
+                        <td>@sectionInfo.courseID</td>
+                        <td>@sectionInfo.courseName</td>
+                        <td>@sectionInfo.professorName</td>
+                        <td>@sectionInfo.semester</td>
+                        <td>@sectionInfo.year</td>
+                        <td>@sectionInfo.type</td>
+                        <td>@sectionInfo.grade</td>
+                    </tr>
+                    currentSemster = sectionInfo.semester;
+                    rows++;
+                }
+                if (Model.sections.Count > 0)
                 {
                     String tableEnd = "</table>";
                     @Html.Raw(tableEnd)
                 }
-                if (!currentSemster.Equals(sectionInfo.semester))
-                {
-                    String tableStart = "<table class=\"transcriptTable\" id=\"lines\"> <tr class=\"tableheader\"><th>Section ID:</th><th>Course ID:</th><th>Course Name:</th><th>Professor</th><th>Semester</th><th>Year</th><th>Type</th><th>Grade</th></tr>";
-                    @Html.Raw(tableStart)
-                }
-                <tr>
-                    <td>@sectionInfo.sectionID</td>
-                    <td>@sectionInfo.courseID</td>
-                    <td>@sectionInfo.courseName</td>
-                    <td>@sectionInfo.professorName</td>
-                    <td>@sectionInfo.semester</td>
-                    <td>@sectionInfo.year</td>
-                    <td>@sectionInfo.type</td>
-                    <td>@sectionInfo.grade</td>
-                </tr>
-                currentSemster = sectionInfo.semester;
-                rows++;
             }
-            if (Model.sections.Count > 0)
-            {
-                String tableEnd = "</table>";
-                @Html.Raw(tableEnd)
-            }
-        }
-    </div>
-</body>
-
-
+        </div>
+    </body>
+}
+else
+{
+    <strong> Error: That is not a valid student ID!</strong>
+}

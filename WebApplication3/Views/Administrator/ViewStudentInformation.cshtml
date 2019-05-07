@@ -24,7 +24,8 @@
                 <td>@v.city</td>
                 <td>@v.state</td>
                 <td>@v.zip</td>
-                <td>@Html.ActionLink("Update Information", "UpdateStudentInformationPage", "Administrator", new { studentID = TempData["studentID"], streetName = v.streetName, city = v.city, state = v.state, zip = v.zip }, null)</td>
+                <td>@Html.ActionLink("Update Information", "UpdateStudentInformationPage", "Administrator", new { studentID = TempData["studentID"], streetName = 
+                   v.streetName, city = v.city, state = v.state, zip = v.zip }, null)</td>
             </tr>
             }
         </table>

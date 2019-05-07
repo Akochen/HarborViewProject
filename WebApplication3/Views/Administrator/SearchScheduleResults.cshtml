@@ -4,38 +4,56 @@
 @{
     Layout = null;
 }
-<link rel="stylesheet" href="~/Content/TableTemplate.css" />
-<table class="resultsTable" id="lines">
-    <tr class="tableheader">
-        <th>Section:</th>
-        <th>Course:</th>
-        <th>Course Name:</th>
-        <th>Professor</th>
-        <th>Days</th>
-        <th>Time</th>
-        <th>Semester</th>
-        <th>Year</th>
-        <th>Capacity</th>
-        <th>Remaining</th>
-        <th>Building</th>
-        <th>Room</th>
-    </tr>
-    @foreach (var sectionInfo in Model)
-    {
-        <tr>
-            <td>@sectionInfo.sectionID</td>
-            <td>@sectionInfo.courseID</td>
-            <td>@sectionInfo.courseName</td>
-            <td>@sectionInfo.professorName</td>
-            <td>@sectionInfo.days</td>
-            <td>@sectionInfo.startTime-@sectionInfo.endTime</td>
-            <td>@sectionInfo.semester</td>
-            <td>@sectionInfo.year</td>
-            <td>@sectionInfo.seatCapacity</td>
-            <td>@sectionInfo.seatRemaining</td>
-            <td>@sectionInfo.building</td>
-            <td>@sectionInfo.room</td>
+@if (Model.Count > 0)
+{
+    <link rel="stylesheet" href="~/Content/TableTemplate.css" />
+    <table class="resultsTable" id="lines">
+        <tr class="tableheader">
+            <th>Section:</th>
+            <th>Course:</th>
+            <th>Course Name:</th>
+            <th>Professor</th>
+            <th>Days</th>
+            <th>Time</th>
+            <th>Semester</th>
+            <th>Year</th>
+            <th>Capacity</th>
+            <th>Remaining</th>
+            <th>Building</th>
+            <th>Room</th>
+            <th></th>
         </tr>
-    }
-</table>
+        @foreach (var sectionInfo in Model)
+        {
+            <tr>
+                <td>@sectionInfo.sectionID</td>
+                <td>@sectionInfo.courseID</td>
+                <td>@sectionInfo.courseName</td>
+                <td>@sectionInfo.professorName</td>
+                <td>@sectionInfo.days</td>
+                <td>@sectionInfo.startTime-@sectionInfo.endTime</td>
+                <td>@sectionInfo.semester</td>
+                <td>@sectionInfo.year</td>
+                <td>@sectionInfo.seatCapacity</td>
+                <td>@sectionInfo.seatRemaining</td>
+                <td>@sectionInfo.building</td>
+                <td>@sectionInfo.room</td>
+                @if (sectionInfo.semester.Trim().Equals(WebApplication3.HelperClasses.SemesterDataHelper.getNextSemesterSeason()) && sectionInfo.year.Equals(WebApplication3.HelperClasses.SemesterDataHelper.getNextSemesterYear()))
+                {
+                    <td>
+                        @using (@Html.BeginForm("UpdateSection", "Administrator", FormMethod.Post))
+                        {
+                            @Html.Hidden("sectionId", sectionInfo.sectionID);
+                            <input type="submit" value="Edit" />
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <strong>No results found</strong>
+}
 

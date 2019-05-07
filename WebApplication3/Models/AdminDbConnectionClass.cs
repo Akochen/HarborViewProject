@@ -16,7 +16,7 @@ namespace WebApplication3.Models
         {
             List<Department> departments = new List<Department>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "select department_id,department_full_name from department";
+            String queryString = "select department_id,department_full_name from department WHERE department_id != 11";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -38,7 +38,7 @@ namespace WebApplication3.Models
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String deptString = "SELECT [department_full_name] FROM [HarborViewUniversity].[dbo].[department]";
             String dayString = "SELECT DISTINCT [days] FROM [HarborViewUniversity].[dbo].[section_view]";
-            String timeString = "SELECT DISTINCT FORMAT(CAST([start_time] AS datetime), 'h:mm tt') AS start_time, FORMAT(CAST([end_time] AS datetime), 'h:mm tt') AS end_time, CAST([end_time] AS datetime) AS order_time FROM [HarborViewUniversity].[dbo].[time_slot] ORDER BY order_time";
+            String timeString = "SELECT DISTINCT FORMAT(CAST([start_time] AS datetime), 'h:mm tt') AS start_time, CAST([start_time] AS datetime) AS order_time FROM [HarborViewUniversity].[dbo].[time_slot] ORDER BY order_time";
             List<String> departments = new List<string>();
             List<String> days = new List<string>();
             List<String> times = new List<string>();
@@ -261,8 +261,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        classList.Add(new FacultySchedule(reader.GetString(0), reader.GetString(1), reader.GetString(2),
-                            reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
+                        classList.Add(new FacultySchedule(reader.GetString(0), reader.GetString(4), reader.GetString(5), reader.GetString(2), reader.GetString(3), reader.GetString(1), reader.GetString(6)
                             , reader.GetInt32(7).ToString()));
                     }
                 }
@@ -310,14 +309,14 @@ namespace WebApplication3.Models
                 connection.Close();
             }
 
-            return "";
+            return "Grade successfullt updated!";
         }
 
 
         public static AddCourse addCourseHelper2()
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String deptString = "SELECT [department_full_name],department_id FROM [HarborViewUniversity].[dbo].[department] order by department_full_name";
+            String deptString = "SELECT [department_full_name],department_id FROM [HarborViewUniversity].[dbo].[department] WHERE department_id != 11 order by department_full_name";
             String courseString = "select course_name, course_id from course order by course_name";
             List<Department> departments = new List<Department>();
             List<Course> courses = new List<Course>();
@@ -612,10 +611,10 @@ namespace WebApplication3.Models
                 connection.Close();
             }
 
-            return "";
+            return "Student address updated.";
         }
 
-        public static List<StudentInfo> ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        public static List<StudentInfo> ViewStudentInformation(String userID)
         {
             List<StudentInfo> info = new List<StudentInfo>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
@@ -661,7 +660,7 @@ namespace WebApplication3.Models
         public static EditMajor editMajor(String major)
         {
             List<Course> courses = new List<Course>();
-            EditMajor helper = new EditMajor(courses,major);
+            EditMajor helper = new EditMajor(courses, major);
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String queryString = @" SELECT c.course_name, c.course_id,m.major_id FROM course c
                                     INNER JOIN department d ON d.department_id = c.department_id
@@ -684,7 +683,7 @@ namespace WebApplication3.Models
             return helper;
         }
 
-        public static String editMajorResults(String courseID, String courseAttr,String majorID)
+        public static String editMajorResults(String courseID, String courseAttr, String majorID)
         {
             String resultString = "ERROR";
             List<Course> courses = new List<Course>();
@@ -721,9 +720,9 @@ namespace WebApplication3.Models
             }
             if (courseAttr.Equals("Required"))
             {
-                foreach(var v in majorhelper)
+                foreach (var v in majorhelper)
                 {
-                    if(v.major==majorID && v.courseID == courseID)
+                    if (v.major == majorID && v.courseID == courseID)
                     {
                         return "This course is already in the Major Requirements list";
                     }
@@ -779,11 +778,20 @@ namespace WebApplication3.Models
             String roomAndBuilding = @"SELECT b.building_id,b.building_full_name,r.room_id,room_number FROM building b INNER JOIN room r ON r.building_id = b.building_id";
             String courseString = "select course_name,course_id from course order by course_name";
             String buildingString = "SELECT DISTINCT building_id,building_full_name FROM building";
-            String timeString = "SELECT DISTINCT FORMAT(CAST([start_time] AS datetime), 'h:mm tt') AS start_time, CAST([end_time] AS datetime) AS order_time FROM [HarborViewUniversity].[dbo].[time_slot] ORDER BY order_time";
             List<Location> buildings = new List<Location>();
             List<Location> locations = new List<Location>();
             List<Course> courses = new List<Course>();
             List<String> startTimes = new List<String>();
+            List<String> semesters = new List<string>();
+            List<String> years = new List<string>();
+            //Grab semester and year selector data
+            semesters.Add("Spring");
+            semesters.Add("Fall");
+            years.Add(SemesterDataHelper.getNextSemesterYear());
+            if (SemesterDataHelper.canRegisterForCurrentSemester())
+            {
+                years.Add(SemesterDataHelper.getSemesterYear());
+            }
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -824,44 +832,245 @@ namespace WebApplication3.Models
                 }
                 connection.Close();
             }
-            using (SqlConnection connection = new SqlConnection(cString))
-            {
-                SqlCommand c4 = new SqlCommand(timeString, connection);
-                connection.Open();
-                using (var reader = c4.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        startTimes.Add(reader.GetString(0));
-                    }
-                }
-                connection.Close();
-            }
+            //using (SqlConnection connection = new SqlConnection(cString))
+            //{
+            //    SqlCommand c4 = new SqlCommand(timeString, connection);
+            //    connection.Open();
+            //    using (var reader = c4.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            startTimes.Add(reader.GetString(0));
+            //        }
+            //    }
+            //    connection.Close();
+            //}
 
-            return new AddSectionForm(buildings, locations, courses, startTimes);
+            return new AddSectionForm(buildings, locations, courses, semesters, years);
         }
 
         public static String addSection(String courseID, String roomID, String buildingID, String semester, String year, String type, String capacity)
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            string result;
-            string insertSectionString = "INSERT INTO [dbo].[section] ([time_slot_id],[faculty_id],[course_id],[room_id],[building_id],[semster],[year],[type],[capactiy],[seats_taken])VALUES(NULL,NULL," + courseID + "," + roomID + "," + buildingID + ",'" + semester + "','" + year + "','" + type + "','" + capacity + "',0)";
+            string result = "";
+            //TBA professor = 537
+            //TBA time slot = 20
+            string insertSectionString = "INSERT INTO [dbo].[section] ([time_slot_id],[faculty_id],[course_id],[room_id],[building_id],[semster],[year],[type],[capactiy],[seats_taken])VALUES(20,537," + courseID + "," + roomID + "," + buildingID + ",'" + semester + "','" + year + "','" + type + "','" + capacity + "',0)";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(insertSectionString, connection);
                 connection.Open();
-                try
-                {
-                    command.ExecuteNonQuery();
-                    result = "Section inserted.";
-                }
-                catch
-                {
-                    result = "Error: Unable to insert section.";
-                }
+                command.ExecuteNonQuery();
+                //try
+                //{
+                //    command.ExecuteNonQuery();
+                //    result = "Section inserted.";
+                //}
+                //catch
+                //{
+                //    result = "Error: Unable to insert section.";
+                //}
                 connection.Close();
             }
             return result;
+        }
+
+        public static Section updateSection(string sectionId)
+        {
+            String getSectionString = "SELECT [section_id], [course_name], [semster], [year], [capactiy], [type], [building_full_name], [room_number], [CID], [credits] FROM [section_view] WHERE [section_id] = " + sectionId;
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            Section section = null;
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getSectionString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        section = new Section(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(6), reader.GetInt32(7), reader.GetString(5), reader.GetByte(4), reader.GetInt32(8).ToString(), reader.GetByte(9).ToString());
+                    }
+                }
+            }
+            return section;
+        }
+
+        public static UpdateSectionHelper createUpdateSectionForm(String courseID)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            String timeString = "SELECT DISTINCT FORMAT(CAST([start_time] AS datetime), 'h:mm tt') AS start_time, CAST([start_time] AS datetime) AS order_time FROM [HarborViewUniversity].[dbo].[time_slot] ORDER BY order_time";
+            String professorString = "SELECT CONCAT([user].[first_name], ' ', [user].[last_name]) AS name FROM [HarborViewUniversity].[dbo].[faculty] JOIN [user] ON [user].[user_id] = [faculty].[faculty_id] WHERE [department_id] = (SELECT [department_id] FROM [course] WHERE [course_id] = " + courseID + ")";
+            List<String> times = new List<string>();
+            List<String> professors = new List<string>();
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                //Get times
+                SqlCommand command1 = new SqlCommand(timeString, connection);
+                connection.Open();
+                using (var reader = command1.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        times.Add(reader.GetString(0));
+                    }
+                }
+                //Get professors by department
+                SqlCommand command2 = new SqlCommand(professorString, connection);
+                using (var reader = command2.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        professors.Add(reader.GetString(0));
+                    }
+                }
+                connection.Close();
+            }
+
+            return new UpdateSectionHelper(times, professors);
+        }
+
+        public static int updateSectionCheck(string credits, string courseName, string building, string room, string semester, string year, string type, string seatCapacity, string professor, string d1, string d2, string d3, string startTime, string sectionId)
+        {
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            //Check days strings
+            String day1 = d1;
+            String day2;
+            String day3;
+            int dayCount = 1;
+            if (d2 == null || d2.Equals("")) { day2 = ""; } else { day2 = d2; dayCount++; }
+            if (d3 == null || d3.Equals("")) { day3 = ""; } else { day3 = d3; dayCount++; }
+            //Generate end time
+            String endTime = DateTime.Parse(startTime).AddHours(double.Parse(credits) / (double.Parse(dayCount.ToString()))).ToString("h:mm tt");
+            //Check time slot strings
+            String checkTimeStringHead = "SELECT DISTINCT [section].[room_id], [section].[building_id] FROM [HarborViewUniversity].[dbo].[time_slot] JOIN [section] ON [time_slot_id] = [period] WHERE(([day_1] = '" + day1 + "' OR[day_2] = '" + day1 + "' OR[day_3] = '" + day1 + "')";
+            String checkTimeStringTail = ") AND [start_time] = '" + startTime + "' AND [section].[room_id] = (SELECT [room_id] FROM [room] WHERE [room].[room_number] = " + room + " AND [room].[building_id] = (SELECT [building_id] FROM [building] WHERE [building_full_name] = '" + building + "')) AND [year] = '" + year + "' AND [semster] = '" + semester + "'";
+            if (!day2.Equals(""))
+            {
+                checkTimeStringHead += " OR ([day_1] = '" + day2 + "' OR  [day_2] = '" + day2 + "' OR  [day_3] = '" + day2 + "')";
+            }
+            if (!day3.Equals(""))
+            {
+                checkTimeStringHead += " OR ([day_1] = '" + day3 + "' OR  [day_2] = '" + day3 + "' OR  [day_3] = '" + day3 + "')";
+            }
+            String checkTimeString = checkTimeStringHead + checkTimeStringTail;
+            //Check professor string
+            String checkTimeSlotsString = "SELECT DISTINCT [time_slot].[period] FROM [HarborViewUniversity].[dbo].[time_slot] WHERE (([day_1] = '" + day1 + "' OR  [day_2] = '" + day1 + "' OR  [day_3] = '" + day1 + "')";
+            if (!day2.Equals(""))
+            {
+                checkTimeSlotsString += " OR ([day_1] = '" + day2 + "' OR  [day_2] = '" + day2 + "' OR  [day_3] = '" + day2 + "')";
+            }
+            if (!day3.Equals(""))
+            {
+                checkTimeSlotsString += " OR ([day_1] = '" + day3 + "' OR  [day_2] = '" + day3 + "' OR  [day_3] = '" + day3 + "')";
+            }
+            checkTimeSlotsString += ") AND [start_time] = '" + startTime + "'";
+            String insertTimeSlotString = "INSERT INTO [dbo].[time_slot] ([day_1],[day_2],[day_3],[start_time],[end_time]) VALUES ('" + day1 + "','" + day2 + "','" + day3 + "','" + startTime + "', '" + endTime + "')";
+            String checkProfessorScheduleStringHead = "SELECT * FROM [section] WHERE [faculty_id] = (SELECT [user_id] FROM [user] WHERE CONCAT([first_name], ' ' , [last_name]) = '" + professor + "') AND [time_slot_id] = ";
+            String checkProfessorScheduleStringTail = " AND[semster] = '" + semester + "' AND[year] = '" + year + "'";
+            String getTimeSlotString = "SELECT [period] FROM [HarborViewUniversity].[dbo].[time_slot] WHERE ( ([day_1] = '" + day1 + "' OR  [day_2] = '" + day1 + "' OR  [day_3] = '" + day1 + "') AND ([day_1] = '" + day2 + "' OR  [day_2] = '" + day2 + "' OR  [day_3] = '" + day2 + "') AND ([day_1] = '" + day3 + "' OR  [day_2] = '" + day3 + "' OR  [day_3] = '" + day3 + "'))  AND [start_time] = '" + startTime + "' AND [end_time] = '" + endTime + "'";
+            String getProfessorIdString = "SELECT [user_id] FROM [user] WHERE CONCAT([first_name], ' ' , [last_name]) = '" + professor + "'";
+            int timeSlotId = 0;
+            int professorId = 0;
+            String updateString = "";
+            List<int> timeSlots = new List<int>();
+            List<String> test = new List<string>();
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                //Run check times query
+                SqlCommand command1 = new SqlCommand(checkTimeString, connection);
+                connection.Open();
+                using (var reader = command1.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        connection.Close();
+                        return 1; //Room is in use at that time
+                    }
+                }
+                //Get time slots to check professors schedule
+                SqlCommand command2 = new SqlCommand(checkTimeSlotsString, connection);
+                using (var reader = command2.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            timeSlots.Add(reader.GetInt32(0));
+                        }
+                    }
+                }
+                //Get time slot id
+                SqlCommand command3 = new SqlCommand(getTimeSlotString, connection);
+                using (var reader = command3.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            timeSlotId = reader.GetInt32(0);
+                        }
+                    }
+                    else
+                    {
+                        reader.Close();
+                        SqlCommand command4 = new SqlCommand(insertTimeSlotString, connection);
+                        try
+                        {
+                            command4.ExecuteNonQuery();
+                            using (var reader2 = command3.ExecuteReader())
+                            {
+                                while (reader2.Read())
+                                {
+                                    timeSlotId = reader2.GetInt32(0);
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            return 4; //timeslot cannot be made
+                        }
+                    }
+                }
+                //Check professor's schedule
+                foreach (int i in timeSlots)
+                {
+                    test.Add(checkProfessorScheduleStringHead + i + checkProfessorScheduleStringTail);
+                    using (var reader = new SqlCommand(checkProfessorScheduleStringHead + i + checkProfessorScheduleStringTail, connection).ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            return 3; //professor has a class at that time
+                        }
+                    }
+                }
+                //Get professor's ID
+                SqlCommand command5 = new SqlCommand(getProfessorIdString, connection);
+                using (var reader = command5.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            professorId = reader.GetInt32(0);
+                        }
+                    }
+                }
+                if (timeSlotId == 0 || professorId == 0)
+                {
+                    return 4;
+                }
+                updateString = "UPDATE[dbo].[section] SET [time_slot_id] = " + timeSlotId + ",[faculty_id] = " + professorId + " WHERE section_id = " + sectionId;
+                SqlCommand command6 = new SqlCommand(updateString, connection);
+                try
+                {
+                    command6.ExecuteNonQuery();
+                }
+                catch
+                {
+                    return 4; //timeslot cannot be made
+                }
+            }
+            return 0;
         }
 
         public static List<Major> createDegreeAuditSelector(String studentID)
@@ -902,15 +1111,9 @@ namespace WebApplication3.Models
                                                 JOIN department d ON c.department_id = d.department_id
                                                 WHERE m.major_id = " + majorID;
             //SQL to get classes already taken
-            String getClassesTakenString = @"SELECT DISTINCT s.course_id,sh.grade
-                                            FROM student_semester_history sh
-                                            INNER JOIN section s ON s.section_id = sh.section_id
-                                            INNER JOIN course c ON c.course_id = s.course_id
-                                            inner join department d on d.department_id = c.department_id
-                                            INNER join major m on m.department_id = d.department_id
-                                            where sh.student_id = 1";
+            String getClassesTakenString = "SELECT DISTINCT s.course_id,sh.grade FROM student_semester_history sh INNER JOIN section s ON s.section_id = sh.section_id INNER JOIN course c ON c.course_id = s.course_id inner join department d on d.department_id = c.department_id INNER join major m on m.department_id = d.department_id where sh.student_id = 1";
             //SQL to get out of major classes taken
-            String getOutOfMajorClassesTaken = "SELECT [course_id], [course_number], [course_name], [prereqs], [course_credits], [grade] FROM out_of_major_reqs_view WHERE student_id = " + studentID + " AND  course_id not in(select course_id from major_requirements where major_id = " + majorID + ")";
+            String getOutOfMajorClassesTaken = "SELECT [course_id], [course_number], [course_name], [prereqs], [course_credits], [grade] FROM out_of_major_reqs_view WHERE student_id = " + studentID + "AND course_id NOT IN(select course_id from major_requirements where major_id = " + majorID + ") AND course_id NOT IN(select course_id from major_elective where major_id = " + majorID + ")";
             //SQL to get classes currently being taken
             String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = 1";
             //SQL to get prereqs for major courses
@@ -987,14 +1190,23 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        try
-                        {
-                            outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4), reader.GetString(5)));
-                        }
-                        catch
-                        {
-                            outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetByte(4), ""));
-                        }
+                        //[course_id], [course_number], [course_name], [prereqs], [course_credits], [grade]
+                        string courseId;
+                        string courseNumber;
+                        string courseName;
+                        string prereqs;
+                        int courseCredits;
+                        string grade;
+
+                        try { courseId = reader.GetInt32(0).ToString(); } catch { courseId = ""; }
+                        try { courseNumber = reader.GetString(1); } catch { courseNumber = ""; }
+                        try { courseName = reader.GetString(2); } catch { courseName = ""; }
+                        try { prereqs = reader.GetString(3); } catch { prereqs = ""; }
+                        try { courseCredits = reader.GetByte(4); } catch { courseCredits = 0; }
+                        try { grade = reader.GetString(5); } catch { grade = ""; }
+
+                        outOfMajorReqs.Add(new DegreeAuditOutOfMajorReqs(courseId, courseNumber, courseName, prereqs, courseCredits, grade));
+
                     }
                 }
 

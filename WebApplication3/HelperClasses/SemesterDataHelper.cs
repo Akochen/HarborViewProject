@@ -10,7 +10,7 @@ namespace WebApplication3.HelperClasses
         public static String getSemesterSeason()
         {
             DateTime now = DateTime.Now;
-            if (now.Month < 5)
+            if (now.Month < 6)
             {
                 return "Spring";
             }

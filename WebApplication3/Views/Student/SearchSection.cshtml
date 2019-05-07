@@ -55,14 +55,14 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <select id="semesterSelector" name="semesterSelector">
+                        <select id="semesterSelector" name="semesterSelector" required>
                             <option value="startselection">---Semester---</option>
                             @foreach (var v in Model.semesters)
                             {
                                 <option value="@v">@v</option>
                             }
                         </select>
-                        <select id="yearSelector" name="yearSelector">
+                        <select id="yearSelector" name="yearSelector" required>
                             <option value="startselection">---Year---</option>
                             @foreach (var v in Model.years)
                             {

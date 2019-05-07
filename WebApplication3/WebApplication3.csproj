@@ -190,6 +190,7 @@
     <Compile Include="HelperClasses\StudentEnrollment.cs" />
     <Compile Include="HelperClasses\StudentInfo.cs" />
     <Compile Include="HelperClasses\StudentTranscriptHelper.cs" />
+    <Compile Include="HelperClasses\UpdateSectionHelper.cs" />
     <Compile Include="HelperClasses\ViewScheduleHelper.cs" />
     <Compile Include="HelperClasses\Enrollment.cs" />
     <Compile Include="HelperClasses\Hold.cs" />
@@ -286,6 +287,9 @@
     <Content Include="Views\Administrator\EditMajorResult.cshtml" />
     <Content Include="Views\Administrator\EditCatalogRemovePrereq.cshtml" />
     <Content Include="Views\Researcher\DisplayGradeByCourse.cshtml" />
+    <Content Include="Views\Administrator\UpdateSection.cshtml" />
+    <Content Include="Views\Administrator\UpdateSectionForm.cshtml" />
+    <Content Include="Views\Administrator\UpdateGrade.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
