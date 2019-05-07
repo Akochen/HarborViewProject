@@ -23,7 +23,7 @@
     @Html.Hidden("year", Model.year)
     @Html.Hidden("type", Model.type)
     @Html.Hidden("seatCapacity", Model.seatCapacity)
-    @Html.Hidden("end", null, new { @id = "dayCount" })
+    @Html.Hidden("sectionId", Model.sectionID)
     <input type="submit" value="Submit" onclick="return validateForm()" />
 }
 
