@@ -298,15 +298,17 @@ namespace WebApplication3.Models
         {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             String queryString = "UPDATE student_semester_history SET grade = '" + s.grade + "' WHERE student_id = " + s.studentID + " AND section_id = " + s.sectionID;
+            String message = "There was an error with updating the course grade.";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
+                message = "The grade has been updated";
             }
 
-            return "";
+            return message;
         }
 
 
@@ -611,7 +613,7 @@ namespace WebApplication3.Models
             return "";
         }
 
-        public static List<StudentInfo> ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        public static List<StudentInfo> ViewStudentInformation(String userID)
         {
             List<StudentInfo> info = new List<StudentInfo>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;

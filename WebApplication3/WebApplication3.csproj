@@ -289,6 +289,7 @@
     <Content Include="Views\Researcher\DisplayGradeByCourse.cshtml" />
     <Content Include="Views\Administrator\UpdateSection.cshtml" />
     <Content Include="Views\Administrator\UpdateSectionForm.cshtml" />
+    <Content Include="Views\Administrator\UpdateGrade.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

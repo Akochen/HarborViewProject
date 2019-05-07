@@ -123,10 +123,11 @@ namespace WebApplication3.Controllers
             return View(s);
         }
 
-        public String UpdateGrade(string courseID, string name, string sectionID, string grade, string studentID)
+        public ActionResult UpdateGrade(string courseID, string name, string sectionID, string grade, string studentID)
         {
             StudentEnrollment s = new StudentEnrollment(courseID, name, sectionID, grade, studentID);
-            return WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
+            //return WebApplication3.Models.AdminDbConnectionClass.updateGrade(s);
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.updateGrade(s));
         }
 
         public ActionResult ViewStudentHoldSelector()
@@ -159,9 +160,9 @@ namespace WebApplication3.Controllers
             StudentInfo s = new StudentInfo(streetName, city, state, zip);
             return View(s);
         }
-        public ActionResult ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        public ActionResult ViewStudentInformation(String userID)
         {
-            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(streetName, city, state, zip, userID));
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(userID));
         }
 
         public ActionResult EditMajorSelector()
