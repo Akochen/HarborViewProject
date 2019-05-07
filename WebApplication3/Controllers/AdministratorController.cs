@@ -196,9 +196,9 @@ namespace WebApplication3.Controllers
             StudentInfo s = new StudentInfo(streetName, city, state, zip);
             return View(s);
         }
-        public ActionResult ViewStudentInformation(String streetName, String city, String state, String zip, String userID)
+        public ActionResult ViewStudentInformation(String userID)
         {
-            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(streetName, city, state, zip, userID));
+            return View((object)WebApplication3.Models.AdminDbConnectionClass.ViewStudentInformation(userID));
         }
 
         public ActionResult EditMajorSelector()
