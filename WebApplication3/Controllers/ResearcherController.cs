@@ -14,14 +14,14 @@ namespace WebApplication3.Controllers
             return View();
         }
         //Display average grade for all courses (on home)
-        public ActionResult DisplayGradeByCourse()
+        public PartialViewResult DisplayGradeByCourse()
         {
-            return PartialView();
+            return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.ListAllCourses());
         }
 
         public ActionResult DisplayGradeByCourseSelect()
         {
-            return PartialView();
+            return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.ListAllCourses());
         }
         //Display average grade by course
 

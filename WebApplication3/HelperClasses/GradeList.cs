@@ -46,7 +46,7 @@ namespace WebApplication3.HelperClasses
             }
         }
 
-        public static double getGpaValue(String grade)
+        public static double convertGradeToPoints(String grade)
         {
             String gpaGrade = grade.ToLower();
             if (gpaGrade.Equals("a"))
@@ -96,6 +96,54 @@ namespace WebApplication3.HelperClasses
             else
             {
                 return 0;
+            }
+        }
+
+        public static string convertPointsToGrade(double points)
+        {
+            if(points < .5)
+            {
+                return "F";
+            }
+            else if (points < .85)
+            {
+                return "D-";
+            }
+            else if (points < 1.15)
+            {
+                return "D";
+            }
+            else if (points < 1.5)
+            {
+                return "C-";
+            }
+            else if (points < 1.85)
+            {
+                return "C";
+            }
+            else if (points < 2.15)
+            {
+                return "C+";
+            }
+            else if (points < 2.5)
+            {
+                return "B-";
+            }
+            else if (points < 2.85)
+            {
+                return "B";
+            }
+            else if (points < 3.15)
+            {
+                return "B+";
+            }
+            else if (points < 3.5)
+            {
+                return "A-";
+            }
+            else
+            {
+                return "A";
             }
         }
     }

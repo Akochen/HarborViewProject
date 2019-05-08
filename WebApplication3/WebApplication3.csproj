@@ -286,7 +286,7 @@
     <Content Include="Views\Administrator\EditMajor.cshtml" />
     <Content Include="Views\Administrator\EditMajorResult.cshtml" />
     <Content Include="Views\Administrator\EditCatalogRemovePrereq.cshtml" />
-    <Content Include="Views\Researcher\DisplayGradeByCourse.cshtml" />
+    <Content Include="Views\Researcher\DisplayGradeByCourseSelect.cshtml" />
     <Content Include="Views\Administrator\UpdateSection.cshtml" />
     <Content Include="Views\Administrator\UpdateSectionForm.cshtml" />
     <Content Include="Views\Administrator\UpdateGrade.cshtml" />

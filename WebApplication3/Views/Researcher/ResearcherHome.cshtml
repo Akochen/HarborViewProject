@@ -4,14 +4,23 @@
     ViewBag.Title = "ResearcherHome";
     Layout = "~/Views/Shared/_LayoutResearcher.cshtml";
 }
-
+<link rel="stylesheet" href="~/Content/searchTable.css" />
 <table style="width:100%;">
     <tr>
-        <td style="width:50%;" valign="top" align="center">
-            <table>
+        <td style="width:45%;" valign="top" align="center">
+            <table class="searchTable">
                 <tr>
                     <td>
-                        @Html.Action("DisplayGradeByCourse","Researcher")
+                        @Html.Action("DisplayGradeByCourseSelect", "Researcher")
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="width:45%;" valign="top" align="center">
+            <table class="searchTable">
+                <tr>
+                    <td>
+                        TEST
                     </td>
                 </tr>
             </table>

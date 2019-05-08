@@ -29,5 +29,18 @@ namespace WebApplication3.Models
             }
             return allCourses;
         }
+
+        public static String getAverageGradeByCourse(String courseId)
+        {
+
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string getGradeString = "SELECT dbo.getGradeAvgByCourse(" + courseId + ")";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                
+                connection.Close();
+            }
+            return "";
+        }
     }
 }
