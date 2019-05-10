@@ -47,7 +47,8 @@
 @{
     if (IsPost)
     {
-        Response.Redirect(Url.Action("EditMajorResult", "Administrator", new { courseID = Request.Form["courseSelector"], courseAttr = Request.Form["courseAtrSelector"], majorID = Model.major }));
+        Response.Redirect(Url.Action("EditMajorResult", "Administrator", new {
+            courseID = Request.Form["courseSelector"], courseAttr = Request.Form["courseAtrSelector"], majorID = Model.major }));
     }
 }
 

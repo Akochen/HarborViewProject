@@ -21,7 +21,7 @@ namespace WebApplication3.HelperClasses
         {
         }
 
-        public FacultySchedule(string courseName, string semester, string year, string startTime, string endTime, string day, string building, string room)
+        public FacultySchedule(string courseName, string day, string startTime, string endTime, string semester, string year,  string building, string room)
         {
             this.courseName = courseName;
             this.semester = semester;
@@ -32,6 +32,17 @@ namespace WebApplication3.HelperClasses
             this.building = building;
             this.room = room;
         }
+        //public FacultySchedule(string courseName, string semester, string year, string startTime, string endTime, string day, string building, string room)
+        //{
+        //    this.courseName = courseName;
+        //    this.semester = semester;
+        //    this.year = year;
+        //    this.startTime = startTime;
+        //    this.endTime = endTime;
+        //    this.days = day;
+        //    this.building = building;
+        //    this.room = room;
+        //}
 
 
     }

@@ -226,7 +226,8 @@ namespace WebApplication3.Models
         {
             List<Advisee> adviseeList = new List<Advisee>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "SELECT first_name,last_name,phone_number,dob,street_name,city,state,zip,student_id FROM [HarborViewUniversity].[dbo].[advisor_view] av inner join [user] u on u.user_id = av.student_id where av.faculty_id = " + userID + "";
+            String queryString = @"SELECT first_name,last_name,phone_number,dob,street_name,city,state,zip,student_id " +
+                "FROM [HarborViewUniversity].[dbo].[advisor_view] av inner join [user] u on u.user_id = av.student_id where av.faculty_id = " + userID + "";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -235,7 +236,8 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        adviseeList.Add(new Advisee(reader.GetInt32(8).ToString(), reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3).ToShortDateString(), reader.GetString(4),
+                        adviseeList.Add(new Advisee(reader.GetInt32(8).ToString(), reader.GetString(0), reader.GetString(1), 
+                            reader.GetString(2), reader.GetDateTime(3).ToShortDateString(), reader.GetString(4),
                             reader.GetString(5), reader.GetString(6), reader.GetInt32(7).ToString()));
                     }
                 }
@@ -249,7 +251,8 @@ namespace WebApplication3.Models
         {
             List<FacultySchedule> classList = new List<FacultySchedule>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = "SELECT [course_name],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number] FROM [HarborViewUniversity].[dbo].[faculty_schedule_view] WHERE [faculty_id] = " + userID;
+            String queryString = @"SELECT [course_name],[days],[start_time],[end_time],[semster],[year],[building_full_name],[room_number] " +
+                "FROM [HarborViewUniversity].[dbo].[faculty_schedule_view] WHERE [faculty_id] = " + userID;
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);

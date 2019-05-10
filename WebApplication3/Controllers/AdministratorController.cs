@@ -213,8 +213,6 @@ namespace WebApplication3.Controllers
 
         public ActionResult EditMajorResult(String courseID, String courseAttr,String majorID)
         {
-
-           //return RedirectToAction("EditMajor", new { courseID = courseID });
             String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMajorResults(courseID, courseAttr,majorID) + "\"); </script>";
             return View((object)result);
         }
