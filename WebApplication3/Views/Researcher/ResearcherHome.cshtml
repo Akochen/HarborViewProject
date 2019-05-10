@@ -16,15 +16,40 @@
                 </tr>
             </table>
         </td>
+    </tr>
+    <tr>
         <td style="width:45%;" valign="top" align="center">
             <table class="searchTable">
                 <tr>
                     <td>
-                        TEST
+                        @Html.Action("DisplayGradeByMajorSelect", "Researcher")
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
+    @*<tr>
+            <td style="width:45%;" valign="top" align="center">
+                <table class="searchTable">
+                    <tr>
+                        <td>
+                            @Html.Action("DisplayGradeByProfessorSelect", "Researcher")
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>*@
 </table>
 
+@if (TempData["courseSelect"] != null)
+{
+    <script>
+        document.getElementById("courseSelect").value = @TempData["courseSelect"];
+    </script>
+}
+@if (TempData["majorSelect"] != null)
+{
+    <script>
+        document.getElementById("majorSelect").value = @TempData["majorSelect"];
+    </script>
+}

@@ -101,7 +101,11 @@ namespace WebApplication3.HelperClasses
 
         public static string convertPointsToGrade(double points)
         {
-            if(points < .5)
+            if(points < 0)
+            {
+                return "N/A";
+            }
+            else if(points < .5)
             {
                 return "F";
             }

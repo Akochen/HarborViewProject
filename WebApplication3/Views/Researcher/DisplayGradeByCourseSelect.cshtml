@@ -4,8 +4,8 @@
     Layout = null;
     //Create list of all courses for selector
     List<SelectListItem> courses = new List<SelectListItem>();
-    courses.Add(new SelectListItem { Value = "", Text = "All" });
-    foreach(var c in Model)
+    courses.Add(new SelectListItem { Value = "All", Text = "All" });
+    foreach (var c in Model)
     {
         courses.Add(new SelectListItem { Value = c.id, Text = c.fullName });
     }
@@ -14,6 +14,21 @@
 @using (@Html.BeginForm("DisplayGradeByCourse", "Researcher", FormMethod.Post))
 {
     <Strong>Courses:</Strong><br />
-    @Html.DropDownList("course", courses, new { @onchange = "this.form.submit()" })
-    @Html.Raw(TempData["GpaByCourse"])
+    @Html.DropDownList("courseID", courses, new { @onchange = "this.form.submit()", @id = "courseSelect", @required = "required" })
+    if (Session["GpaByCourse"] != null)
+    {
+        @Html.Raw(Session["GpaByCourse"])
+    }
+    if (TempData["majorSelect"] != null)
+    {
+        @Html.Hidden("majorID", TempData["majorSelect"])
+    }
+    if (TempData["yearSelect"] != null)
+    {
+        @Html.Hidden("year", TempData["yearSelect"])
+    }
+    if (TempData["semesterSelect"] != null)
+    {
+        @Html.Hidden("semester", TempData["semesterSelect"])
+    }
 }

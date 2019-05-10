@@ -14,18 +14,48 @@ namespace WebApplication3.Controllers
             return View();
         }
         //Display average grade for all courses (on home)
-        public PartialViewResult DisplayGradeByCourse()
+        //Display average grade by course
+        public ActionResult DisplayGradeByCourse(String courseID, String majorID, String year, String semester)
         {
-            return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.ListAllCourses());
+            Session["GpaByCourse"] = WebApplication3.Models.ResearcherDbConnectionClass.getAverageGradeByCourse(courseID, year, semester);
+            TempData["courseSelect"] = courseID;
+            TempData["majorSelect"] = majorID;
+            TempData["yearSelect"] = year;
+            TempData["semsterSelect"] = semester;
+            return RedirectToAction("ResearcherHome");
         }
 
-        public ActionResult DisplayGradeByCourseSelect()
+        public PartialViewResult DisplayGradeByCourseSelect()
         {
             return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.ListAllCourses());
         }
-        //Display average grade by course
+        //Display average grade by Major
+        public ActionResult DisplayGradeByMajor(String courseID, String majorID, String year, String semester)
+        {
+            Session["GpaByMajor"] = WebApplication3.Models.ResearcherDbConnectionClass.getAverageGradeByMajor(majorID, year, semester);
+            TempData["courseSelect"] = courseID;
+            TempData["majorSelect"] = majorID;
+            TempData["yearSelect"] = year;
+            TempData["semsterSelect"] = semester;
+            return RedirectToAction("ResearcherHome");
+        }
+
+        public PartialViewResult DisplayGradeByMajorSelect()
+        {
+            return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.listAllMajors());
+        }
 
         //Display average grade by professor
+        //public ActionResult DisplayGradeByProfessor(String courseID, String professorID, String year, String semester)
+        //{
+        //    TempData["GpaByProfessor"] = WebApplication3.Models.ResearcherDbConnectionClass.getAverageGradeByProfessor(professorID, year, semester);
+        //    return RedirectToAction("ResearcherHome");
+        //}
+
+        //public PartialViewResult DisplayGradeByProfessorSelect()
+        //{
+        //    return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.listAllProfessors());
+        //}
 
         //Display average grade by year
 

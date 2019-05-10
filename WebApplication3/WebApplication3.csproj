@@ -290,6 +290,8 @@
     <Content Include="Views\Administrator\UpdateSection.cshtml" />
     <Content Include="Views\Administrator\UpdateSectionForm.cshtml" />
     <Content Include="Views\Administrator\UpdateGrade.cshtml" />
+    <Content Include="Views\Researcher\DisplayGradeByProfessorSelect.cshtml" />
+    <Content Include="Views\Researcher\DisplayGradeByMajorSelect.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
