@@ -4,7 +4,6 @@
     Layout = null;
     //Create list of all courses for selector
     List<SelectListItem> majors = new List<SelectListItem>();
-    majors.Sort();
     foreach (var m in Model)
     {
         majors.Add(new SelectListItem { Value = m.majorID, Text = m.name });
