@@ -217,6 +217,22 @@ namespace WebApplication3.Controllers
             return View((object)result);
         }
 
+        public ActionResult EditMinorSelector()
+        {
+            return View(WebApplication3.Models.AdminDbConnectionClass.editMinorSelectorHelper());
+        }
+
+        public ActionResult EditMinor(String minorID)
+        {
+            return View(Models.AdminDbConnectionClass.editMinor(minorID));
+        }
+
+        public ActionResult EditMinorResult(String courseID, String courseAttr, String minorID)
+        {
+            String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMinorResults(courseID, courseAttr, minorID) + "\"); </script>";
+            return View((object)result);
+        }
+
         public ActionResult DegreeAuditStudentSelector()
         {
             return View();
