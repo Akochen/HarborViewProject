@@ -801,10 +801,18 @@ namespace WebApplication3.Models
             List<Course> courses = new List<Course>();
             EditMinor helper = new EditMinor(courses, minor);
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            String queryString = @" SELECT c.course_name, c.course_id,m.minor_id FROM course c
-                                    INNER JOIN department d ON d.department_id = c.department_id
-                                    INNER JOIN minor m ON m.department_id = d.department_id
-                                    WHERE m.minor_name = '"+ minor + "'";
+            String queryString = @"SELECT c.course_name, c.course_id,mr.major_id 
+  FROM [HarborViewUniversity].[dbo].[major_requirements] mr
+  inner join course c on c.course_id = mr.course_id
+  inner join major m on m.major_id = mr.major_id
+  where m.major_name = '" + minor + "'"+
+  @"UNION
+  SELECT c.course_name, c.course_id,mr.major_id 
+  FROM [HarborViewUniversity].[dbo].[major_elective] mr
+  inner join course c on c.course_id = mr.course_id
+  inner join major m on m.major_id = mr.major_id
+  where m.major_name = '" + minor + "'";
+                                    
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);

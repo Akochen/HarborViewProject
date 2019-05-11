@@ -227,6 +227,12 @@ namespace WebApplication3.Controllers
             return View(Models.AdminDbConnectionClass.editMinor(minorID));
         }
 
+        public ActionResult EditMinorNoResults()
+        {
+            TempData["result"] = "There are no courses available that can be added to this minor";
+            return RedirectToAction("EditMinorSelector");
+        }
+
         public ActionResult EditMinorResult(String courseID, String courseAttr, String minorID)
         {
             String result = "<script> alert(\"" + WebApplication3.Models.AdminDbConnectionClass.editMinorResults(courseID, courseAttr, minorID) + "\"); </script>";

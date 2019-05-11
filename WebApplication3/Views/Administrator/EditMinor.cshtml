@@ -8,43 +8,47 @@
 
 <link rel="stylesheet" href="~/Content/Background.css" />
 
+@if (Model.courses.Count <= 0)
+{
+    Response.Redirect(Url.Action("EditMinorNoResults", "Administrator"));
+}
+else
+{
+    <form name="editCourse2" method="post">
+        <div>
+            <table>
+                <tr>
+                    <td><strong>Courses:</strong> </td>
+                    <td>
+                        <select id="courseSelector" name="courseSelector" required>
+                            <option value="">---Select---</option>
+                            @foreach (var c in Model.courses)
+                            {
+                                <option value="@c.id">@c.courseName</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Choose Option:</strong> </td>
+                    <td>
+                        <select id="courseAtrSelector" name="courseAtrSelector" required>
+                            <option value="default">---Select---</option>
+                            <option value="Add">Add To Minor Requirement List</option>
+                            <option value="Remove">Remove From Minor Requirement List</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" id="submit" value="Update" />
+                    </td>
+                </tr>
 
-<form name="editCourse2" method="post">
-    <div>
-        <table>
-            <tr>
-                <td><strong>Courses:</strong> </td>
-                <td>
-                    <select id="courseSelector" name="courseSelector" required>
-                        <option value="">---Select---</option>
-                        @foreach (var c in Model.courses)
-                        {
-                            <option value="@c.id">@c.courseName</option>
-                        }
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Choose Option:</strong> </td>
-                <td>
-                    <select id="courseAtrSelector" name="courseAtrSelector" required>
-                        <option value="default">---Select---</option>
-                        <option value="Add">Add To Minor Requirement List</option>
-                        <option value="Remove">Remove From Minor Requirement List</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" id="submit" value="Update" />
-                </td>
-            </tr>
+            </table>
+        </div>
+    </form>
 
-        </table>
-    </div>
-</form>
-
-@{
     if (IsPost)
     {
         Response.Redirect(Url.Action("EditMinorResult", "Administrator", new
@@ -54,6 +58,6 @@
             minorID = Model.minor
         }));
     }
+
+
 }
-
-
