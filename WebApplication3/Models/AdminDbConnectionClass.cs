@@ -827,7 +827,11 @@ namespace WebApplication3.Models
             String resultString = "ERROR";
             List<Course> courses = new List<Course>();
             List<EditMinor> minorHelper = new List<EditMinor>();
-            String minorListString = "SELECT [minor_id],[course_id] FROM [HarborViewUniversity].[dbo].[minor_requirements] WHERE minor_id = " + minorID;
+            String minorListString = @"SELECT mr.[minor_id],mr.[course_id],m.minor_name
+  FROM [HarborViewUniversity].[dbo].[minor_requirements] mr
+  inner join minor m on m.minor_id = mr.minor_id
+  inner join course c on c.course_id = mr.course_id
+  where minor_name = '" + minorID+"'";
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -837,7 +841,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        minorHelper.Add(new EditMinor(reader.GetInt32(0).ToString(), reader.GetInt32(1).ToString()));
+                        minorHelper.Add(new EditMinor(reader.GetInt32(0).ToString(), reader.GetInt32(1).ToString(),reader.GetString(2)));
                     }
                 }
                 connection.Close();
@@ -847,12 +851,12 @@ namespace WebApplication3.Models
             {
                 foreach (var v in minorHelper)
                 {
-                    if (v.minor == minorID && v.courseID == courseID)
+                    if (v.minorName == minorID && v.courseID == courseID)
                     {
                         return "This course is already in the Minor Requirements list";
                     }
                 }
-                string insertMinorReq = "INSERT INTO minor_requirements(minor_id,course_id) VALUES (" + minorID + ", " + courseID + ")";
+                string insertMinorReq = "INSERT INTO minor_requirements(minor_id,course_id) VALUES (" + minorHelper[0].minor + ", " + courseID + ")";
                 using (SqlConnection connection = new SqlConnection(cString))
                 {
                     SqlCommand command = new SqlCommand(insertMinorReq, connection);
@@ -871,7 +875,7 @@ namespace WebApplication3.Models
             }
             if (courseAttr.Equals("Remove"))
             {
-                string removeElective = "DELETE FROM minor_requirements WHERE minor_id = " + minorID;
+                string removeElective = "DELETE FROM minor_requirements WHERE minor_id = " + minorHelper[0].minor;
                 using (SqlConnection connection = new SqlConnection(cString))
                 {
                     SqlCommand command = new SqlCommand(removeElective, connection);
