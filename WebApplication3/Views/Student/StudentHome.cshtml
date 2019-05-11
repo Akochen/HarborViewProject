@@ -1,6 +1,8 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
-    ViewBag.Title = "Student Home";
+                /**/
+
+                Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+                ViewBag.Title = "Student Home";
 }
 
 <html>
@@ -21,12 +23,12 @@
             @Html.Raw("ERROR")
         }
     }
-    
-                @{
-                    if (Session["UserID"] != null)
-                    {
-                        @Html.Action("ViewCurrentSchedule", "Student", new { userID = Session["UserID"], year = WebApplication3.HelperClasses.SemesterDataHelper.getSemesterYear(), semester = @WebApplication3.HelperClasses.SemesterDataHelper.getSemesterSeason() })
-                    }
-                }
+
+    @{
+        if (Session["UserID"] != null)
+        {
+            @Html.Action("ViewCurrentSchedule", "Student", new { userID = Session["UserID"], year = WebApplication3.HelperClasses.SemesterDataHelper.getSemesterYear(), semester = @WebApplication3.HelperClasses.SemesterDataHelper.getSemesterSeason() })
+        }
+    }
 </body>
 </html>
