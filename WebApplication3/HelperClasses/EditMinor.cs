@@ -10,6 +10,7 @@ namespace WebApplication3.HelperClasses
         public List<Course> courses { set; get; }
         public String minor { get; set; }
         public String courseID { get; set; }
+        public String minorName { get; set; }
 
         public EditMinor(List<Course> courses, string minor)
         {
@@ -17,10 +18,11 @@ namespace WebApplication3.HelperClasses
             this.minor = minor;
         }
 
-        public EditMinor(string minor, string courseID)
+        public EditMinor(string minor, string courseID,string minorName)
         {
             this.minor = minor;
             this.courseID = courseID;
+            this.minorName = minorName;
         }
     }
 }
