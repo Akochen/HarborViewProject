@@ -45,6 +45,25 @@ namespace WebApplication3.Controllers
             return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.listAllMajors());
         }
 
+        //Create selects for semesters and years
+        public PartialViewResult ShowSemesterSelects()
+        {
+            return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.createSemesterList());
+        }
+
+        //Num of students by major
+        //Create search by semester view
+        public PartialViewResult StudentsByDegreeSelector()
+        {
+            return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.createSemesterList());
+        }
+        public PartialViewResult StudentsByDegree(String semester, String year)
+        {
+            TempData["majorYear"] = year;
+            TempData["majorSemester"] = semester;
+            return PartialView(WebApplication3.Models.ResearcherDbConnectionClass.getStudentsByMajorCount(year, semester));
+        }
+
         //Display average grade by professor
         //public ActionResult DisplayGradeByProfessor(String courseID, String professorID, String year, String semester)
         //{

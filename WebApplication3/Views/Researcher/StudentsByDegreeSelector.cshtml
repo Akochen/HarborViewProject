@@ -1,0 +1,57 @@
+﻿
+@model WebApplication3.HelperClasses.SemesterList
+@{
+    ViewBag.Title = "Students by Major";
+    Layout = "~/Views/Shared/_LayoutResearcher.cshtml";
+
+    List<SelectListItem> semesters = new List<SelectListItem>();
+    List<SelectListItem> years = new List<SelectListItem>();
+    foreach (var s in Model.season)
+    {
+        semesters.Add(new SelectListItem { Value = s, Text = s });
+    }
+    foreach (var y in Model.year)
+    {
+        years.Add(new SelectListItem { Value = y, Text = y });
+    }
+}
+<link rel="stylesheet" href="~/Content/searchTable.css" />
+<table class="searchTable">
+    <tr>
+        <td>
+            <form method="post">
+                <table>
+                    <tr>
+                        <td>
+                            @Html.Label("Semester: ")
+                        </td>
+                        <td>
+                            @Html.DropDownList("semester", semesters, new { @id = "semesterSelect", @required = "required" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.Label("Year: ")
+                        </td>
+                        <td>
+                            @Html.DropDownList("year", years, new { @id = "yearSelect", @required = "required" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" value="Search" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            @if (IsPost)
+            {
+                @Html.Action("StudentsByDegree", "Researcher", new { year = Request.Form["year"], semester = Request.Form["semester"] })
+            }
+        </td>
+    </tr>
+</table>
+<script>
+    document.getElementById('yearSelect').value = "@TempData["majorYear"]";
+    document.getElementById('semesterSelect').value = "@TempData["majorSemester"]";
+</script>

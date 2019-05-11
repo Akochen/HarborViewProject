@@ -13,22 +13,13 @@
 
 @using (@Html.BeginForm("DisplayGradeByCourse", "Researcher", FormMethod.Post))
 {
-    <Strong>Courses:</Strong><br />
+    <Strong>Avg GPA by Course:</Strong><br />
     @Html.DropDownList("courseID", courses, new { @onchange = "this.form.submit()", @id = "courseSelect", @required = "required" })
     if (Session["GpaByCourse"] != null)
     {
         @Html.Raw(Session["GpaByCourse"])
     }
-    if (TempData["majorSelect"] != null)
-    {
-        @Html.Hidden("majorID", TempData["majorSelect"])
-    }
-    if (TempData["yearSelect"] != null)
-    {
-        @Html.Hidden("year", TempData["yearSelect"])
-    }
-    if (TempData["semesterSelect"] != null)
-    {
-        @Html.Hidden("semester", TempData["semesterSelect"])
-    }
+    @Html.Hidden("majorID", TempData["majorSelect"])
+    @Html.Hidden("year", TempData["yearSelect"], new { @class = "yearHidden", @id = "test" })
+    @Html.Hidden("semester", TempData["semesterSelect"], new { @class = "semesterHidden" })
 }

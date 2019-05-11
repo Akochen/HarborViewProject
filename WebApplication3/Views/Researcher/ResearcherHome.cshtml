@@ -11,6 +11,17 @@
             <table class="searchTable">
                 <tr>
                     <td>
+                        @Html.Action("ShowSemesterSelects", "Researcher")
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:45%;" valign="top" align="center">
+            <table class="searchTable">
+                <tr>
+                    <td>
                         @Html.Action("DisplayGradeByCourseSelect", "Researcher")
                     </td>
                 </tr>
@@ -28,17 +39,6 @@
             </table>
         </td>
     </tr>
-    @*<tr>
-            <td style="width:45%;" valign="top" align="center">
-                <table class="searchTable">
-                    <tr>
-                        <td>
-                            @Html.Action("DisplayGradeByProfessorSelect", "Researcher")
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>*@
 </table>
 
 @if (TempData["courseSelect"] != null)
@@ -53,3 +53,18 @@
         document.getElementById("majorSelect").value = @TempData["majorSelect"];
     </script>
 }
+
+<script>
+    var semesters = document.getElementsByClassName('semesterHidden');
+    var years = document.getElementsByClassName('yearHidden');
+    function yearChange() {
+        Array.prototype.forEach.call(years, function (item) {
+            item.value = document.getElementById('yearSelect').value;
+        });
+    }
+    function semesterChange() {
+        Array.prototype.forEach.call(semesters, function (item) {
+            item.value = document.getElementById('semesterSelect').value;
+        });
+    }
+</script>

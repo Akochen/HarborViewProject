@@ -146,5 +146,64 @@ namespace WebApplication3.Models
             }
             return GradeList.convertPointsToGrade((double)grade);
         }
+
+        //Get list of years and semster seasons
+        public static SemesterList createSemesterList()
+        {
+            List<String> years = new List<String>();
+            List<String> seasons = new List<String>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string getYearsString = "SELECT DISTINCT [year] FROM [HarborViewUniversity].[dbo].[section]";
+            string getSeasonsString = "SELECT DISTINCT [semster] FROM [HarborViewUniversity].[dbo].[section]";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getYearsString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        years.Add((reader.GetString(0)));
+                    }
+                }
+                SqlCommand command2 = new SqlCommand(getSeasonsString, connection);
+                using (var reader = command2.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        seasons.Add((reader.GetString(0)));
+                    }
+                }
+                connection.Close();
+            }
+            return new SemesterList(seasons, years);
+        }
+
+        //Get all majors and their student counts
+        public static List<ResearcherMajorData> getStudentsByMajorCount(String year, String semester)
+        {
+            List<ResearcherMajorData> dataList = new List<ResearcherMajorData>();
+            String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
+            string getDataString = @"SELECT DISTINCT [m].[major_name], CAST(COUNT(sml.student_id) as varchar(10)) FROM student_major_list sml
+                                        LEFT JOIN student_full_time sft ON sft.student_id = sml.student_id
+                                        LEFT JOIN student_part_time spt ON spt.student_id = sml.student_id
+                                        JOIN major m ON m.major_id = sml.major_id
+                                        WHERE ([sft].[year] = '" + year + "' OR [spt].[year] = '" + year + "') AND ([sft].[semester] = '" + semester + "' OR [spt].[semester] = '" + semester + "')"+
+                                        "GROUP BY [m].[major_name] ";
+            using (SqlConnection connection = new SqlConnection(cString))
+            {
+                SqlCommand command = new SqlCommand(getDataString, connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        dataList.Add(new ResearcherMajorData(reader.GetString(0), reader.GetString(1)));
+                    }
+                }
+                connection.Close();
+            }
+            return dataList;
+        }
     }
 }

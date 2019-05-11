@@ -186,6 +186,8 @@
     <Compile Include="HelperClasses\Location.cs" />
     <Compile Include="HelperClasses\NullException.cs" />
     <Compile Include="HelperClasses\Professor.cs" />
+    <Compile Include="HelperClasses\ResearcherMajorData.cs" />
+    <Compile Include="HelperClasses\SemesterList.cs" />
     <Compile Include="HelperClasses\SemesterDataHelper.cs" />
     <Compile Include="HelperClasses\StudentEnrollment.cs" />
     <Compile Include="HelperClasses\StudentInfo.cs" />
@@ -292,6 +294,9 @@
     <Content Include="Views\Administrator\UpdateGrade.cshtml" />
     <Content Include="Views\Researcher\DisplayGradeByProfessorSelect.cshtml" />
     <Content Include="Views\Researcher\DisplayGradeByMajorSelect.cshtml" />
+    <Content Include="Views\Researcher\ShowSemesterSelects.cshtml" />
+    <Content Include="Views\Researcher\StudentsByDegreeSelector.cshtml" />
+    <Content Include="Views\Researcher\StudentsByDegree.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
