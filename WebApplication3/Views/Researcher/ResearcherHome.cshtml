@@ -4,14 +4,36 @@
     ViewBag.Title = "ResearcherHome";
     Layout = "~/Views/Shared/_LayoutResearcher.cshtml";
 }
-
+<link rel="stylesheet" href="~/Content/searchTable.css" />
 <table style="width:100%;">
     <tr>
-        <td style="width:50%;" valign="top" align="center">
-            <table>
+        <td style="width:45%;" valign="top" align="center">
+            <table class="searchTable">
                 <tr>
                     <td>
-                        @Html.Action("DisplayGradeByCourse","Researcher")
+                        @Html.Action("ShowSemesterSelects", "Researcher")
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:45%;" valign="top" align="center">
+            <table class="searchTable">
+                <tr>
+                    <td>
+                        @Html.Action("DisplayGradeByCourseSelect", "Researcher")
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:45%;" valign="top" align="center">
+            <table class="searchTable">
+                <tr>
+                    <td>
+                        @Html.Action("DisplayGradeByMajorSelect", "Researcher")
                     </td>
                 </tr>
             </table>
@@ -19,3 +41,30 @@
     </tr>
 </table>
 
+@if (TempData["courseSelect"] != null)
+{
+    <script>
+        document.getElementById("courseSelect").value = @TempData["courseSelect"];
+    </script>
+}
+@if (TempData["majorSelect"] != null)
+{
+    <script>
+        document.getElementById("majorSelect").value = @TempData["majorSelect"];
+    </script>
+}
+
+<script>
+    var semesters = document.getElementsByClassName('semesterHidden');
+    var years = document.getElementsByClassName('yearHidden');
+    function yearChange() {
+        Array.prototype.forEach.call(years, function (item) {
+            item.value = document.getElementById('yearSelect').value;
+        });
+    }
+    function semesterChange() {
+        Array.prototype.forEach.call(semesters, function (item) {
+            item.value = document.getElementById('semesterSelect').value;
+        });
+    }
+</script>

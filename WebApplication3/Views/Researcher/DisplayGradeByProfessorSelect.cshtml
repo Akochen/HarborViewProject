@@ -1,0 +1,23 @@
+﻿@using WebApplication3.HelperClasses;
+@model List<Professor>
+@{
+    Layout = null;
+    //Create list of all courses for selector
+    List<SelectListItem> courses = new List<SelectListItem>();
+    courses.Add(new SelectListItem { Value = "", Text = "Course" });
+    courses.Add(new SelectListItem { Value = "All", Text = "All" });
+    foreach (var c in Model)
+    {
+        courses.Add(new SelectListItem { Value = c.id, Text = c.name });
+    }
+}
+
+@using (@Html.BeginForm("DisplayGradeByProfessor", "Researcher", FormMethod.Post))
+{
+    <Strong>Professors:</Strong><br />
+    @Html.DropDownList("professorID", courses, new { @onchange = "this.form.submit()", @id = "courseSelect", @required = "required"})
+    if (TempData["GpaByProfessor"] != null)
+    {
+        @Html.Raw(TempData["GpaByProfessor"])
+    }
+}

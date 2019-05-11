@@ -187,6 +187,8 @@
     <Compile Include="HelperClasses\Location.cs" />
     <Compile Include="HelperClasses\NullException.cs" />
     <Compile Include="HelperClasses\Professor.cs" />
+    <Compile Include="HelperClasses\ResearcherMajorData.cs" />
+    <Compile Include="HelperClasses\SemesterList.cs" />
     <Compile Include="HelperClasses\SemesterDataHelper.cs" />
     <Compile Include="HelperClasses\StudentEnrollment.cs" />
     <Compile Include="HelperClasses\StudentInfo.cs" />
@@ -287,10 +289,15 @@
     <Content Include="Views\Administrator\EditMajor.cshtml" />
     <Content Include="Views\Administrator\EditMajorResult.cshtml" />
     <Content Include="Views\Administrator\EditCatalogRemovePrereq.cshtml" />
-    <Content Include="Views\Researcher\DisplayGradeByCourse.cshtml" />
+    <Content Include="Views\Researcher\DisplayGradeByCourseSelect.cshtml" />
     <Content Include="Views\Administrator\UpdateSection.cshtml" />
     <Content Include="Views\Administrator\UpdateSectionForm.cshtml" />
     <Content Include="Views\Administrator\UpdateGrade.cshtml" />
+    <Content Include="Views\Researcher\DisplayGradeByProfessorSelect.cshtml" />
+    <Content Include="Views\Researcher\DisplayGradeByMajorSelect.cshtml" />
+    <Content Include="Views\Researcher\ShowSemesterSelects.cshtml" />
+    <Content Include="Views\Researcher\StudentsByDegreeSelector.cshtml" />
+    <Content Include="Views\Researcher\StudentsByDegree.cshtml" />
     <Content Include="Views\Administrator\EditMinorSelector.cshtml" />
     <Content Include="Views\Administrator\EditMinor.cshtml" />
     <Content Include="Views\Administrator\EditMinorResult.cshtml" />

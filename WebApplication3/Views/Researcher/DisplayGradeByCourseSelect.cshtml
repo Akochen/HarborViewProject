@@ -1,0 +1,25 @@
+﻿@using WebApplication3.HelperClasses;
+@model List<CatalogCourse>
+@{
+    Layout = null;
+    //Create list of all courses for selector
+    List<SelectListItem> courses = new List<SelectListItem>();
+    courses.Add(new SelectListItem { Value = "All", Text = "All" });
+    foreach (var c in Model)
+    {
+        courses.Add(new SelectListItem { Value = c.id, Text = c.fullName });
+    }
+}
+
+@using (@Html.BeginForm("DisplayGradeByCourse", "Researcher", FormMethod.Post))
+{
+    <Strong>Avg GPA by Course:</Strong><br />
+    @Html.DropDownList("courseID", courses, new { @onchange = "this.form.submit()", @id = "courseSelect", @required = "required" })
+    if (Session["GpaByCourse"] != null)
+    {
+        @Html.Raw(Session["GpaByCourse"])
+    }
+    @Html.Hidden("majorID", TempData["majorSelect"])
+    @Html.Hidden("year", TempData["yearSelect"], new { @class = "yearHidden", @id = "test" })
+    @Html.Hidden("semester", TempData["semesterSelect"], new { @class = "semesterHidden" })
+}

@@ -1,0 +1,36 @@
+﻿@model WebApplication3.HelperClasses.SemesterList
+
+@{
+    Layout = null;
+
+    List<SelectListItem> semesters = new List<SelectListItem>();
+    semesters.Add(new SelectListItem { Value = "", Text = "All seasons" });
+    List<SelectListItem> years = new List<SelectListItem>();
+    years.Add(new SelectListItem { Value = "", Text = "All years" });
+    foreach (var s in Model.season)
+    {
+        semesters.Add(new SelectListItem { Value = s, Text = s });
+    }
+    foreach (var y in Model.year)
+    {
+        years.Add(new SelectListItem { Value = y, Text = y });
+    }
+}
+<table>
+    <tr>
+        <td>
+            @Html.Label("Semester: ")
+        </td>
+        <td>
+            @Html.DropDownList("semester", semesters, new { @id = "semesterSelect", @onchange = "semesterChange()", @required = "required" })
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.Label("Year: ")
+        </td>
+        <td>
+            @Html.DropDownList("year", years, new { @id = "yearSelect", @onchange = "yearChange()", @required = "required" })
+        </td>
+    </tr>
+</table>
