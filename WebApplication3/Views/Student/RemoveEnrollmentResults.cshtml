@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 <link rel="stylesheet" href="~/Content/TableTemplate.css" />
+@if (Model.Count > 0)
+{
 <div>
     <table class="resultsTable">
         <tr class="tableheader">
@@ -53,3 +55,8 @@
     </table>
 </div>
 
+}
+else
+{
+    <strong>Error: You are not registered for any courses</strong>
+}

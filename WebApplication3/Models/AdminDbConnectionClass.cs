@@ -261,7 +261,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        classList.Add(new FacultySchedule(reader.GetString(0), reader.GetString(4), reader.GetString(5), reader.GetString(2), reader.GetString(3), reader.GetString(1), reader.GetString(6)
+                        classList.Add(new FacultySchedule(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetString(6)
                             , reader.GetInt32(7).ToString()));
                     }
                 }
