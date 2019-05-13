@@ -457,7 +457,7 @@ namespace WebApplication3.Models
                         }
                         catch
                         {
-                            returnMessage = returnMessage + "\\n" + "ERROR: The Prereq Failed to Insert Correctly";
+                            returnMessage = returnMessage + "\\n" + "";
                         }
                         connection.Close();
                     }
@@ -479,7 +479,7 @@ namespace WebApplication3.Models
                         }
                         catch
                         {
-                            returnMessage = returnMessage + "\\n" + "ERROR: The Prereq Failed to Insert Correctly";
+                            returnMessage = returnMessage + "\\n" + "";
                         }
                         connection.Close();
                     }
@@ -502,7 +502,7 @@ namespace WebApplication3.Models
                         }
                         catch
                         {
-                            returnMessage = returnMessage + "\\n" + "ERROR: The Course Req Failed to Insert Correctly";
+                            returnMessage = returnMessage + "\\n" + "";
                         }
                         connection.Close();
                     }
@@ -524,7 +524,7 @@ namespace WebApplication3.Models
                         }
                         catch
                         {
-                            returnMessage = returnMessage + "\\n" + "ERROR: The Course Req Failed to Insert Correctly";
+                            returnMessage = returnMessage + "\\n" + "";
                         }
                         connection.Close();
                     }
