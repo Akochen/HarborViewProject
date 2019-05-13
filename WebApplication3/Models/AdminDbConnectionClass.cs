@@ -440,95 +440,100 @@ namespace WebApplication3.Models
                         connection.Close();
                     }
                 }
-                if (!(acForm.pr1.Equals("default")))
-                {
-                    String preReqTableInsert = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES(" + newCourseID + "," + pr1 + ")";
-                    //insert query
-                    //update return message
-                    using (SqlConnection connection = new SqlConnection(cString))
-                    {
-                        SqlCommand command = new SqlCommand(preReqTableInsert, connection);
-                        connection.Open();
-                        try
-                        {
-                            command.ExecuteNonQuery();
-                            String pr1Msg = "You have successfully added a prereq";
-                            returnMessage = returnMessage + "\\n" + pr1Msg;
-                        }
-                        catch
-                        {
-                            returnMessage = returnMessage + "\\n" + "";
-                        }
-                        connection.Close();
-                    }
-                }
-                if (!(acForm.pr2.Equals("default")))
-                {
-                    String preReqTableInsert2 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES(" + newCourseID + "," + pr2 + ")";
-                    //insert query
-                    //update return message
-                    using (SqlConnection connection = new SqlConnection(cString))
-                    {
-                        SqlCommand command = new SqlCommand(preReqTableInsert2, connection);
-                        connection.Open();
-                        try
-                        {
-                            command.ExecuteNonQuery();
-                            String pr2Msg = "You have successfully added a prereq";
-                            returnMessage = returnMessage + "\\n" + pr2Msg;
-                        }
-                        catch
-                        {
-                            returnMessage = returnMessage + "\\n" + "";
-                        }
-                        connection.Close();
-                    }
-                }
-                //check course req
-                if (!(acForm.cr1.Equals("default")))
-                {
-                    String preReqTableInsert3 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES(" + newCourseID + "," + cr1 + ")";
-                    //insert query
-                    //update return message
-                    using (SqlConnection connection = new SqlConnection(cString))
-                    {
-                        SqlCommand command = new SqlCommand(preReqTableInsert3, connection);
-                        connection.Open();
-                        try
-                        {
-                            command.ExecuteNonQuery();
-                            String cr1Msg = "You have successfully added a course req";
-                            returnMessage = returnMessage + "\\n" + cr1Msg;
-                        }
-                        catch
-                        {
-                            returnMessage = returnMessage + "\\n" + "";
-                        }
-                        connection.Close();
-                    }
-                }
-                if (!(acForm.cr2.Equals("default")))
-                {
-                    String preReqTableInsert4 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES(" + newCourseID + "," + cr2 + ")";
-                    //insert query
-                    //update return message
-                    using (SqlConnection connection = new SqlConnection(cString))
-                    {
-                        SqlCommand command = new SqlCommand(preReqTableInsert4, connection);
-                        connection.Open();
-                        try
-                        {
-                            command.ExecuteNonQuery();
-                            String cr2Msg = "You have successfully added a prereq";
-                            returnMessage = returnMessage + "\\n" + cr2Msg;
-                        }
-                        catch
-                        {
-                            returnMessage = returnMessage + "\\n" + "";
-                        }
-                        connection.Close();
-                    }
-                }
+                //if (!(acForm.pr1.Equals("def")))
+                //{
+
+                //    String preReqTableInsert = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES(" + newCourseID + "," + pr1 + ")";
+                //    //insert query
+                //    //update return message
+                //    using (SqlConnection connection = new SqlConnection(cString))
+                //    {
+                //        SqlCommand command = new SqlCommand(preReqTableInsert, connection);
+                //        connection.Open();
+                //        try
+                //        {
+                //            command.ExecuteNonQuery();
+                //            String pr1Msg = "You have successfully added a prereq";
+                //            returnMessage = returnMessage + "\\n" + pr1Msg;
+                //        }
+                //        catch
+                //        {
+                //            if (acForm.pr1.Equals("def"))
+                //            {
+                //                returnMessage = returnMessage + "\\n" + "";
+                //            }
+                //            returnMessage = returnMessage + "\\n" + "";
+                //        }
+                //        connection.Close();
+                //    }
+                //}
+                //if (!(acForm.pr2.Equals("default")))
+                //{
+                //    String preReqTableInsert2 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES(" + newCourseID + "," + pr2 + ")";
+                //    //insert query
+                //    //update return message
+                //    using (SqlConnection connection = new SqlConnection(cString))
+                //    {
+                //        SqlCommand command = new SqlCommand(preReqTableInsert2, connection);
+                //        connection.Open();
+                //        try
+                //        {
+                //            command.ExecuteNonQuery();
+                //            String pr2Msg = "You have successfully added a prereq";
+                //            returnMessage = returnMessage + "\\n" + pr2Msg;
+                //        }
+                //        catch
+                //        {
+                //            returnMessage = returnMessage + "\\n" + "";
+                //        }
+                //        connection.Close();
+                //    }
+                //}
+                ////check course req
+                //if (!(acForm.cr1.Equals("default")))
+                //{
+                //    String preReqTableInsert3 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES(" + newCourseID + "," + cr1 + ")";
+                //    //insert query
+                //    //update return message
+                //    using (SqlConnection connection = new SqlConnection(cString))
+                //    {
+                //        SqlCommand command = new SqlCommand(preReqTableInsert3, connection);
+                //        connection.Open();
+                //        try
+                //        {
+                //            command.ExecuteNonQuery();
+                //            String cr1Msg = "You have successfully added a course req";
+                //            returnMessage = returnMessage + "\\n" + cr1Msg;
+                //        }
+                //        catch
+                //        {
+                //            returnMessage = returnMessage + "\\n" + "";
+                //        }
+                //        connection.Close();
+                //    }
+                //}
+                //if (!(acForm.cr2.Equals("default")))
+                //{
+                //    String preReqTableInsert4 = @"INSERT INTO [dbo].[prereq]([course_id],[pre_req_course_id]) VALUES(" + newCourseID + "," + cr2 + ")";
+                //    //insert query
+                //    //update return message
+                //    using (SqlConnection connection = new SqlConnection(cString))
+                //    {
+                //        SqlCommand command = new SqlCommand(preReqTableInsert4, connection);
+                //        connection.Open();
+                //        try
+                //        {
+                //            command.ExecuteNonQuery();
+                //            String cr2Msg = "You have successfully added a prereq";
+                //            returnMessage = returnMessage + "\\n" + cr2Msg;
+                //        }
+                //        catch
+                //        {
+                //            returnMessage = returnMessage + "\\n" + "";
+                //        }
+                //        connection.Close();
+                //    }
+            //}
 
             }
             catch (Exception ex)
