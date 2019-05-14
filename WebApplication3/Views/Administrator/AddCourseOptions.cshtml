@@ -7,9 +7,11 @@
 }
 
 
+
 <link rel="stylesheet" href="~/Content/Background.css" />
 
 <form name="addCourse" method="post">
+
     <div>
         <table>
             <tr>
@@ -28,7 +30,7 @@
 
             <tr>
                 <td><strong>Course Number:</strong> </td>
-                <td><input type="text" name="courseNumber" value="" required></td>
+                <td><input type="number" id="cN" name="courseNumber" value="" required></td>
             </tr>
             <tr>
                 <td><strong>Course Name:</strong> </td>
@@ -75,7 +77,7 @@
     <div>
         <table>
 
-            <tr>
+            @*<tr>
                 <td><strong>Add Prerequisites for this course:</strong> </td>
                 <td><input type="text" name="pr1" value="" placeholder="(OPTIONAL)"></td>
                 <td><input type="text" name="pr2" value="" placeholder="(OPTIONAL)"></td>
@@ -84,7 +86,7 @@
                 <td><strong>Add Courses this is a prerequisite for:</strong> </td>
                 <td><input type="text" name="cr1" value="" placeholder="(OPTIONAL)"></td>
                 <td><input type="text" name="cr2" value="" placeholder="(OPTIONAL)"></td>
-            </tr>
+            </tr>*@
 
             <tr>
                 <td>
@@ -94,33 +96,45 @@
         </table>
     </div>
 </form>
-
-    @{
-        if (IsPost)
-        {
-            String department = Request.Form["departmentSelector"];
-            //String major = Request.Form["majorSelector"];
-            //String minor = Request.Form["minorSelector"];
-            String courseNumber = Request.Form["courseNumber"];
-            String courseName = Request.Form["courseName"];
-            String credits = Request.Form["creditSelector"];
-            String isElective = Request.Form["electiveSelector"];
-            String isGrad = Request.Form["gradSelector"];
-            String description = Request.Form["desc"];
-            String pr1 = Request.Form["pr1"];
-            String pr2 = Request.Form["pr2"];
-            String cr1 = Request.Form["cr1"];
-            String cr2 = Request.Form["cr2"];
-            //String isMajorReq = Request.Form["majorReq"];
-            //String isMinorReq = Request.Form["minReq"];
-
-            AddCourse addcourseFormDetails = new AddCourse(department, courseNumber,
-                courseName, credits, isElective, isGrad, description,
-                pr1, pr2, cr1, cr2);
-
-            @Html.Action("AddCourse", "Administrator", new { form = addcourseFormDetails });
-
+<script>
+    var inputBox = document.getElementById("cN");
+    var invalidChars = [
+        "-",
+        "+",
+        "e",
+    ];
+    inputBox.addEventListener("keydown", function (e) {
+        if (invalidChars.includes(e.key)) {
+            e.preventDefault();
         }
+    });
+</script>
+@{
+    if (IsPost)
+    {
+        String department = Request.Form["departmentSelector"];
+        //String major = Request.Form["majorSelector"];
+        //String minor = Request.Form["minorSelector"];
+        String courseNumber = Request.Form["courseNumber"];
+        String courseName = Request.Form["courseName"];
+        String credits = Request.Form["creditSelector"];
+        String isElective = Request.Form["electiveSelector"];
+        String isGrad = Request.Form["gradSelector"];
+        String description = Request.Form["desc"];
+        String pr1 = Request.Form[""];
+        String pr2 = Request.Form[""];
+        String cr1 = Request.Form[""];
+        String cr2 = Request.Form[""];
+        //String isMajorReq = Request.Form["majorReq"];
+        //String isMinorReq = Request.Form["minReq"];
+
+        AddCourse addcourseFormDetails = new AddCourse(department, courseNumber,
+            courseName, credits, isElective, isGrad, description,
+            pr1, pr2, cr1, cr2);
+
+        @Html.Action("AddCourse", "Administrator", new { form = addcourseFormDetails });
+
     }
+}
 
 

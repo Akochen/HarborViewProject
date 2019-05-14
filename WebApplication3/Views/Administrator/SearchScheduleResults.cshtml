@@ -38,7 +38,8 @@
                 <td>@sectionInfo.seatRemaining</td>
                 <td>@sectionInfo.building</td>
                 <td>@sectionInfo.room</td>
-                @if (sectionInfo.semester.Trim().Equals(WebApplication3.HelperClasses.SemesterDataHelper.getNextSemesterSeason()) && sectionInfo.year.Equals(WebApplication3.HelperClasses.SemesterDataHelper.getNextSemesterYear()))
+                @if (sectionInfo.semester.Trim().Equals(WebApplication3.HelperClasses.SemesterDataHelper.getNextSemesterSeason()) 
+                    && sectionInfo.year.Equals(WebApplication3.HelperClasses.SemesterDataHelper.getNextSemesterYear()))
                 {
                     <td>
                         @using (@Html.BeginForm("UpdateSection", "Administrator", FormMethod.Post))

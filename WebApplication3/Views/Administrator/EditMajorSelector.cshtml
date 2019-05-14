@@ -14,13 +14,15 @@
             <tr>
                 <td><strong>Major:</strong> </td>
                 <td>
-                    <select id="majorSelector" name="majorSelector" required>
-                        <option value="">---Select---</option>
-                        @foreach (var m in Model)
-                        {
+              
+                        <select id="majorSelector" name="majorSelector" required>
+                            <option value="">---Select---</option>
+                            @foreach (var m in Model)
+                            {
                             <option value="@m.majorID">@m.name</option>
-                        }
-                    </select>
+                            }
+                            
+                        </select>
                 </td>
                 <td>
                     <input type="submit" id="submit" value="Submit" />

@@ -70,7 +70,7 @@ namespace WebApplication3.Models
                 connection.Close();
             }
             //Fill Majors List
-            String majorString = "SELECT [major_name],[Requirements], [degree_name] FROM [dbo].[catalog_majors]";
+            String majorString = "SELECT [major_name],[Requirements], [degree_name] FROM [dbo].[catalog_majors] ORDER BY [major_name]";
             List<Major> majorsList = new List<Major>();
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -84,7 +84,7 @@ namespace WebApplication3.Models
                 connection.Close();
             }
             //Fill Minors List
-            String minorString = "SELECT [minor_name],[Requirements] FROM [dbo].[catalog_minors]";
+            String minorString = "SELECT [minor_name],[Requirements] FROM [dbo].[catalog_minors] ORDER BY [minor_name]";
             List<Minor> minorsList = new List<Minor>();
             using (SqlConnection connection = new SqlConnection(cString))
             {

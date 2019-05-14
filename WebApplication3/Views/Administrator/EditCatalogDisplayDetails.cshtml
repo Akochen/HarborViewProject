@@ -54,7 +54,7 @@
             <strong>Description:</strong>
             @using (Html.BeginForm("EditCatalogEditDescription", "Administrator", FormMethod.Post))
             {
-                @Html.TextArea("description", new { @value = Model.description, @cols = 50, @rows = 4 });
+                @Html.TextArea("description", new { @value = Model.description, @cols = 50, @rows = 4, @required= "required" });
                 @Html.Hidden("courseID", Model.id);
                 <br />
                 <input style="margin-left:90%;" type="submit" value="Edit" />

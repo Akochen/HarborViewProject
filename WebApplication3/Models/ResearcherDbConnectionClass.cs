@@ -71,7 +71,7 @@ namespace WebApplication3.Models
         {
             List<Major> allMajors = new List<Major>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            string getCoursesString = "SELECT [major_id], [major_name] FROM major";
+            string getCoursesString = "SELECT [major_id], [major_name] FROM major ORDER BY [major].[major_name]";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(getCoursesString, connection);
@@ -153,8 +153,8 @@ namespace WebApplication3.Models
             List<String> years = new List<String>();
             List<String> seasons = new List<String>();
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
-            string getYearsString = "SELECT DISTINCT [year] FROM [HarborViewUniversity].[dbo].[section]";
-            string getSeasonsString = "SELECT DISTINCT [semster] FROM [HarborViewUniversity].[dbo].[section]";
+            string getYearsString = "SELECT DISTINCT [year] FROM [HarborViewUniversity].[dbo].[section] ORDER BY [section].[year] ASC";
+            string getSeasonsString = "SELECT DISTINCT [semster] FROM [HarborViewUniversity].[dbo].[section] ORDER BY [section].[semster]";
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(getYearsString, connection);

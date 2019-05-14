@@ -9,6 +9,8 @@ namespace WebApplication3.HelperClasses
     {
         public String name { get; set; }
         public String requirements { get; set; }
+        public int minorID { get; set; }
+
         public Minor(String name, String requirements)
         {
             this.name = name;
@@ -17,6 +19,12 @@ namespace WebApplication3.HelperClasses
 
         public Minor(String name)
         {
+            this.name = name;
+        }
+
+        public Minor(int minorID, String name)
+        {
+            this.minorID = minorID;
             this.name = name;
         }
     }

@@ -180,6 +180,7 @@
     <Compile Include="HelperClasses\Department.cs" />
     <Compile Include="HelperClasses\DepartmentEnum.cs" />
     <Compile Include="HelperClasses\EditMajor.cs" />
+    <Compile Include="HelperClasses\EditMinor.cs" />
     <Compile Include="HelperClasses\EnrollmentSemesterHelper.cs" />
     <Compile Include="HelperClasses\FacultySemester.cs" />
     <Compile Include="HelperClasses\GradeList.cs" />
@@ -297,6 +298,9 @@
     <Content Include="Views\Researcher\ShowSemesterSelects.cshtml" />
     <Content Include="Views\Researcher\StudentsByDegreeSelector.cshtml" />
     <Content Include="Views\Researcher\StudentsByDegree.cshtml" />
+    <Content Include="Views\Administrator\EditMinorSelector.cshtml" />
+    <Content Include="Views\Administrator\EditMinor.cshtml" />
+    <Content Include="Views\Administrator\EditMinorResult.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
