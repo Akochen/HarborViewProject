@@ -98,5 +98,28 @@ namespace WebApplication3.HelperClasses
             }
             return false;
         }
+
+        public static bool canAssignGrade()
+        {
+            //if during first week of current semester
+            DateTime today = DateTime.Now;
+            if (today.Month == 5) 
+            {
+                if (today.Day > 12 && today.Day < 21)
+                {
+                    
+                     return true;
+                }
+            }
+            else if (today.Month == 12)
+            {
+                if (today.Day > 13 && today.Day < 21)
+                {
+
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
