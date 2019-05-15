@@ -443,20 +443,28 @@ namespace WebApplication3.Models
             String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = " + studentID;
             //SQL to get prereqs for major courses
             String getPrereqsString = "SELECT [course_id] ,[prereq_course_id] ,[prereq_course_name] FROM [HarborViewUniversity].[dbo].[prereq_view] WHERE [major_id] = " + majorID;
+            //SQL to get requirements for minor
+            String getMinorReqsString = "SELECT c.course_id,CONCAT(d.department_short_name,c.course_num)AS course_number,c.course_name,c.course_credits FROM minor_requirements mr INNER JOIN course c ON c.course_id = mr.course_id INNER JOIN minor m ON m.minor_id = mr.minor_id INNER JOIN department d ON d.department_id = m.department_id WHERE m.minor_id = (SELECT [minor_id] FROM [student_minor_list] WHERE [student_id] = " + studentID + ")";
+            //SQL to get prereqs for minor courses
+            String getMinorPrereqsString = "SELECT[course_id],[prereq_course_id] ,[prereq_course_name] FROM[HarborViewUniversity].[dbo].[prereq_view_minors] WHERE[minor_id] = (SELECT[minor_id] FROM [student_minor_list] WHERE[student_id] = " + studentID + ")";
             //Connection String
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             //List of major reqs
             List<DegreeAuditMajorReqs> majorReqs = new List<DegreeAuditMajorReqs>();
             //List of courses taken
             Hashtable coursesTaken = new Hashtable();
-            //Prerequisites for courses
-            DataTable prereqTable = new DataTable();
+            //Prerequisites for major courses
+            DataTable majorPrereqTable = new DataTable();
+            //Prerequisites for minor courses
+            DataTable minorPrereqTable = new DataTable();
             //List of courses currently being taken
             List<string> inProgress = new List<string>();
             //Lists for major electives
             List<DegreeAuditElectives> majorElectives = new List<DegreeAuditElectives>();
             //List of out of major classes taken
             List<DegreeAuditOutOfMajorReqs> outOfMajorReqs = new List<DegreeAuditOutOfMajorReqs>();
+            //List of Minor Requirements
+            List<DegreeAuditMajorReqs> minorReqs = new List<DegreeAuditMajorReqs>();
             //Create connect
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -486,7 +494,7 @@ namespace WebApplication3.Models
                 SqlCommand cmd = new SqlCommand(getPrereqsString, connection);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 // this will query your database and return the result to your datatable
-                da.Fill(prereqTable);
+                da.Fill(majorPrereqTable);
                 da.Dispose();
 
                 //Major Electives
@@ -535,6 +543,24 @@ namespace WebApplication3.Models
                     }
                 }
 
+                //Minor Requirements
+                //Get list of minor requirements
+                SqlCommand command6 = new SqlCommand(getMinorReqsString, connection);
+                using (var reader = command6.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        minorReqs.Add(new DegreeAuditMajorReqs(reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2), reader.GetByte(3)));
+                    }
+                }
+
+                //Get prereqs for minor reqs
+                SqlCommand cmd2 = new SqlCommand(getMinorPrereqsString, connection);
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd);
+                // this will query your database and return the result to your datatable
+                da2.Fill(minorPrereqTable);
+                da2.Dispose();
+
                 connection.Close();
             }
             //Major reqs data processing
@@ -556,7 +582,7 @@ namespace WebApplication3.Models
                 //foreach buildingid
                 //listofroomsforbuildingx.add( datarow dr prereqTable.Select(where buildingid = currentbuilingid))
 
-                foreach (DataRow dr in prereqTable.Select("course_id = '" + mr.courseID + "'"))
+                foreach (DataRow dr in majorPrereqTable.Select("course_id = '" + mr.courseID + "'"))
                 {
                     if (coursesTaken.Contains(dr[1] + ""))
                     {
@@ -593,7 +619,7 @@ namespace WebApplication3.Models
                 }
 
                 //sort and add prereqs
-                foreach (DataRow dr in prereqTable.Select("course_id = '" + el.courseID + "'"))
+                foreach (DataRow dr in majorPrereqTable.Select("course_id = '" + el.courseID + "'"))
                 {
                     if (coursesTaken.Contains(dr[1] + ""))
                     {
@@ -631,7 +657,44 @@ namespace WebApplication3.Models
                 }
             }
 
-            return new DegreeAuditData(majorReqs, majorElectives, outOfMajorReqs);
+            foreach (var min in minorReqs)
+            {
+                //if course is in progress, mark as in progreess
+                if (inProgress.Contains(min.courseID))
+                {
+                    min.courseStatus = "&#x2610";
+                }
+
+                //if taken course is passed, mark as complete
+                if (coursesTaken.Contains(min.courseID))
+                {
+                    if (GradeList.isPassing((string)coursesTaken[min.courseID]))
+                    {
+                        min.courseStatus = "&#x2611";
+                        min.grade = (string)coursesTaken[min.courseID];
+                    }
+                }
+
+                //sort and add prereqs
+                foreach (DataRow dr in minorPrereqTable.Select("course_id = '" + min.courseID + "'"))
+                {
+                    if (coursesTaken.Contains(dr[1] + ""))
+                    {
+                        min.prereqsTaken += " " + dr[2] + ",";
+                    }
+                    else
+                    {
+                        min.prereqsToTake += " " + dr[2] + ",";
+                    }
+                }
+
+                if (coursesTaken.Contains(min.courseID))
+                {
+                    min.grade = (string)coursesTaken[min.courseID];
+                }
+            }
+
+            return new DegreeAuditData(majorReqs, majorElectives, outOfMajorReqs, minorReqs);
         }
     }
 }

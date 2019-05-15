@@ -36,7 +36,7 @@ namespace WebApplication3.Controllers
             }
             else if (result == "Faculty")
             {
-                var isAdvisor = isFacultyAdvisor(email);
+                Session["Advisor"] = isFacultyAdvisor(email);
                 return RedirectToAction("FacultyHome", "Faculty"); //(method name, controller name)
             }
             else if (result == "Admin")
