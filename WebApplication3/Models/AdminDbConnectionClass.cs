@@ -236,7 +236,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        adviseeList.Add(new Advisee(reader.GetInt32(8).ToString(), reader.GetString(0), reader.GetString(1), 
+                        adviseeList.Add(new Advisee(reader.GetInt32(8).ToString(), reader.GetString(0), reader.GetString(1),
                             reader.GetString(2), reader.GetDateTime(3).ToShortDateString(), reader.GetString(4),
                             reader.GetString(5), reader.GetString(6), reader.GetInt32(7).ToString()));
                     }
@@ -533,7 +533,7 @@ namespace WebApplication3.Models
                 //        }
                 //        connection.Close();
                 //    }
-            //}
+                //}
 
             }
             catch (Exception ex)
@@ -694,8 +694,10 @@ namespace WebApplication3.Models
             List<Course> courses = new List<Course>();
             List<EditMajor> majorhelper = new List<EditMajor>();
             List<EditMajor> electivehelper = new List<EditMajor>();
-            String majReqString = "SELECT* FROM major_requirements";
-            String electiveString = "SELECT* FROM major_elective";
+            String majReqString = "SELECT * FROM major_requirements";
+            String electiveString = "SELECT * FROM major_elective";
+            String getMajorCreditsString = "SELECT SUM(course_credits) FROM major_requirements JOIN course c ON c.course_id = major_requirements.course_id WHERE major_id = " + majorID;
+            String getClassCreditsString = "SELECT [course_credits] FROM course WHERE course_id = " + courseID;
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -725,6 +727,35 @@ namespace WebApplication3.Models
             }
             if (courseAttr.Equals("Required"))
             {
+                using (SqlConnection connection = new SqlConnection(cString))
+                {
+                    int majorCredits = 0;
+                    int courseCredits = 0;
+                    int totalCredits = 0;
+                    SqlCommand command = new SqlCommand(getMajorCreditsString, connection);
+                    connection.Open();
+                    using(var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            majorCredits = reader.GetInt32(0); 
+                        }
+                    }
+                    SqlCommand command2 = new SqlCommand(getClassCreditsString, connection);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            courseCredits = reader.GetInt32(0);
+                        }
+                    }
+                    connection.Close();
+                    totalCredits = majorCredits + totalCredits;
+                    if(totalCredits > 68)
+                    {
+                        return "This major already has the maximum number of required credits.";
+                    }
+                }
                 foreach (var v in majorhelper)
                 {
                     if (v.major == majorID && v.courseID == courseID)
@@ -810,14 +841,14 @@ namespace WebApplication3.Models
   FROM [HarborViewUniversity].[dbo].[major_requirements] mr
   inner join course c on c.course_id = mr.course_id
   inner join major m on m.major_id = mr.major_id
-  where m.major_name = '" + minor + "'"+
+  where m.major_name = '" + minor + "'" +
   @"UNION
   SELECT c.course_name, c.course_id,mr.major_id 
   FROM [HarborViewUniversity].[dbo].[major_elective] mr
   inner join course c on c.course_id = mr.course_id
   inner join major m on m.major_id = mr.major_id
   where m.major_name = '" + minor + "'";
-                                    
+
             using (SqlConnection connection = new SqlConnection(cString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -844,7 +875,7 @@ namespace WebApplication3.Models
   FROM [HarborViewUniversity].[dbo].[minor_requirements] mr
   inner join minor m on m.minor_id = mr.minor_id
   inner join course c on c.course_id = mr.course_id
-  where minor_name = '" + minorID+"'";
+  where minor_name = '" + minorID + "'";
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -854,7 +885,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        minorHelper.Add(new EditMinor(reader.GetInt32(0).ToString(), reader.GetInt32(1).ToString(),reader.GetString(2)));
+                        minorHelper.Add(new EditMinor(reader.GetInt32(0).ToString(), reader.GetInt32(1).ToString(), reader.GetString(2)));
                     }
                 }
                 connection.Close();
@@ -888,21 +919,28 @@ namespace WebApplication3.Models
             }
             if (courseAttr.Equals("Remove"))
             {
-                string removeElective = "DELETE FROM minor_requirements WHERE minor_id = " + minorHelper[0].minor;
-                using (SqlConnection connection = new SqlConnection(cString))
+                try
                 {
-                    SqlCommand command = new SqlCommand(removeElective, connection);
-                    connection.Open();
-                    try
+                    string removeElective = "DELETE FROM minor_requirements WHERE minor_id = " + minorHelper[0].minor;
+                    using (SqlConnection connection = new SqlConnection(cString))
                     {
-                        command.ExecuteNonQuery();
-                        resultString = "This course has been remove from the minor course list.";
+                        SqlCommand command = new SqlCommand(removeElective, connection);
+                        connection.Open();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                            resultString = "This course has been removed from the minor course list.";
+                        }
+                        catch
+                        {
+                            resultString = "There was an error when trying to remove";
+                        }
+                        connection.Close();
                     }
-                    catch
-                    {
-                        resultString = "There is an error when trying to remove";
-                    }
-                    connection.Close();
+                }
+                catch
+                {
+                    resultString = "The selected course is not part of the minor and cannot be removed";
                 }
             }
             return resultString;
@@ -937,7 +975,7 @@ namespace WebApplication3.Models
                 {
                     while (reader.Read())
                     {
-                        locations.Add(new Location(reader.GetInt32(0).ToString(), 
+                        locations.Add(new Location(reader.GetInt32(0).ToString(),
                             reader.GetString(1), reader.GetInt32(2).ToString(), reader.GetInt32(3).ToString()));
                     }
                 }
@@ -986,7 +1024,7 @@ namespace WebApplication3.Models
                 SqlCommand command = new SqlCommand(insertSectionString, connection);
                 connection.Open();
                 command.ExecuteNonQuery();
- 
+
                 connection.Close();
             }
             return result;
@@ -1046,9 +1084,9 @@ namespace WebApplication3.Models
             return new UpdateSectionHelper(times, professors);
         }
 
-        public static int updateSectionCheck(string credits, string courseName, string building, string room, string semester, 
+        public static int updateSectionCheck(string credits, string courseName, string building, string room, string semester,
             string year, string type, string seatCapacity, string professor, string d1, string d2, string d3, string startTime, string sectionId)
-        {          
+        {
             String cString = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnect"].ConnectionString;
             //Check days strings
             String day1 = d1;
@@ -1239,11 +1277,11 @@ namespace WebApplication3.Models
                                                 JOIN department d ON c.department_id = d.department_id
                                                 WHERE m.major_id = " + majorID;
             //SQL to get classes already taken
-            String getClassesTakenString = "SELECT DISTINCT s.course_id,sh.grade FROM student_semester_history sh INNER JOIN section s ON s.section_id = sh.section_id INNER JOIN course c ON c.course_id = s.course_id inner join department d on d.department_id = c.department_id INNER join major m on m.department_id = d.department_id where sh.student_id = 1";
+            String getClassesTakenString = "SELECT DISTINCT s.course_id,sh.grade FROM student_semester_history sh INNER JOIN section s ON s.section_id = sh.section_id INNER JOIN course c ON c.course_id = s.course_id inner join department d on d.department_id = c.department_id INNER join major m on m.department_id = d.department_id where sh.student_id = " + studentID;
             //SQL to get out of major classes taken
             String getOutOfMajorClassesTaken = "SELECT [course_id], [course_number], [course_name], [prereqs], [course_credits], [grade] FROM out_of_major_reqs_view WHERE student_id = " + studentID + "AND course_id NOT IN(select course_id from major_requirements where major_id = " + majorID + ") AND course_id NOT IN(select course_id from major_elective where major_id = " + majorID + ")";
             //SQL to get classes currently being taken
-            String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = 1";
+            String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = " + studentID;
             //SQL to get prereqs for major courses
             String getPrereqsString = "SELECT [course_id] ,[prereq_course_id] ,[prereq_course_name] FROM [HarborViewUniversity].[dbo].[prereq_view] WHERE [major_id] = " + majorID;
             //Connection String
@@ -1343,6 +1381,11 @@ namespace WebApplication3.Models
             //Major reqs data processing
             foreach (var mr in majorReqs)
             {
+                //if course is in progress, mark as in progress
+                if (inProgress.Contains(mr.courseID))
+                {
+                    mr.courseStatus = "&#x2610";
+                }
                 //if taken course is passed, mark as complete
                 if (coursesTaken.Contains(mr.courseID))
                 {
@@ -1350,11 +1393,6 @@ namespace WebApplication3.Models
                     {
                         mr.courseStatus = "&#x2611";
                     }
-                }
-                //if course is in progress, mark as in progress
-                if (inProgress.Contains(mr.courseID))
-                {
-                    mr.courseStatus = "&#x2610";
                 }
                 //foreach buildingid
                 //listofroomsforbuildingx.add( datarow dr prereqTable.Select(where buildingid = currentbuilingid))
@@ -1379,6 +1417,12 @@ namespace WebApplication3.Models
             //major electives data processing
             foreach (var el in majorElectives)
             {
+                //if course is in progress, mark as in progreess
+                if (inProgress.Contains(el.courseID))
+                {
+                    el.courseStatus = "&#x2610";
+                }
+
                 //if taken course is passed, mark as complete
                 if (coursesTaken.Contains(el.courseID))
                 {
@@ -1387,12 +1431,6 @@ namespace WebApplication3.Models
                         el.courseStatus = "&#x2611";
                         el.grade = (string)coursesTaken[el.courseID];
                     }
-                }
-
-                //if course is in progress, mark as in progreess
-                if (inProgress.Contains(el.courseID))
-                {
-                    el.courseStatus = "&#x2610";
                 }
 
                 //sort and add prereqs

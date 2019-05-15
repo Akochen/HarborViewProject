@@ -436,11 +436,11 @@ namespace WebApplication3.Models
                                                 JOIN department d ON c.department_id = d.department_id
                                                 WHERE m.major_id = " + majorID;
             //SQL to get classes already taken
-            String getClassesTakenString = "SELECT DISTINCT s.course_id,sh.grade FROM student_semester_history sh INNER JOIN section s ON s.section_id = sh.section_id INNER JOIN course c ON c.course_id = s.course_id inner join department d on d.department_id = c.department_id INNER join major m on m.department_id = d.department_id where sh.student_id = 1";
+            String getClassesTakenString = "SELECT DISTINCT s.course_id,sh.grade FROM student_semester_history sh INNER JOIN section s ON s.section_id = sh.section_id INNER JOIN course c ON c.course_id = s.course_id inner join department d on d.department_id = c.department_id INNER join major m on m.department_id = d.department_id where sh.student_id = " + studentID;
             //SQL to get out of major classes taken
             String getOutOfMajorClassesTaken = "SELECT [course_id], [course_number], [course_name], [prereqs], [course_credits], [grade] FROM out_of_major_reqs_view WHERE student_id = " + studentID + "AND course_id NOT IN(select course_id from major_requirements where major_id = " + majorID + ") AND course_id NOT IN(select course_id from major_elective where major_id = " + majorID + ")";
             //SQL to get classes currently being taken
-            String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = 1";
+            String getClassesInProgressString = "SELECT s.course_id FROM enrollment e INNER JOIN section s ON s.section_id = e.section_id WHERE s.semster = 'spring' AND s.[year] = '2019' AND e.student_id = " + studentID;
             //SQL to get prereqs for major courses
             String getPrereqsString = "SELECT [course_id] ,[prereq_course_id] ,[prereq_course_name] FROM [HarborViewUniversity].[dbo].[prereq_view] WHERE [major_id] = " + majorID;
             //Connection String
@@ -540,6 +540,11 @@ namespace WebApplication3.Models
             //Major reqs data processing
             foreach (var mr in majorReqs)
             {
+                //if course is in progress, mark as in progress
+                if (inProgress.Contains(mr.courseID))
+                {
+                    mr.courseStatus = "&#x2610";
+                }
                 //if taken course is passed, mark as complete
                 if (coursesTaken.Contains(mr.courseID))
                 {
@@ -547,11 +552,6 @@ namespace WebApplication3.Models
                     {
                         mr.courseStatus = "&#x2611";
                     }
-                }
-                //if course is in progress, mark as in progress
-                if (inProgress.Contains(mr.courseID))
-                {
-                    mr.courseStatus = "&#x2610";
                 }
                 //foreach buildingid
                 //listofroomsforbuildingx.add( datarow dr prereqTable.Select(where buildingid = currentbuilingid))
@@ -576,6 +576,12 @@ namespace WebApplication3.Models
             //major electives data processing
             foreach (var el in majorElectives)
             {
+                //if course is in progress, mark as in progreess
+                if (inProgress.Contains(el.courseID))
+                {
+                    el.courseStatus = "&#x2610";
+                }
+
                 //if taken course is passed, mark as complete
                 if (coursesTaken.Contains(el.courseID))
                 {
@@ -584,12 +590,6 @@ namespace WebApplication3.Models
                         el.courseStatus = "&#x2611";
                         el.grade = (string)coursesTaken[el.courseID];
                     }
-                }
-
-                //if course is in progress, mark as in progreess
-                if (inProgress.Contains(el.courseID))
-                {
-                    el.courseStatus = "&#x2610";
                 }
 
                 //sort and add prereqs
