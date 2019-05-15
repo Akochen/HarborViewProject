@@ -33,16 +33,18 @@
             <tr>
                 <th>Major</th>
                 <th>Requirements</th>
+                <th>Electives</th>
                 <th>Degree Type</th>
             </tr>
             @{
                 foreach (var v in Model.majors)
                 {
-                    <tr>
-                        <td align="right">@v.name</td>
-                        <td>@Html.Raw(v.requirements)</td>
-                        <td align="right">@v.degreeLevel</td>
-                    </tr>
+            <tr>
+                <td align="right">@v.name</td>
+                <td>@Html.Raw(v.requirements)</td>
+                <td>@Html.Raw(v.electives)</td>
+                <td align="right">@v.degreeLevel</td>
+            </tr>
                 }
             }
         </table>

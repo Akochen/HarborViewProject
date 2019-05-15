@@ -17,55 +17,20 @@
             </div>
             <h2 align="center">Login</h2>
             <div align="center" id="input">
-                <form method="post">
+                @using (Html.BeginForm("LogIn", "Home", FormMethod.Post))
+                {
                     <label id="email_label">Email: </label>
-                    <input type="text" autocomplete="off" id="email_field" name="email" />
+                    @Html.TextBox("email", null, new { @autocomplete = "off" })
                     <br />
                     <label id="password_label">Password: </label>
-                    <input type="password" autocomplete="off" id="password_field" name="password" />
+                    @Html.Password("password", null, new { @autocomplete = "off" })
                     <br />
                     <input type="submit" id="submit" value="submit" />
                     <div id="test_div"></div>
-                </form>
+                }
             </div>
             <div>
-                @{
-                    if (IsPost)
-                    {
-                        String result = WebApplication3.Models.UserDbConnectionClass.login("select case [type_id] When 1 then 'Student' When 2 then 'Faculty' When 3 then 'Admin' When 4 then 'Researcher' End from[user] where[email] = '" + Request["email"] + "' and [password]= '" + Request["password"] + "'");
-                        if (result == "Student")
-                        {
-                            var userID = Html.Action("getUserID", "Home", new { email = Request["email"] });
-                            Session["UserID"] = userID;
-                            Response.Redirect(Url.Action("StudentHome", "Student")); //(method name, controller name)
-                        }
-                        else if (result == "Faculty")
-                        {
-                            var isAdvisor = Html.Action("isFacultyAdvisor", "Home", new { email = Request["email"] });
-                            var userID = Html.Action("getUserID", "Home", new { email = Request["email"] });
-                            Session["UserID"] = userID;
-                            Session["Advisor"] = isAdvisor;
-                            Response.Redirect(Url.Action("FacultyHome", "Faculty")); //(method name, controller name)
-                        }
-                        else if (result == "Admin")
-                        {
-                            var userID = Html.Action("getUserID", "Home", new { email = Request["email"] });
-                            Session["UserID"] = userID;
-                            Response.Redirect(Url.Action("AdminHome", "Administrator")); //(method name, controller name)
-                        }
-                        else if (result == "Researcher")
-                        {
-                            var userID = Html.Action("getUserID", "Home", new { email = Request["email"] });
-                            Session["UserID"] = userID;
-                            Response.Redirect(Url.Action("ResearcherHome", "Researcher")); //(method name, controller name)
-                        }
-                        else
-                        {
-                            @Html.Raw("<text>Error: username or password incorrect!</text>")
-
-                        }
-                    }
-                }
+                @TempData["msg"]
             </div>
             <div id="catalog_link">
                 @Html.ActionLink("Course Catalog", "Catalog", "Catalog")
