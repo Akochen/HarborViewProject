@@ -26,6 +26,13 @@ namespace WebApplication3.Controllers
             return (WebApplication3.Models.UserDbConnectionClass.isFacultyAdvisor(email));
         }
 
+        public String LogIn()
+        {
+            String userType = WebApplication3.Models.UserDbConnectionClass.login("select case [type_id] When 1 then 'Student' When 2 then 'Faculty' When 3 then 'Admin' When 4 then 'Researcher' End from[user] where[email] = '" + Request["email"] + "' and [password]= '" + Request["password"] + "'");
+
+            return null;
+        }
+
         public ActionResult LogOut()
         {
             Session.RemoveAll();
