@@ -9,13 +9,15 @@ namespace WebApplication3.HelperClasses
     {
         public String name { get; set; }
         public String requirements { get; set; }
+        public String electives { get; set; }
         public String degreeLevel { get; set; }
         public String majorID { get; set; }
 
-        public Major(String name, String requirements, String degreeLevel)
+        public Major(string name, string requirements, string electives, string degreeLevel)
         {
-            this.requirements = requirements;
             this.name = name;
+            this.requirements = requirements;
+            this.electives = electives;
             this.degreeLevel = degreeLevel;
         }
 

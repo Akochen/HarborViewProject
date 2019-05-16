@@ -70,7 +70,7 @@ namespace WebApplication3.Models
                 connection.Close();
             }
             //Fill Majors List
-            String majorString = "SELECT [major_name],[Requirements], [degree_name] FROM [dbo].[catalog_majors] ORDER BY [major_name]";
+            String majorString = "SELECT [major_name],[Requirements],[Electives],[degree_name] FROM [dbo].[catalog_majors] ORDER BY [major_name]";
             List<Major> majorsList = new List<Major>();
             using (SqlConnection connection = new SqlConnection(cString))
             {
@@ -79,7 +79,7 @@ namespace WebApplication3.Models
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    majorsList.Add(new Major(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                    majorsList.Add(new Major(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3)));
                 }
                 connection.Close();
             }
