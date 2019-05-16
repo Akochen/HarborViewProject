@@ -4,6 +4,10 @@
     /**/
 
     Layout = null;
+    int majorReqCreditsTaken = 0;
+    int majorElecCreditsTaken = 0;
+    int outOfMajorCredits = 0;
+    int minorReqCredits = 0;
 }
 
 <style>
@@ -44,7 +48,6 @@
                         <th>Credits</th>
                     </tr>
                     @{
-                        int majorReqCreditsTaken = 0;
                         foreach (var v in Model.majorReqs)
                         {
                             <tr class="ul">
@@ -103,8 +106,8 @@
                         <th>Grade</th>
                         <th>Credits</th>
                     </tr>
+
                     @{
-                        int majorElecCreditsTaken = 0;
                         foreach (var v in Model.majorElectives)
                         {
                             <tr class="ul">
@@ -139,7 +142,6 @@
                                     }
                                 }
                             </tr>
-
                         }
                     }
                 </table>
@@ -164,7 +166,6 @@
                         <th>Credits</th>
                     </tr>
                     @{
-                        int outOfMajorCredits = 0;
                         foreach (var v in Model.outOfMajorRequirements)
                         {
                             <tr class="ul">
@@ -192,60 +193,60 @@
         <td>
 
             <div style="width:80%;margin-top:10px;margin-left:auto; margin-right:auto;">
-                <div class="barContainer">
-                    <div id="min_bar" style="background-color:forestgreen; height: 100%; text-align:center; margin-left:0;"></div>
-                    <div id="min_text" class="centered"></div>
-                </div>
-
-                <table id="min" class="resultsTable" style="width:100%;">
-                    <tr class="tableheader">
-                        <th></th>
-                        <th>CID</th>
-                        <th>Course</th>
-                        <th>Prerequisites</th>
-                        <th>Grade</th>
-                        <th>Credits</th>
-                    </tr>
-                    @{
-                        int minorReqCredits = 0;
-                        foreach (var v in Model.minorReqs)
-                        {
-                            <tr class="ul">
-                                <td>@Html.Raw(@v.courseStatus)</td>
-                                <td>@v.courseNum</td>
-                                <td>@v.courseName</td>
-                                <td>
-                                    @{
-                                        string front = "<span style=\"color:red\"> ";
-                                        string toTake = v.prereqsToTake;
-                                        string middle = "</span><span style=\"color:forestgreen\"> ";
-                                        string taken = v.prereqsTaken;
-                                        string end = " </span>";
-                                        string output;
-                                        if (taken.Equals(""))
-                                        {
-                                            output = front + toTake.TrimEnd(',') + middle + taken + end;
-                                        }
-                                        else
-                                        {
-                                            output = front + toTake + middle + taken.TrimEnd(',') + end;
-                                        }
-                                        @Html.Raw(output);
-                                    }
-                                </td>
-                                <td>@v.grade</td>
-                                <td>@v.credits</td>
-                                @{
-                                    if (v.courseStatus.Equals("&#x2611"))
-                                    {
-                                        minorReqCredits += v.credits;
-                                    }
-                                }
+                @{
+                    if (Model.minorReqs.Count > 0)
+                    {
+                        <div class="barContainer">
+                            <div id="min_bar" style="background-color:forestgreen; height: 100%; text-align:center; margin-left:0;"></div>
+                            <div id="min_text" class="centered"></div>
+                        </div>
+                        <table id="min" class="resultsTable" style="width:100%;">
+                            <tr class="tableheader">
+                                <th></th>
+                                <th>CID</th>
+                                <th>Course</th>
+                                <th>Prerequisites</th>
+                                <th>Grade</th>
+                                <th>Credits</th>
                             </tr>
-
-                        }
+                            @foreach (var v in Model.minorReqs)
+                            {
+                                <tr class="ul">
+                                    <td>@Html.Raw(@v.courseStatus)</td>
+                                    <td>@v.courseNum</td>
+                                    <td>@v.courseName</td>
+                                    <td>
+                                        @{
+                                            string front = "<span style=\"color:red\"> ";
+                                            string toTake = v.prereqsToTake;
+                                            string middle = "</span><span style=\"color:forestgreen\"> ";
+                                            string taken = v.prereqsTaken;
+                                            string end = " </span>";
+                                            string output;
+                                            if (taken.Equals(""))
+                                            {
+                                                output = front + toTake.TrimEnd(',') + middle + taken + end;
+                                            }
+                                            else
+                                            {
+                                                output = front + toTake + middle + taken.TrimEnd(',') + end;
+                                            }
+                                            @Html.Raw(output);
+                                        }
+                                    </td>
+                                    <td>@v.grade</td>
+                                    <td>@v.credits</td>
+                                    @{
+                                        if (v.courseStatus.Equals("&#x2611"))
+                                        {
+                                            minorReqCredits += v.credits;
+                                        }
+                                    }
+                                </tr>
+                            }
+                        </table>
                     }
-                </table>
+                }
             </div>
         </td>
     </tr>
